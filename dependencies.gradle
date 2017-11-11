@@ -1,0 +1,12 @@
+ext {
+    supportVersion = '26.1.0'
+    espressoVersion = '3.0.1'
+
+    dependencies = [
+            androidSupportV7: "com.android.support:appcompat-v7:$supportVersion",
+            espressoCore    : "com.android.support.test.espresso:espresso-core:$espressoVersion",
+            junit           : "junit:junit:4.12",
+            kotlin          : "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version",
+            testRunner      : 'com.android.support.test:runner:1.0.1'
+    ]
+}
