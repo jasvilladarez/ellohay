@@ -7,6 +7,8 @@ ext {
             espressoCore    : "com.android.support.test.espresso:espresso-core:$espressoVersion",
             junit           : "junit:junit:4.12",
             kotlin          : "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version",
+            retrofit        : "com.squareup.retrofit2:retrofit:2.3.0",
+            rxJava2         : "io.reactivex.rxjava2:rxjava:2.1.6",
             testRunner      : 'com.android.support.test:runner:1.0.1'
     ]
 }
