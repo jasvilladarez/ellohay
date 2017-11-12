@@ -34,7 +34,6 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
-import kotlin.reflect.KClass
 
 /**
  * This object involves creating of initializing
@@ -44,20 +43,21 @@ internal object ApiFactory {
     private const val ELLO_API_URL = "https://ello.co/api/"
     private const val DEFAULT_TIMEOUT = 120L
 
-    fun <T : Any> createApi(kClass: KClass<T>,
-                            isDebug: Boolean = false,
-                            vararg interceptors: Interceptor) =
-            kClass.createApi(ELLO_API_URL,
+    inline fun <reified T : Any> createApi(clazz: Class<T>,
+                                           isDebug: Boolean = false,
+                                           vararg interceptors: Interceptor): T =
+            createApi(clazz, ELLO_API_URL,
                     makeOkHttpClient(makeLoggingInterceptor(isDebug),
                             *interceptors))
 
-    private inline fun <reified T : Any> T.createApi(baseUrl: String,
-                                                     okHttpClient: OkHttpClient): T =
+    private fun <T : Any> createApi(clazz: Class<T>,
+                                    baseUrl: String,
+                                    okHttpClient: OkHttpClient): T =
             Retrofit.Builder().baseUrl(baseUrl)
                     .client(okHttpClient)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(makeConverterFactory())
-                    .build().create(this::class.java)
+                    .build().create(clazz)
 
     private fun makeOkHttpClient(vararg interceptors: Interceptor) = OkHttpClient.Builder()
             .apply {
@@ -74,7 +74,7 @@ internal object ApiFactory {
         else HttpLoggingInterceptor.Level.NONE
     }
 
-    private fun makeConverterFactory() : Converter.Factory = MoshiConverterFactory.create(
+    private fun makeConverterFactory(): Converter.Factory = MoshiConverterFactory.create(
             Moshi.Builder().add(KotlinJsonAdapterFactory())
                     .build()
     )
