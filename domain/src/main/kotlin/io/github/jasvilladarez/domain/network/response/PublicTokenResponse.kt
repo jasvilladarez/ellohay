@@ -22,17 +22,16 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.interactor.auth
+package io.github.jasvilladarez.domain.network.response
 
-import io.github.jasvilladarez.domain.network.response.PublicTokenResponse
-import io.reactivex.Single
-import retrofit2.http.GET
+import com.squareup.moshi.Json
 
 /**
  * Created by Jasmine on 11/12/17.
  */
-internal interface AuthApi {
-
-    @GET("webapp-token")
-    fun fetchPublicToken(): Single<PublicTokenResponse>
-}
+internal data class PublicTokenResponse(
+        @Json(name = "token_type")
+        val tokenType: String,
+        @Json(name = "access_token")
+        val token: String
+)
