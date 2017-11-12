@@ -2,17 +2,25 @@ ext {
     supportVersion = '26.1.0'
     daggerVersion = '2.13'
     espressoVersion = '3.0.1'
+    okHttpVersion = '3.9.0'
+    retrofitVersion = '2.3.0'
+    moshiVersion = '1.5.0'
 
     dependencies = [
-            androidSupportV7: "com.android.support:appcompat-v7:$supportVersion",
-            dagger          : "com.google.dagger:dagger:$daggerVersion",
-            daggerCompiler  : "com.google.dagger:dagger-compiler:$daggerVersion",
-            espressoCore    : "com.android.support.test.espresso:espresso-core:$espressoVersion",
-            gson            : "com.google.code.gson:gson:2.8.2",
-            junit           : "junit:junit:4.12",
-            kotlin          : "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version",
-            retrofit        : "com.squareup.retrofit2:retrofit:2.3.0",
-            rxJava2         : "io.reactivex.rxjava2:rxjava:2.1.6",
-            testRunner      : 'com.android.support.test:runner:1.0.1'
+            androidSupportV7 : "com.android.support:appcompat-v7:$supportVersion",
+            dagger           : "com.google.dagger:dagger:$daggerVersion",
+            daggerCompiler   : "com.google.dagger:dagger-compiler:$daggerVersion",
+            espressoCore     : "com.android.support.test.espresso:espresso-core:$espressoVersion",
+            gson             : "com.google.code.gson:gson:2.8.2",
+            junit            : "junit:junit:4.12",
+            kotlin           : "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version",
+            moshi            : "com.squareup.moshi:moshi:${moshiVersion}",
+            moshiKotlin      : "com.squareup.moshi:moshi-kotlin:${moshiVersion}",
+            okHttpLogging    : "com.squareup.okhttp3:logging-interceptor:$okHttpVersion",
+            retrofit         : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            retrofitAdapter  : "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
+            retrofitConverter: "com.squareup.retrofit2:converter-moshi:$retrofitVersion",
+            rxJava2          : "io.reactivex.rxjava2:rxjava:2.1.6",
+            testRunner       : 'com.android.support.test:runner:1.0.1'
     ]
 }
