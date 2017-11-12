@@ -22,23 +22,19 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.interactor.category
+package io.github.jasvilladarez.domain.interactor.auth
 
-import io.github.jasvilladarez.domain.entity.Category
 import io.reactivex.Observable
 
 /**
- * This class conntains all functionality involving fetching categories
- * and their content.
+ * This class involves fetching public access token
+ * and logging in.
  */
-interface CategoryInteractor {
+interface AuthInteractor {
 
     /**
-     * This function fetches all categories
-     *
-     * @param withMeta - Include meta categories like featured, trending, etc
-     * @param all - Include all categories, even archived ones
+     * Fetch a public token to use for the APIs.
+     * This do not need any login credentials.
      */
-    fun fetchCategories(withMeta: Boolean = false,
-                        all: Boolean = false): Observable<List<Category>>
+    fun fetchPublicToken(): Observable<String>
 }
