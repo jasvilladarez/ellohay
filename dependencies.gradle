@@ -1,9 +1,12 @@
 ext {
     supportVersion = '26.1.0'
+    daggerVersion = '2.13'
     espressoVersion = '3.0.1'
 
     dependencies = [
             androidSupportV7: "com.android.support:appcompat-v7:$supportVersion",
+            dagger          : "com.google.dagger:dagger:$daggerVersion",
+            daggerCompiler  : "com.google.dagger:dagger-compiler:$daggerVersion",
             espressoCore    : "com.android.support.test.espresso:espresso-core:$espressoVersion",
             gson            : "com.google.code.gson:gson:2.8.2",
             junit           : "junit:junit:4.12",
