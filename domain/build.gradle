@@ -9,6 +9,7 @@ dependencies {
     def dependencies = rootProject.ext.dependencies
 
     implementation dependencies.kotlin
+    implementation dependencies.gson
     implementation dependencies.retrofit
     implementation dependencies.rxJava2
 }
