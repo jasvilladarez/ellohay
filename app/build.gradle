@@ -27,7 +27,13 @@ dependencies {
     def dependencies = rootProject.ext.dependencies
 
     implementation dependencies.kotlin
+
+    kapt dependencies.androidLifecycleCompiler
+    implementation dependencies.androidLifecycleExtensions
+    implementation dependencies.androidDesign
     implementation dependencies.androidSupportV7
+
+    implementation dependencies.rxJava2
 
     testImplementation dependencies.junit
 
