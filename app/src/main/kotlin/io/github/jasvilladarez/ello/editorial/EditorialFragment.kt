@@ -26,15 +26,51 @@ package io.github.jasvilladarez.ello.editorial
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.github.jasvilladarez.ello.R
+import io.github.jasvilladarez.ello.common.MviView
+import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
+import kotlinx.android.synthetic.main.fragment_editorial.*
 
-internal class EditorialFragment : Fragment() {
+internal class EditorialFragment : Fragment(),
+        MviView<EditorialIntent, EditorialViewState> {
+
+    private val viewModel by lazy { EditorialViewModel() }
+
+    private val testSubject by lazy { PublishSubject.create<EditorialIntent>() }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
             inflater?.inflate(R.layout.fragment_editorial, container, false)
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.states().subscribe({
+            render(it)
+        }, {
+            Log.e("t", "error")
+        }, {
+            Log.i("in", "")
+        })
+        viewModel.processIntents(intents())
+        testSubject.onNext(EditorialIntent.InitialIntent)
+    }
+
+    override fun intents(): Observable<EditorialIntent> =
+        initialIntent()
+
+    override fun render(state: EditorialViewState) = when(state) {
+        is EditorialViewState.View -> {
+            swipeRefreshLayout.isRefreshing = state.isLoading
+        }
+    }
+
+    private fun initialIntent(): Observable<EditorialIntent> =
+            testSubject
 
 }
