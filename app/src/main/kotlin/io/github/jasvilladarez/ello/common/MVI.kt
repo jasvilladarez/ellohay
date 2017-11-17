@@ -24,6 +24,7 @@
 
 package io.github.jasvilladarez.ello.common
 
+import android.arch.lifecycle.LiveData
 import io.reactivex.Observable
 
 /**
@@ -67,5 +68,5 @@ internal interface MviViewModel<I : MviIntent, S : MviViewState> {
 
     fun processIntents(intents: Observable<I>)
 
-    fun states(): Observable<S>
+    val state: LiveData<S>
 }

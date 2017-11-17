@@ -24,6 +24,8 @@
 
 package io.github.jasvilladarez.ello.editorial
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.util.Log
 import io.github.jasvilladarez.ello.common.MviViewModel
 import io.reactivex.Observable
@@ -35,8 +37,10 @@ internal class EditorialViewModel : MviViewModel<EditorialIntent, EditorialViewS
     private val intentSubject: PublishSubject<EditorialIntent> =
             PublishSubject.create<EditorialIntent>()
 
-    private val statesSubject: PublishSubject<EditorialViewState> =
-            PublishSubject.create<EditorialViewState>()
+    override val state: LiveData<EditorialViewState>
+        get() = _state
+
+    private val _state: MutableLiveData<EditorialViewState> = MutableLiveData()
 
     override fun processIntents(intents: Observable<EditorialIntent>) {
         intents.subscribe(intentSubject)
@@ -44,14 +48,11 @@ internal class EditorialViewModel : MviViewModel<EditorialIntent, EditorialViewS
             Observable.just(EditorialViewState.View(false) as EditorialViewState)
                     .delay(10, TimeUnit.SECONDS)
         }.startWith(EditorialViewState.View(true) as EditorialViewState).subscribe({
-            statesSubject.onNext(it)
+            _state.postValue(it)
             Log.d("Test", "test")
         }, {
             Log.d("Test", "error")
         })
     }
-
-    override fun states(): Observable<EditorialViewState> =
-        statesSubject
 
 }

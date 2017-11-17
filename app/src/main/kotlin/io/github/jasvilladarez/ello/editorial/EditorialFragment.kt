@@ -24,6 +24,7 @@
 
 package io.github.jasvilladarez.ello.editorial
 
+import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -50,21 +51,19 @@ internal class EditorialFragment : Fragment(),
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.states().subscribe({
-            render(it)
-        }, {
-            Log.e("t", "error")
-        }, {
-            Log.i("in", "")
+        viewModel.state.observe(this, Observer {
+            it?.let {
+                render(it)
+            }
         })
         viewModel.processIntents(intents())
         testSubject.onNext(EditorialIntent.InitialIntent)
     }
 
     override fun intents(): Observable<EditorialIntent> =
-        initialIntent()
+            initialIntent()
 
-    override fun render(state: EditorialViewState) = when(state) {
+    override fun render(state: EditorialViewState) = when (state) {
         is EditorialViewState.View -> {
             swipeRefreshLayout.isRefreshing = state.isLoading
         }
