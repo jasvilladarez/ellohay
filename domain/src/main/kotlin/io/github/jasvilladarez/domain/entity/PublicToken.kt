@@ -22,16 +22,17 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.network.response
+package io.github.jasvilladarez.domain.entity
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
-/**
- * Created by Jasmine on 11/12/17.
- */
-internal data class PublicTokenResponse(
-        @Json(name = "token_type")
+internal data class PublicToken(
+        @SerializedName("token_type")
         val tokenType: String,
-        @Json(name = "access_token")
-        val token: String
+        @SerializedName("access_token")
+        val token: String,
+        @SerializedName("created_at")
+        val createdAt: Long,
+        @SerializedName("expires_in")
+        val expiresIn: Long
 )

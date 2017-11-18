@@ -24,17 +24,17 @@
 
 package io.github.jasvilladarez.domain.entity
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class Category(
-        @Json(name = "id")
+        @SerializedName("id")
         val id: String,
-        @Json(name = "name")
+        @SerializedName("name")
         val name: String,
-        @Json(name = "order")
+        @SerializedName("order")
         val order: Int = 0,
-        @Json(name = "description")
+        @SerializedName("description")
         val description: String? = null,
-        @Json(name = "uses_page_promotionals")
+        @SerializedName("uses_page_promotionals")
         val usesPagePromotionals: Boolean = false
 )
