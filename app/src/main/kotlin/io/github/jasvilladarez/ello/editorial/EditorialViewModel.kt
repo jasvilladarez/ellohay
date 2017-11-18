@@ -46,8 +46,14 @@ internal class EditorialViewModel : ViewModel(), MviViewModel<EditorialIntent, E
     override fun processIntents(intents: Observable<EditorialIntent>) {
         intents.subscribe(intentSubject)
         intentSubject.flatMap {
-            Observable.just(EditorialViewState.View(false) as EditorialViewState)
-                    .delay(10, TimeUnit.SECONDS)
+            when (it) {
+                is EditorialIntent.InitialIntent ->
+                    Observable.just(EditorialViewState.View(false) as EditorialViewState)
+                            .delay(10, TimeUnit.SECONDS)
+                is EditorialIntent.ButtonClickedIntent ->
+                    Observable.just(EditorialViewState.View(false,
+                            it.buttonText) as EditorialViewState)
+            }
         }.startWith(EditorialViewState.View(true) as EditorialViewState).subscribe({
             _state.postValue(it)
             Log.d("Test", "test")

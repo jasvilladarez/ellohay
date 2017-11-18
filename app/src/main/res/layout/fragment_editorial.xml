@@ -32,9 +32,27 @@
     <!--android:id="@+id/recyclerView"-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent" />-->
-    <TextView
-        android:id="@+id/textView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/test1Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="test 1" />
+
+        <Button
+            android:id="@+id/test2Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="test 2" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </android.support.v4.widget.SwipeRefreshLayout>

@@ -36,6 +36,7 @@ import io.github.jasvilladarez.ello.common.MviView
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_editorial.*
+import kotlinx.android.synthetic.main.fragment_editorial.view.*
 
 internal class EditorialFragment : Fragment(),
         MviView<EditorialIntent, EditorialViewState> {
@@ -60,18 +61,34 @@ internal class EditorialFragment : Fragment(),
         })
         viewModel.processIntents(intents())
         testSubject.onNext(EditorialIntent.InitialIntent)
+
+        test1Button.setOnClickListener {
+            testSubject.onNext(EditorialIntent.ButtonClickedIntent(test1Button.text.toString()))
+        }
+        test2Button.setOnClickListener {
+            testSubject.onNext(EditorialIntent.ButtonClickedIntent(test2Button.text.toString()))
+        }
+        swipeRefreshLayout.setOnRefreshListener {
+            testSubject.onNext(EditorialIntent.ButtonClickedIntent("refreshing"))
+        }
     }
 
-    override fun intents(): Observable<EditorialIntent> =
-            initialIntent()
+    override fun intents(): Observable<EditorialIntent> = Observable.merge(
+        initialIntent(),
+        buttonClickedIntent()
+    )
 
     override fun render(state: EditorialViewState) = when (state) {
         is EditorialViewState.View -> {
             swipeRefreshLayout.isRefreshing = state.isLoading
+            textView.text = state.buttonText
         }
     }
 
     private fun initialIntent(): Observable<EditorialIntent> =
-            testSubject
+            testSubject.filter { it is EditorialIntent.InitialIntent }
+
+    private fun buttonClickedIntent(): Observable<EditorialIntent> =
+            testSubject.filter { it is EditorialIntent.ButtonClickedIntent }
 
 }

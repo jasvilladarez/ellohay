@@ -31,6 +31,10 @@ import io.github.jasvilladarez.ello.common.MviViewState
 internal sealed class EditorialIntent : MviIntent {
 
     object InitialIntent : EditorialIntent()
+
+    data class ButtonClickedIntent(
+            val buttonText: String
+    ) : EditorialIntent()
 }
 
 internal sealed class EditorialResult : MviResult
@@ -38,6 +42,7 @@ internal sealed class EditorialResult : MviResult
 internal sealed class EditorialViewState : MviViewState {
 
     data class View(
-            val isLoading: Boolean = false
+            val isLoading: Boolean = false,
+            val buttonText: String? = null
     ) : EditorialViewState()
 }
