@@ -25,10 +25,9 @@
 package io.github.jasvilladarez.ello.dagger
 
 import dagger.Module
-import dagger.android.AndroidInjectionModule
 import io.github.jasvilladarez.ello.main.MainActivity
 
-@Module(includes = arrayOf(AndroidInjectionModule::class))
+@Module
 internal abstract class ActivityBuilder {
 
     abstract fun bindMainActivity(): MainActivity
