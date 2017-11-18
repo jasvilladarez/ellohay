@@ -22,39 +22,46 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.editorial
+package io.github.jasvilladarez.ello.common
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.ViewModel
-import io.github.jasvilladarez.ello.common.MviStateMachine
-import io.github.jasvilladarez.ello.common.MviViewModel
+import android.arch.lifecycle.MutableLiveData
+import com.jakewharton.rxrelay2.BehaviorRelay
 import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 
-internal class EditorialViewModel : ViewModel(), MviViewModel<EditorialIntent, EditorialViewState> {
+internal class MviStateMachine<in I : MviIntent, R : MviResult, S : MviViewState>(
+        initialState: S,
+        resultFromIntent: (I) -> Observable<R>,
+        reducer: (prevState: S, result: R) -> S
+) {
 
-    private val stateMachine =
-            MviStateMachine<EditorialIntent, EditorialResult, EditorialViewState>(EditorialViewState.View(false), {
-                when (it) {
-                    is EditorialIntent.InitialIntent -> Observable.just(EditorialResult.InProgress)
-                }
-            }, { _, result ->
-                when (result) {
-                    is EditorialResult.InProgress -> EditorialViewState.View(true)
-                }
-            })
+    val state: LiveData<S> get() = mutableState
 
+    private val mutableState: MutableLiveData<S> = MutableLiveData()
 
-    override val state: LiveData<EditorialViewState>
-        get() = stateMachine.state
+    private val disposables = CompositeDisposable()
 
+    private val intents = BehaviorRelay.create<I>()
 
-    override fun processIntents(intents: Observable<EditorialIntent>) {
-        stateMachine.processIntents(intents)
+    init {
+        intents.flatMap(resultFromIntent)
+                .scan(initialState, reducer)
+                .subscribe { mutableState.postValue(it) }
+                .disposeOnCleared()
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        stateMachine.clear()
+    fun processIntents(intent: Observable<out I>) {
+        intent.subscribe(intents).disposeOnCleared()
+    }
+
+    fun clear() {
+        disposables.clear()
+    }
+
+    private fun Disposable.disposeOnCleared() {
+        disposables.add(this)
     }
 
 }

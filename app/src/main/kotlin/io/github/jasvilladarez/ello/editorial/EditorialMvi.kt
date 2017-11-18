@@ -32,12 +32,13 @@ internal sealed class EditorialIntent : MviIntent {
 
     object InitialIntent : EditorialIntent()
 
-    data class ButtonClickedIntent(
-            val buttonText: String
-    ) : EditorialIntent()
 }
 
-internal sealed class EditorialResult : MviResult
+internal sealed class EditorialResult : MviResult {
+
+    object InProgress : EditorialResult()
+
+}
 
 internal sealed class EditorialViewState : MviViewState {
 

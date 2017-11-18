@@ -61,22 +61,10 @@ internal class EditorialFragment : Fragment(),
         })
         viewModel.processIntents(intents())
         testSubject.onNext(EditorialIntent.InitialIntent)
-
-        test1Button.setOnClickListener {
-            testSubject.onNext(EditorialIntent.ButtonClickedIntent(test1Button.text.toString()))
-        }
-        test2Button.setOnClickListener {
-            testSubject.onNext(EditorialIntent.ButtonClickedIntent(test2Button.text.toString()))
-        }
-        swipeRefreshLayout.setOnRefreshListener {
-            testSubject.onNext(EditorialIntent.ButtonClickedIntent("refreshing"))
-        }
     }
 
-    override fun intents(): Observable<EditorialIntent> = Observable.merge(
-        initialIntent(),
-        buttonClickedIntent()
-    )
+    override fun intents(): Observable<EditorialIntent> =
+        initialIntent()
 
     override fun render(state: EditorialViewState) = when (state) {
         is EditorialViewState.View -> {
@@ -88,7 +76,5 @@ internal class EditorialFragment : Fragment(),
     private fun initialIntent(): Observable<EditorialIntent> =
             testSubject.filter { it is EditorialIntent.InitialIntent }
 
-    private fun buttonClickedIntent(): Observable<EditorialIntent> =
-            testSubject.filter { it is EditorialIntent.ButtonClickedIntent }
 
 }
