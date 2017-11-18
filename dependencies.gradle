@@ -5,6 +5,7 @@ ext {
     espressoVersion = '3.0.1'
     okHttpVersion = '3.9.0'
     retrofitVersion = '2.3.0'
+    rxBindingVersion = '2.0.0'
     moshiVersion = '1.5.0'
 
     dependencies = [
@@ -23,7 +24,7 @@ ext {
             // Kotlin
             kotlin             : "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version",
 
-            // RX
+            // Network
             gson               : "com.google.code.gson:gson:2.8.2",
             moshi              : "com.squareup.moshi:moshi:${moshiVersion}",
             moshiKotlin        : "com.squareup.moshi:moshi-kotlin:${moshiVersion}",
@@ -34,6 +35,9 @@ ext {
 
             // Reactive
             rxJava             : "io.reactivex.rxjava2:rxjava:2.1.6",
+            rxKotlin           : "io.reactivex.rxjava2:rxkotlin:2.1.0",
+            rxBinding          : "com.jakewharton.rxbinding2:rxbinding:$rxBindingVersion",
+            rxBindingKotlin    : "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxBindingVersion",
 
             // Tests
             espressoCore       : "com.android.support.test.espresso:espresso-core:$espressoVersion",
