@@ -12,8 +12,7 @@ dependencies {
     kapt dependencies.daggerCompiler
     implementation dependencies.kotlin
 
-    implementation dependencies.moshi
-    implementation dependencies.moshiKotlin
+    implementation dependencies.gson
     implementation dependencies.okHttpLogging
     implementation dependencies.retrofit
     implementation dependencies.retrofitAdapter
