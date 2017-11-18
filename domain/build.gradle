@@ -19,5 +19,5 @@ dependencies {
     implementation dependencies.retrofitAdapter
     implementation dependencies.retrofitConverter
 
-    implementation dependencies.rxJava2
+    implementation dependencies.rxJava
 }

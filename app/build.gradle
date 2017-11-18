@@ -28,12 +28,12 @@ dependencies {
 
     implementation dependencies.kotlin
 
-    kapt dependencies.androidLifecycleCompiler
-    implementation dependencies.androidLifecycleExtensions
-    implementation dependencies.androidDesign
-    implementation dependencies.androidSupportV7
+    kapt dependencies.lifecycleCompiler
+    implementation dependencies.lifecycleExtensions
+    implementation dependencies.design
+    implementation dependencies.appCompat
 
-    implementation dependencies.rxJava2
+    implementation dependencies.rxJava
 
     testImplementation dependencies.junit
 
