@@ -22,18 +22,14 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.dagger
+package io.github.jasvilladarez.ello.editorial
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import io.github.jasvilladarez.ello.editorial.EditorialBuilder
-import io.github.jasvilladarez.ello.main.MainActivity
 
 @Module
-internal abstract class ActivityBuilder {
+internal abstract class EditorialBuilder {
 
-    @ContributesAndroidInjector(modules = arrayOf(
-            EditorialBuilder::class
-    ))
-    abstract fun bindMainActivity(): MainActivity
+    @ContributesAndroidInjector
+    abstract fun editorialFragment(): EditorialFragment
 }

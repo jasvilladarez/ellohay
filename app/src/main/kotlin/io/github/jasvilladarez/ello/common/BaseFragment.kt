@@ -25,11 +25,9 @@
 package io.github.jasvilladarez.ello.common
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import io.github.jasvilladarez.ello.rx.RxLifecycle
+import dagger.android.support.DaggerFragment
 
-
-internal abstract class BaseFragment : Fragment() {
+internal abstract class BaseFragment : DaggerFragment() {
 
     protected val rxLifecycle = RxLifecycle()
 

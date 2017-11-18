@@ -26,10 +26,11 @@ package io.github.jasvilladarez.ello.main
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import dagger.android.support.DaggerAppCompatActivity
 import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.editorial.EditorialFragment
 
-internal class MainActivity : AppCompatActivity() {
+internal class MainActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
