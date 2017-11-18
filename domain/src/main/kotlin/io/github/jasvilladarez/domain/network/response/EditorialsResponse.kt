@@ -22,17 +22,16 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.interactor.auth
+package io.github.jasvilladarez.domain.network.response
 
-import io.github.jasvilladarez.domain.entity.PublicToken
-import io.reactivex.Single
-import retrofit2.http.GET
+import com.google.gson.annotations.SerializedName
+import io.github.jasvilladarez.domain.entity.Editorial
 
 /**
- * Created by Jasmine on 11/12/17.
+ * Response from calling
+ * @see https://ello.co/api/v2/editorials
  */
-internal interface AuthApi {
-
-    @GET("webapp-token")
-    fun fetchPublicToken(): Single<PublicToken>
-}
+internal data class EditorialsResponse(
+        @SerializedName("editorials")
+        val editorials: List<Editorial>
+)

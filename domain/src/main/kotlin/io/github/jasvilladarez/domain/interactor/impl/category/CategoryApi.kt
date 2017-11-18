@@ -22,23 +22,17 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.interactor.category
+package io.github.jasvilladarez.domain.interactor.impl.category
 
-import io.github.jasvilladarez.domain.entity.Category
-import io.reactivex.Observable
+import retrofit2.http.GET
+import retrofit2.http.Query
 
 /**
- * This class conntains all functionality involving fetching categories
- * and their content.
+ * Created by Jasmine on 11/12/17.
  */
-interface CategoryInteractor {
+internal interface CategoryApi {
 
-    /**
-     * This function fetches all categories
-     *
-     * @param withMeta - Include meta categories like featured, trending, etc
-     * @param all - Include all categories, even archived ones
-     */
-    fun fetchCategories(withMeta: Boolean = false,
-                        all: Boolean = false): Observable<List<Category>>
+    @GET("v2/categories")
+    fun getCategories(@Query("meta") withMeta: Boolean = false,
+                      @Query("all") all: Boolean = false)
 }

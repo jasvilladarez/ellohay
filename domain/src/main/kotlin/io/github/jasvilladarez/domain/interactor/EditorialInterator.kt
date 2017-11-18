@@ -22,17 +22,12 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.interactor.category
+package io.github.jasvilladarez.domain.interactor
 
-import retrofit2.http.GET
-import retrofit2.http.Query
+import io.github.jasvilladarez.domain.entity.Editorial
+import io.reactivex.Observable
 
-/**
- * Created by Jasmine on 11/12/17.
- */
-internal interface CategoryApi {
+internal interface EditorialInterator {
 
-    @GET("v2/categories")
-    fun getCategories(@Query("meta") withMeta: Boolean = false,
-                      @Query("all") all: Boolean = false)
+    fun fetchEditorials(): Observable<List<Editorial>>
 }

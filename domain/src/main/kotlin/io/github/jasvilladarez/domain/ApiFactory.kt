@@ -50,12 +50,14 @@ import java.util.concurrent.TimeUnit
 internal object ApiFactory {
 
     private const val ELLO_API_URL = "https://ello.co/api/"
+    private const val ELLO_V2_PREFIX = "v2/"
     private const val DEFAULT_TIMEOUT = 120L
 
     inline fun <reified T : Any> createApi(clazz: Class<T>,
+                                           baseUrl: String = ELLO_API_URL,
                                            isDebug: Boolean = false,
                                            vararg interceptors: Interceptor): T =
-            createApi(clazz, ELLO_API_URL,
+            createApi(clazz, baseUrl,
                     makeOkHttpClient(makeLoggingInterceptor(isDebug),
                             *interceptors))
 
