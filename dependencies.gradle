@@ -10,39 +10,41 @@ ext {
 
     dependencies = [
             // Android Support Libraries
-            design             : "com.android.support:design:$supportVersion",
-            appCompat          : "com.android.support:appcompat-v7:$supportVersion",
+            design               : "com.android.support:design:$supportVersion",
+            appCompat            : "com.android.support:appcompat-v7:$supportVersion",
 
             // Architecture Components
-            lifecycleCompiler  : "android.arch.lifecycle:compiler:$architectureComponentsVersion",
-            lifecycleExtensions: "android.arch.lifecycle:extensions:$architectureComponentsVersion",
+            lifecycleCompiler    : "android.arch.lifecycle:compiler:$architectureComponentsVersion",
+            lifecycleExtensions  : "android.arch.lifecycle:extensions:$architectureComponentsVersion",
 
             // DI
-            dagger             : "com.google.dagger:dagger:$daggerVersion",
-            daggerCompiler     : "com.google.dagger:dagger-compiler:$daggerVersion",
+            dagger               : "com.google.dagger:dagger:$daggerVersion",
+            daggerAndroid        : "com.google.dagger:dagger-android-support:$daggerVersion",
+            daggerAndroidCompiler: "com.google.dagger:dagger-android-processor:$daggerVersion",
+            daggerCompiler       : "com.google.dagger:dagger-compiler:$daggerVersion",
 
             // Kotlin
-            kotlin             : "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version",
+            kotlin               : "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version",
 
             // Network
-            gson               : "com.google.code.gson:gson:2.8.2",
-            moshi              : "com.squareup.moshi:moshi:${moshiVersion}",
-            moshiKotlin        : "com.squareup.moshi:moshi-kotlin:${moshiVersion}",
-            okHttpLogging      : "com.squareup.okhttp3:logging-interceptor:$okHttpVersion",
-            retrofit           : "com.squareup.retrofit2:retrofit:$retrofitVersion",
-            retrofitAdapter    : "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
-            retrofitConverter  : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
+            gson                 : "com.google.code.gson:gson:2.8.2",
+            moshi                : "com.squareup.moshi:moshi:${moshiVersion}",
+            moshiKotlin          : "com.squareup.moshi:moshi-kotlin:${moshiVersion}",
+            okHttpLogging        : "com.squareup.okhttp3:logging-interceptor:$okHttpVersion",
+            retrofit             : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            retrofitAdapter      : "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
+            retrofitConverter    : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
 
             // Reactive
-            rxJava             : "io.reactivex.rxjava2:rxjava:2.1.6",
-            rxKotlin           : "io.reactivex.rxjava2:rxkotlin:2.1.0",
-            rxBinding          : "com.jakewharton.rxbinding2:rxbinding:$rxBindingVersion",
-            rxBindingKotlin    : "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxBindingVersion",
-            rxRelay            : "com.jakewharton.rxrelay2:rxrelay:2.0.0",
+            rxJava               : "io.reactivex.rxjava2:rxjava:2.1.6",
+            rxKotlin             : "io.reactivex.rxjava2:rxkotlin:2.1.0",
+            rxBinding            : "com.jakewharton.rxbinding2:rxbinding:$rxBindingVersion",
+            rxBindingKotlin      : "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxBindingVersion",
+            rxRelay              : "com.jakewharton.rxrelay2:rxrelay:2.0.0",
 
             // Tests
-            espressoCore       : "com.android.support.test.espresso:espresso-core:$espressoVersion",
-            junit              : "junit:junit:4.12",
-            testRunner         : 'com.android.support.test:runner:1.0.1'
+            espressoCore         : "com.android.support.test.espresso:espresso-core:$espressoVersion",
+            junit                : "junit:junit:4.12",
+            testRunner           : 'com.android.support.test:runner:1.0.1'
     ]
 }
