@@ -26,13 +26,14 @@ package io.github.jasvilladarez.ello.editorial
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
 import android.util.Log
 import io.github.jasvilladarez.ello.common.MviViewModel
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
 
-internal class EditorialViewModel : MviViewModel<EditorialIntent, EditorialViewState> {
+internal class EditorialViewModel : ViewModel(), MviViewModel<EditorialIntent, EditorialViewState> {
 
     private val intentSubject: PublishSubject<EditorialIntent> =
             PublishSubject.create<EditorialIntent>()

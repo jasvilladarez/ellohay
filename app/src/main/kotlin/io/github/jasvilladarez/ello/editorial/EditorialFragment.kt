@@ -25,9 +25,9 @@
 package io.github.jasvilladarez.ello.editorial
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,7 +40,9 @@ import kotlinx.android.synthetic.main.fragment_editorial.*
 internal class EditorialFragment : Fragment(),
         MviView<EditorialIntent, EditorialViewState> {
 
-    private val viewModel by lazy { EditorialViewModel() }
+    private val viewModel: EditorialViewModel by lazy {
+        ViewModelProviders.of(this).get(EditorialViewModel::class.java)
+    }
 
     private val testSubject by lazy { PublishSubject.create<EditorialIntent>() }
 
