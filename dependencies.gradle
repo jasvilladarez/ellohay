@@ -38,6 +38,7 @@ ext {
             rxKotlin           : "io.reactivex.rxjava2:rxkotlin:2.1.0",
             rxBinding          : "com.jakewharton.rxbinding2:rxbinding:$rxBindingVersion",
             rxBindingKotlin    : "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxBindingVersion",
+            rxRelay            : "com.jakewharton.rxrelay2:rxrelay:2.0.0",
 
             // Tests
             espressoCore       : "com.android.support.test.espresso:espresso-core:$espressoVersion",

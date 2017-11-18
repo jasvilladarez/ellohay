@@ -34,7 +34,7 @@ dependencies {
     implementation dependencies.appCompat
 
     implementation dependencies.rxJava
-    implementation dependencies.rxKotlin
+    implementation dependencies.rxRelay
     implementation dependencies.rxBindingKotlin
 
     testImplementation dependencies.junit
