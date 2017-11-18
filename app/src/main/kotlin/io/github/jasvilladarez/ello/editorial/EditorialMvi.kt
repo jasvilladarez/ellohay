@@ -30,7 +30,9 @@ import io.github.jasvilladarez.ello.common.MviViewState
 
 internal sealed class EditorialIntent : MviIntent {
 
-    object InitialIntent : EditorialIntent()
+    data class Load(
+            val endItem: String? = null
+    ) : EditorialIntent()
 
 }
 

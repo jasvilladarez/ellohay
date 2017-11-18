@@ -22,39 +22,21 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.editorial
+package io.github.jasvilladarez.ello.common
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.ViewModel
-import io.github.jasvilladarez.ello.common.MviStateMachine
-import io.github.jasvilladarez.ello.common.MviViewModel
-import io.reactivex.Observable
-
-internal class EditorialViewModel : ViewModel(), MviViewModel<EditorialIntent, EditorialViewState> {
-
-    private val stateMachine =
-            MviStateMachine<EditorialIntent, EditorialResult, EditorialViewState>(EditorialViewState.View(false), {
-                when (it) {
-                    is EditorialIntent.Load -> Observable.just(EditorialResult.InProgress)
-                }
-            }, { _, result ->
-                when (result) {
-                    is EditorialResult.InProgress -> EditorialViewState.View(true)
-                }
-            })
+import android.os.Bundle
+import android.support.v4.app.Fragment
+import io.github.jasvilladarez.ello.rx.RxLifecycle
 
 
-    override val state: LiveData<EditorialViewState>
-        get() = stateMachine.state
+internal abstract class BaseFragment : Fragment() {
 
+    protected val rxLifecycle = RxLifecycle()
 
-    override fun processIntents(intents: Observable<EditorialIntent>) {
-        stateMachine.processIntents(intents)
-    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    override fun onCleared() {
-        super.onCleared()
-        stateMachine.clear()
+        lifecycle.addObserver(rxLifecycle)
     }
 
 }

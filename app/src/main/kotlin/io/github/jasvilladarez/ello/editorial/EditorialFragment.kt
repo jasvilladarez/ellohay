@@ -24,28 +24,25 @@
 
 package io.github.jasvilladarez.ello.editorial
 
+import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.github.jasvilladarez.ello.R
+import io.github.jasvilladarez.ello.common.BaseFragment
 import io.github.jasvilladarez.ello.common.MviView
 import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_editorial.*
-import kotlinx.android.synthetic.main.fragment_editorial.view.*
 
-internal class EditorialFragment : Fragment(),
+internal class EditorialFragment : BaseFragment(),
         MviView<EditorialIntent, EditorialViewState> {
 
     private val viewModel: EditorialViewModel by lazy {
         ViewModelProviders.of(this).get(EditorialViewModel::class.java)
     }
-
-    private val testSubject by lazy { PublishSubject.create<EditorialIntent>() }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
@@ -60,11 +57,10 @@ internal class EditorialFragment : Fragment(),
             }
         })
         viewModel.processIntents(intents())
-        testSubject.onNext(EditorialIntent.InitialIntent)
     }
 
     override fun intents(): Observable<EditorialIntent> =
-        initialIntent()
+            loadIntent()
 
     override fun render(state: EditorialViewState) = when (state) {
         is EditorialViewState.View -> {
@@ -73,8 +69,8 @@ internal class EditorialFragment : Fragment(),
         }
     }
 
-    private fun initialIntent(): Observable<EditorialIntent> =
-            testSubject.filter { it is EditorialIntent.InitialIntent }
-
+    private fun loadIntent(): Observable<EditorialIntent> = rxLifecycle.filter {
+        it == Lifecycle.Event.ON_START
+    }.map { EditorialIntent.Load() }
 
 }
