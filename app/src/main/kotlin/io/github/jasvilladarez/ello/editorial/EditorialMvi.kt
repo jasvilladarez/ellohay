@@ -24,7 +24,6 @@
 
 package io.github.jasvilladarez.ello.editorial
 
-import io.github.jasvilladarez.ello.common.MviAction
 import io.github.jasvilladarez.ello.common.MviIntent
 import io.github.jasvilladarez.ello.common.MviResult
 import io.github.jasvilladarez.ello.common.MviViewState
@@ -32,13 +31,6 @@ import io.github.jasvilladarez.ello.common.MviViewState
 internal sealed class EditorialIntent : MviIntent {
 
     object InitialIntent : EditorialIntent()
-}
-
-internal sealed class EditorialAction : MviAction {
-
-    data class LoadEditorialAction(
-            val forcedUpdate: Boolean = false
-    ) : EditorialAction()
 }
 
 internal sealed class EditorialResult : MviResult

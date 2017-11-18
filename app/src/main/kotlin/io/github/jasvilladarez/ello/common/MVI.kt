@@ -34,12 +34,6 @@ import io.reactivex.Observable
 internal interface MviIntent
 
 /**
- * Represents the action to be taken in the backend from the intent of the user
- * @see MviIntent
- */
-internal interface MviAction
-
-/**
  * Represents the result after the action was taken
  */
 internal interface MviResult
