@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.editorial
+package io.github.jasvilladarez.ello.discover.editorial
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.Observer

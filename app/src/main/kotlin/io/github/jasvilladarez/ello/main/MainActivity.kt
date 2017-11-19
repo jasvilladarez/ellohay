@@ -25,10 +25,9 @@
 package io.github.jasvilladarez.ello.main
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import dagger.android.support.DaggerAppCompatActivity
 import io.github.jasvilladarez.ello.R
-import io.github.jasvilladarez.ello.editorial.EditorialFragment
+import io.github.jasvilladarez.ello.discover.editorial.EditorialFragment
 
 internal class MainActivity : DaggerAppCompatActivity() {
 

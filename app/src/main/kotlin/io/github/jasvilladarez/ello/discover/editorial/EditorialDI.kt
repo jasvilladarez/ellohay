@@ -22,30 +22,14 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.editorial
+package io.github.jasvilladarez.ello.discover.editorial
 
-import io.github.jasvilladarez.ello.common.MviIntent
-import io.github.jasvilladarez.ello.common.MviResult
-import io.github.jasvilladarez.ello.common.MviViewState
+import dagger.Module
+import dagger.android.ContributesAndroidInjector
 
-internal sealed class EditorialIntent : MviIntent {
+@Module
+internal abstract class EditorialBuilder {
 
-    data class Load(
-            val endItem: String? = null
-    ) : EditorialIntent()
-
-}
-
-internal sealed class EditorialResult : MviResult {
-
-    object InProgress : EditorialResult()
-
-}
-
-internal sealed class EditorialViewState : MviViewState {
-
-    data class View(
-            val isLoading: Boolean = false,
-            val buttonText: String? = null
-    ) : EditorialViewState()
+    @ContributesAndroidInjector
+    abstract fun editorialFragment(): EditorialFragment
 }

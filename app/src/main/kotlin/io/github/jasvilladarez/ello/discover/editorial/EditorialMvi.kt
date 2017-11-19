@@ -22,39 +22,30 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.editorial
+package io.github.jasvilladarez.ello.discover.editorial
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.ViewModel
-import io.github.jasvilladarez.ello.common.MviStateMachine
-import io.github.jasvilladarez.ello.common.MviViewModel
-import io.reactivex.Observable
+import io.github.jasvilladarez.ello.common.MviIntent
+import io.github.jasvilladarez.ello.common.MviResult
+import io.github.jasvilladarez.ello.common.MviViewState
 
-internal class EditorialViewModel : ViewModel(), MviViewModel<EditorialIntent, EditorialViewState> {
+internal sealed class EditorialIntent : MviIntent {
 
-    private val stateMachine =
-            MviStateMachine<EditorialIntent, EditorialResult, EditorialViewState>(EditorialViewState.View(false), {
-                when (it) {
-                    is EditorialIntent.Load -> Observable.just(EditorialResult.InProgress)
-                }
-            }, { _, result ->
-                when (result) {
-                    is EditorialResult.InProgress -> EditorialViewState.View(true)
-                }
-            })
+    data class Load(
+            val endItem: String? = null
+    ) : EditorialIntent()
 
+}
 
-    override val state: LiveData<EditorialViewState>
-        get() = stateMachine.state
+internal sealed class EditorialResult : MviResult {
 
+    object InProgress : EditorialResult()
 
-    override fun processIntents(intents: Observable<EditorialIntent>) {
-        stateMachine.processIntents(intents)
-    }
+}
 
-    override fun onCleared() {
-        super.onCleared()
-        stateMachine.clear()
-    }
+internal sealed class EditorialViewState : MviViewState {
 
+    data class View(
+            val isLoading: Boolean = false,
+            val buttonText: String? = null
+    ) : EditorialViewState()
 }

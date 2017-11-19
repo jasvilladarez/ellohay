@@ -26,7 +26,7 @@ package io.github.jasvilladarez.ello.dagger
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import io.github.jasvilladarez.ello.editorial.EditorialBuilder
+import io.github.jasvilladarez.ello.discover.editorial.EditorialBuilder
 import io.github.jasvilladarez.ello.main.MainActivity
 
 @Module
