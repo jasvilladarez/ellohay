@@ -39,7 +39,7 @@ internal class ViewModelFactory @Inject constructor(
             creators.filterKeys { modelClass.isAssignableFrom(it) }
                     .flatMap { listOf(it.value) }
                     .firstOrNull()
-        } ?: throw IllegalArgumentException("unknown model class " + modelClass)
+        } ?: throw IllegalArgumentException("unknown model class $modelClass")
         try {
             @Suppress("UNCHECKED_CAST")
             return creator.get() as T

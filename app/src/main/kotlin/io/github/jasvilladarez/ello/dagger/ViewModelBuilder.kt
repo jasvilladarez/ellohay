@@ -24,17 +24,15 @@
 
 package io.github.jasvilladarez.ello.dagger
 
+import android.arch.lifecycle.ViewModelProvider
+import dagger.Binds
 import dagger.Module
-import dagger.android.ContributesAndroidInjector
-import io.github.jasvilladarez.ello.discover.editorial.EditorialBuilder
-import io.github.jasvilladarez.ello.main.MainActivity
+import io.github.jasvilladarez.ello.viewmodel.ViewModelFactory
 
 @Module
-internal abstract class ActivityBuilder {
+internal abstract class ViewModelBuilder {
 
-    @ContributesAndroidInjector(modules = arrayOf(
-            EditorialBuilder::class,
-            ViewModelBuilder::class
-    ))
-    abstract fun bindMainActivity(): MainActivity
+    @Binds
+    internal abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+
 }

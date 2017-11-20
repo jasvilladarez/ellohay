@@ -24,12 +24,26 @@
 
 package io.github.jasvilladarez.ello.discover.editorial
 
+import android.arch.lifecycle.ViewModel
 import dagger.Module
+import dagger.Provides
 import dagger.android.ContributesAndroidInjector
+import dagger.multibindings.IntoMap
+import io.github.jasvilladarez.ello.viewmodel.ViewModelKey
 
 @Module
 internal abstract class EditorialBuilder {
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = arrayOf(
+            EditorialModule::class))
     abstract fun editorialFragment(): EditorialFragment
+}
+
+@Module
+internal class EditorialModule {
+
+    @Provides
+    @IntoMap
+    @ViewModelKey(EditorialViewModel::class)
+    fun provideEditorialViewModel(): ViewModel = EditorialViewModel()
 }

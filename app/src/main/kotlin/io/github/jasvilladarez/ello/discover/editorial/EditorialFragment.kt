@@ -26,6 +26,7 @@ package io.github.jasvilladarez.ello.discover.editorial
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -36,12 +37,16 @@ import io.github.jasvilladarez.ello.common.BaseFragment
 import io.github.jasvilladarez.ello.common.MviView
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_editorial.*
+import javax.inject.Inject
 
 internal class EditorialFragment : BaseFragment(),
         MviView<EditorialIntent, EditorialViewState> {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
     private val viewModel: EditorialViewModel by lazy {
-        ViewModelProviders.of(this).get(EditorialViewModel::class.java)
+        ViewModelProviders.of(this, viewModelFactory)[EditorialViewModel::class.java]
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
