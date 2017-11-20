@@ -26,18 +26,18 @@ android {
 
 dependencies {
     def dependencies = rootProject.ext.dependencies
-
-    kapt dependencies.daggerAndroidCompiler
-    kapt dependencies.daggerCompiler
-    implementation dependencies.dagger
-    implementation dependencies.daggerAndroid
-
     implementation dependencies.kotlin
+    implementation project(':domain')
 
     kapt dependencies.lifecycleCompiler
     implementation dependencies.lifecycleExtensions
     implementation dependencies.design
     implementation dependencies.appCompat
+
+    kapt dependencies.daggerAndroidCompiler
+    kapt dependencies.daggerCompiler
+    implementation dependencies.dagger
+    implementation dependencies.daggerAndroid
 
     implementation dependencies.rxJava
     implementation dependencies.rxRelay
