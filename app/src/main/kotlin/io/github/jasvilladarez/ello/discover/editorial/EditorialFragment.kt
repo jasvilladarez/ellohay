@@ -70,7 +70,6 @@ internal class EditorialFragment : BaseFragment(),
     override fun render(state: EditorialViewState) = when (state) {
         is EditorialViewState.View -> {
             swipeRefreshLayout.isRefreshing = state.isLoading
-            textView.text = state.buttonText
         }
     }
 

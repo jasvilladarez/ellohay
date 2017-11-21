@@ -45,7 +45,6 @@ internal sealed class EditorialResult : MviResult {
 internal sealed class EditorialViewState : MviViewState {
 
     data class View(
-            val isLoading: Boolean = false,
-            val buttonText: String? = null
+            val isLoading: Boolean = false
     ) : EditorialViewState()
 }
