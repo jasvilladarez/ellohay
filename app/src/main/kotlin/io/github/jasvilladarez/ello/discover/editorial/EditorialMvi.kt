@@ -24,6 +24,7 @@
 
 package io.github.jasvilladarez.ello.discover.editorial
 
+import io.github.jasvilladarez.domain.entity.Editorial
 import io.github.jasvilladarez.ello.common.MviIntent
 import io.github.jasvilladarez.ello.common.MviResult
 import io.github.jasvilladarez.ello.common.MviViewState
@@ -37,6 +38,14 @@ internal sealed class EditorialIntent : MviIntent {
 }
 
 internal sealed class EditorialResult : MviResult {
+
+    data class Success(
+            val editorials: List<Editorial> = emptyList()
+    ) : EditorialResult()
+
+    data class Error(
+            val error: Throwable
+    ) : EditorialResult()
 
     object InProgress : EditorialResult()
 
