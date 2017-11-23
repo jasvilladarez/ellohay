@@ -33,13 +33,19 @@ import io.reactivex.Observable
 internal class EditorialViewModel : ViewModel(), MviViewModel<EditorialIntent, EditorialViewState> {
 
     private val stateMachine =
-            MviStateMachine<EditorialIntent, EditorialResult, EditorialViewState>(EditorialViewState.View(false), {
+            MviStateMachine<EditorialIntent, EditorialResult, EditorialViewState>(EditorialViewState.View(), {
                 when (it) {
                     is EditorialIntent.Load -> Observable.just(EditorialResult.InProgress)
                 }
             }, { _, result ->
                 when (result) {
-                    is EditorialResult.InProgress -> EditorialViewState.View(true)
+                    is EditorialResult.Success -> {
+                        EditorialViewState.View()
+                    }
+                    is EditorialResult.Error -> {
+                        EditorialViewState.Error("test")
+                    }
+                    is EditorialResult.InProgress -> EditorialViewState.View(isLoading = true)
                 }
             })
 

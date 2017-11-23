@@ -54,6 +54,11 @@ internal sealed class EditorialResult : MviResult {
 internal sealed class EditorialViewState : MviViewState {
 
     data class View(
+            val editorials: List<Editorial> = emptyList(),
             val isLoading: Boolean = false
+    ) : EditorialViewState()
+
+    data class Error(
+            val errorMessage: String
     ) : EditorialViewState()
 }
