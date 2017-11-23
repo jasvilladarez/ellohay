@@ -71,6 +71,10 @@ internal class EditorialFragment : BaseFragment(),
         is EditorialViewState.View -> {
             swipeRefreshLayout.isRefreshing = state.isLoading
         }
+        is EditorialViewState.Error -> {
+            swipeRefreshLayout.isRefreshing = false
+            // TODO: write error
+        }
     }
 
     private fun loadIntent(): Observable<EditorialIntent> = rxLifecycle.filter {
