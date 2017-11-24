@@ -36,6 +36,7 @@ ext {
             retrofitConverter    : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
 
             // Reactive
+            rxAndroid            : "io.reactivex.rxjava2:rxandroid:2.0.0",
             rxJava               : "io.reactivex.rxjava2:rxjava:2.1.6",
             rxKotlin             : "io.reactivex.rxjava2:rxkotlin:2.1.0",
             rxBinding            : "com.jakewharton.rxbinding2:rxbinding:$rxBindingVersion",

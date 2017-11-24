@@ -1,12 +1,22 @@
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
-sourceSets {
-    main.java.srcDirs += 'src/main/kotlin'
+def globalConf = rootProject.ext
+
+android {
+    compileSdkVersion globalConf.compiledSdkVersion
+    defaultConfig {
+        minSdkVersion globalConf.minSdkVersion
+        targetSdkVersion globalConf.targetSdkVersion
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
 }
 
 dependencies {
-    def dependencies = rootProject.ext.dependencies
+    def dependencies = globalConf.dependencies
 
     implementation dependencies.dagger
     kapt dependencies.daggerCompiler
@@ -18,5 +28,7 @@ dependencies {
     implementation dependencies.retrofitAdapter
     implementation dependencies.retrofitConverter
 
+    implementation dependencies.rxAndroid
     implementation dependencies.rxJava
+    implementation dependencies.rxKotlin
 }

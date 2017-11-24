@@ -3,12 +3,14 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+def globalConf = rootProject.ext
+
 android {
-    compileSdkVersion 26
+    compileSdkVersion globalConf.compiledSdkVersion
     defaultConfig {
         applicationId "io.github.jasvilladarez.ello"
-        minSdkVersion 21
-        targetSdkVersion 26
+        minSdkVersion globalConf.minSdkVersion
+        targetSdkVersion globalConf.targetSdkVersion
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -25,7 +27,7 @@ android {
 }
 
 dependencies {
-    def dependencies = rootProject.ext.dependencies
+    def dependencies = globalConf.dependencies
     implementation dependencies.kotlin
     implementation project(':domain')
 
