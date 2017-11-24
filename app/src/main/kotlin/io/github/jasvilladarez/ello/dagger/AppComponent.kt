@@ -28,13 +28,14 @@ import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import dagger.android.support.AndroidSupportInjectionModule
+import io.github.jasvilladarez.domain.dagger.DomainComponent
 import io.github.jasvilladarez.ello.ElloApp
 
 @AppScope
 @Component(modules = arrayOf(
         AndroidSupportInjectionModule::class,
         ActivityBuilder::class
-))
+), dependencies = arrayOf(DomainComponent::class))
 internal interface AppComponent : AndroidInjector<DaggerApplication> {
 
     fun inject(app: ElloApp)

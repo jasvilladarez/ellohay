@@ -22,28 +22,12 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.entity
+package io.github.jasvilladarez.domain
 
-import com.google.gson.annotations.SerializedName
+import io.github.jasvilladarez.domain.dagger.DaggerDomainComponent
+import io.github.jasvilladarez.domain.dagger.DomainComponent
 
-data class Token(
-        @SerializedName("token_type")
-        val tokenType: String,
-        @SerializedName("access_token")
-        val token: String,
-        @SerializedName("created_at")
-        val createdAt: Long,
-        @SerializedName("expires_in")
-        val expiresIn: Long,
-        /**
-         * Used to get a new token w/o username and password
-         */
-        @SerializedName("refresh_token")
-        val refreshToken: String? = null
-) {
+object Domain {
 
-    companion object {
-        internal fun default(): Token = Token("", "",
-                0, 0)
-    }
+    fun createComponent(): DomainComponent = DaggerDomainComponent.create()
 }

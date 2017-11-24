@@ -26,10 +26,13 @@ package io.github.jasvilladarez.ello
 
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
+import io.github.jasvilladarez.domain.Domain
+import io.github.jasvilladarez.domain.dagger.DaggerDomainComponent
+import io.github.jasvilladarez.domain.dagger.DomainComponent
 import io.github.jasvilladarez.ello.dagger.DaggerAppComponent
 
 internal class ElloApp : DaggerApplication() {
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
-            DaggerAppComponent.create()
+            DaggerAppComponent.builder().domainComponent(Domain.createComponent()).build()
 }
