@@ -26,7 +26,7 @@ package io.github.jasvilladarez.domain.entity
 
 import com.google.gson.annotations.SerializedName
 
-internal data class PublicToken(
+data class Token(
         @SerializedName("token_type")
         val tokenType: String,
         @SerializedName("access_token")
@@ -34,5 +34,10 @@ internal data class PublicToken(
         @SerializedName("created_at")
         val createdAt: Long,
         @SerializedName("expires_in")
-        val expiresIn: Long
+        val expiresIn: Long,
+        /**
+         * Used to get a new token w/o username and password
+         */
+        @SerializedName("refresh_token")
+        val refreshToken: String? = null
 )

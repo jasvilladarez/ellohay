@@ -24,7 +24,7 @@
 
 package io.github.jasvilladarez.domain.interactor.impl.auth
 
-import io.github.jasvilladarez.domain.entity.PublicToken
+import io.github.jasvilladarez.domain.entity.Token
 import io.reactivex.Single
 import retrofit2.http.GET
 
@@ -34,5 +34,5 @@ import retrofit2.http.GET
 internal interface AuthApi {
 
     @GET("webapp-token")
-    fun fetchPublicToken(): Single<PublicToken>
+    fun fetchPublicToken(): Single<Token>
 }
