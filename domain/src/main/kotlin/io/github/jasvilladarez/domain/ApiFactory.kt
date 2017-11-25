@@ -46,11 +46,10 @@ internal object ApiFactory {
     private const val DEFAULT_TIMEOUT = 120L
 
     fun <T : Any> createApi(clazz: Class<T>,
-                            baseUrl: String? = ELLO_API_URL,
                             urlPrefix: String = "",
                             isDebug: Boolean = false,
                             vararg interceptors: Interceptor): T =
-            createApi(clazz, baseUrl + urlPrefix,
+            createApi(clazz, ELLO_API_URL + urlPrefix,
                     makeOkHttpClient(makeLoggingInterceptor(isDebug),
                             *interceptors))
 
