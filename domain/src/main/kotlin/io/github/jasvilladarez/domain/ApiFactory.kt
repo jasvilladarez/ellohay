@@ -24,14 +24,7 @@
 
 package io.github.jasvilladarez.domain
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.TypeAdapter
-import com.google.gson.TypeAdapterFactory
-import com.google.gson.reflect.TypeToken
-import com.google.gson.stream.JsonReader
-import com.google.gson.stream.JsonToken
-import com.google.gson.stream.JsonWriter
+import io.github.jasvilladarez.domain.util.gson
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -39,8 +32,6 @@ import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 
@@ -54,11 +45,12 @@ internal object ApiFactory {
     private const val ELLO_API_URL = "https://ello.co/api/"
     private const val DEFAULT_TIMEOUT = 120L
 
-    inline fun <reified T : Any> createApi(clazz: Class<T>,
-                                           prefix: String? = null,
-                                           isDebug: Boolean = false,
-                                           vararg interceptors: Interceptor): T =
-            createApi(clazz, ELLO_API_URL + prefix?.let { it },
+    fun <T : Any> createApi(clazz: Class<T>,
+                            baseUrl: String? = ELLO_API_URL,
+                            urlPrefix: String = "",
+                            isDebug: Boolean = false,
+                            vararg interceptors: Interceptor): T =
+            createApi(clazz, baseUrl + urlPrefix,
                     makeOkHttpClient(makeLoggingInterceptor(isDebug),
                             *interceptors))
 
@@ -87,44 +79,6 @@ internal object ApiFactory {
     }
 
     private fun makeConverterFactory(): Converter.Factory =
-            GsonConverterFactory.create(GsonBuilder()
-                    .registerTypeAdapterFactory(LowercaseEnumTypeAdapterFactory())
-                    .create())
-
-    private class LowercaseEnumTypeAdapterFactory : TypeAdapterFactory {
-
-        override fun <T> create(gson: Gson, type: TypeToken<T>): TypeAdapter<T>? {
-            val rawType = type.rawType as Class<T>
-            if (!rawType.isEnum) {
-                return null
-            }
-
-            val lowercaseToConstant = HashMap<String, T>()
-            for (constant in rawType.enumConstants) {
-                lowercaseToConstant.put(toLowercase(constant), constant)
-            }
-
-            return object : TypeAdapter<T>() {
-                @Throws(IOException::class)
-                override fun write(out: JsonWriter, value: T?) {
-                    value?.let {
-                        out.value(toLowercase(it))
-                    } ?: out.nullValue()
-                }
-
-                @Throws(IOException::class)
-                override fun read(reader: JsonReader): T? {
-                    return if (reader.peek() === JsonToken.NULL) {
-                        reader.nextNull()
-                        null
-                    } else {
-                        lowercaseToConstant[reader.nextString()]
-                    }
-                }
-            }
-        }
-
-        private fun toLowercase(o: Any?): String = o.toString().toLowerCase(Locale.US)
-    }
+            GsonConverterFactory.create(gson)
 
 }

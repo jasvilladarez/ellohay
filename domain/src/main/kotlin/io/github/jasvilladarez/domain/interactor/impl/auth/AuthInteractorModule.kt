@@ -22,21 +22,30 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.dagger
+package io.github.jasvilladarez.domain.interactor.impl.auth
 
+import android.content.SharedPreferences
 import dagger.Module
-import dagger.android.ContributesAndroidInjector
-import io.github.jasvilladarez.domain.interactor.impl.auth.AuthInteractorModule
-import io.github.jasvilladarez.ello.discover.editorial.EditorialBuilder
-import io.github.jasvilladarez.ello.main.MainActivity
+import dagger.Provides
+import io.github.jasvilladarez.domain.ApiFactory
+import io.github.jasvilladarez.domain.interactor.AuthInteractor
+import io.github.jasvilladarez.domain.preference.auth.AuthPreference
+import io.github.jasvilladarez.domain.preference.auth.AuthPreferenceImpl
+import io.github.jasvilladarez.ello.BuildConfig
 
 @Module
-internal abstract class ActivityBuilder {
+class AuthInteractorModule {
 
-    @ContributesAndroidInjector(modules = arrayOf(
-            AuthInteractorModule::class,
-            EditorialBuilder::class,
-            ViewModelBuilder::class
-    ))
-    abstract fun bindMainActivity(): MainActivity
+    @Provides
+    internal fun providesAuthApi(): AuthApi = ApiFactory.createApi(AuthApi::class.java,
+            isDebug = BuildConfig.DEBUG)
+
+    @Provides
+    internal fun providesAuthPreference(sharedPreferences: SharedPreferences): AuthPreference =
+            AuthPreferenceImpl(sharedPreferences)
+
+    @Provides
+    internal fun providesAuthInteractory(authApi: AuthApi,
+                                         authPreference: AuthPreference): AuthInteractor =
+            AuthInteractorImpl(authApi, authPreference)
 }

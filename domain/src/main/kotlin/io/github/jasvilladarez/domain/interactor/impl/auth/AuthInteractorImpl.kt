@@ -22,21 +22,27 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.dagger
+package io.github.jasvilladarez.domain.interactor.impl.auth
 
-import dagger.Module
-import dagger.android.ContributesAndroidInjector
-import io.github.jasvilladarez.domain.interactor.impl.auth.AuthInteractorModule
-import io.github.jasvilladarez.ello.discover.editorial.EditorialBuilder
-import io.github.jasvilladarez.ello.main.MainActivity
+import io.github.jasvilladarez.domain.interactor.AuthInteractor
+import io.github.jasvilladarez.domain.preference.auth.AuthPreference
+import io.github.jasvilladarez.domain.util.applySchedulers
+import io.reactivex.Observable
+import io.reactivex.rxkotlin.toSingle
+import java.util.concurrent.TimeUnit
 
-@Module
-internal abstract class ActivityBuilder {
+internal class AuthInteractorImpl(
+        private val authApi: AuthApi,
+        private val authPreference: AuthPreference
+) : AuthInteractor {
 
-    @ContributesAndroidInjector(modules = arrayOf(
-            AuthInteractorModule::class,
-            EditorialBuilder::class,
-            ViewModelBuilder::class
-    ))
-    abstract fun bindMainActivity(): MainActivity
+    override fun fetchAccessToken(): Observable<String> {
+        return (authPreference.token?.takeIf {
+            it.createdAt + it.expiresIn > TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
+        }?.toSingle() ?: authApi.fetchPublicToken().map { it.token }).map {
+            authPreference.token = it
+            "${it.tokenType} ${it.accessToken}"
+        }.toObservable().applySchedulers()
+    }
+
 }
