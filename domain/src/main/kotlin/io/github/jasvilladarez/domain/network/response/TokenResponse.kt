@@ -22,28 +22,12 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.entity
+package io.github.jasvilladarez.domain.network.response
 
 import com.google.gson.annotations.SerializedName
+import io.github.jasvilladarez.domain.entity.Token
 
-data class Token(
-        @SerializedName("token_type")
-        val tokenType: String,
-        @SerializedName("access_token")
-        val accessToken: String,
-        @SerializedName("created_at")
-        val createdAt: Long,
-        @SerializedName("expires_in")
-        val expiresIn: Long,
-        /**
-         * Used to get a new token w/o username and password
-         */
-        @SerializedName("refresh_token")
-        val refreshToken: String? = null
-) {
-
-    companion object {
-        internal fun default(): Token = Token("", "",
-                0, 0)
-    }
-}
+internal data class TokenResponse(
+        @SerializedName("token")
+        val token: Token
+)
