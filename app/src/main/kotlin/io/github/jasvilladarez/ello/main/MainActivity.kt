@@ -65,7 +65,7 @@ internal class MainActivity : BaseActivity(), MviView<MainIntent, MainViewState>
             is MainViewState.View -> {
                 fragmentContainer.setVisible(!state.isLoading)
                 loadingView.setVisible(state.isLoading)
-                state.token?.let {
+                if (state.isSuccessful) {
                     supportFragmentManager.beginTransaction()
                             .replace(R.id.fragmentContainer, EditorialFragment())
                             .commit()

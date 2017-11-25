@@ -43,7 +43,7 @@ internal class MainViewModel(
                 }
             }, { _, result ->
                 when (result) {
-                    is MainResult.Success -> MainViewState.View(false, result.token)
+                    is MainResult.Success -> MainViewState.View(false, true)
                     is MainResult.Error -> MainViewState.Error(result.error.message ?: "Something went wrong...")
                     is MainResult.InProgress -> MainViewState.View(true)
                 }
@@ -62,7 +62,7 @@ internal class MainViewModel(
     }
 
     private fun fetchAccessToken(): Observable<MainResult> =
-            authInteractor.fetchAccessToken().map { MainResult.Success(it) }
+            authInteractor.fetchAccessToken().map { MainResult.Success }
                     .ofType(MainResult::class.java)
                     .onErrorReturn { MainResult.Error(it) }
                     .applySchedulers()

@@ -24,7 +24,6 @@
 
 package io.github.jasvilladarez.ello.main
 
-import io.github.jasvilladarez.domain.entity.Token
 import io.github.jasvilladarez.ello.common.MviIntent
 import io.github.jasvilladarez.ello.common.MviResult
 import io.github.jasvilladarez.ello.common.MviViewState
@@ -36,9 +35,7 @@ internal sealed class MainIntent : MviIntent {
 
 internal sealed class MainResult : MviResult {
 
-    data class Success(
-            val token: Token
-    ) : MainResult()
+    object Success : MainResult()
 
     data class Error(
             val error: Throwable
@@ -51,7 +48,9 @@ internal sealed class MainViewState : MviViewState {
 
     data class View(
             val isLoading: Boolean = false,
-            val token: Token? = null
+            val isSuccessful: Boolean = false,
+            // TODO handle logged in view (Phase 2 implementation)
+            val isLoggedIn: Boolean = false
     ) : MainViewState()
 
     data class Error(
