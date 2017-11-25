@@ -33,8 +33,10 @@ dependencies {
 
     kapt dependencies.lifecycleCompiler
     implementation dependencies.lifecycleExtensions
-    implementation dependencies.design
     implementation dependencies.appCompat
+    implementation dependencies.design
+    implementation dependencies.materialDialogCore
+    implementation dependencies.materialDialogCommons
 
     kapt dependencies.daggerAndroidCompiler
     kapt dependencies.daggerCompiler

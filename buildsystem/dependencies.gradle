@@ -1,12 +1,13 @@
 ext {
     architectureComponentsVersion = '1.0.0'
-    supportVersion = '26.1.0'
     daggerVersion = '2.13'
     espressoVersion = '3.0.1'
+    materialDialogVersion = '0.9.6.0'
+    moshiVersion = '1.5.0'
     okHttpVersion = '3.9.0'
     retrofitVersion = '2.3.0'
     rxBindingVersion = '2.0.0'
-    moshiVersion = '1.5.0'
+    supportVersion = '26.1.0'
 
     dependencies = [
             // Android Support Libraries
@@ -16,6 +17,10 @@ ext {
             // Architecture Components
             lifecycleCompiler    : "android.arch.lifecycle:compiler:$architectureComponentsVersion",
             lifecycleExtensions  : "android.arch.lifecycle:extensions:$architectureComponentsVersion",
+
+            // UI
+            materialDialogCore   : "com.afollestad.material-dialogs:core:$materialDialogVersion",
+            materialDialogCommons: "com.afollestad.material-dialogs:commons:$materialDialogVersion",
 
             // DI
             dagger               : "com.google.dagger:dagger:$daggerVersion",
