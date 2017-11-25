@@ -30,6 +30,7 @@ import io.github.jasvilladarez.domain.interactor.AuthInteractor
 import io.github.jasvilladarez.domain.util.applySchedulers
 import io.github.jasvilladarez.ello.common.MviStateMachine
 import io.github.jasvilladarez.ello.common.MviViewModel
+import io.github.jasvilladarez.ello.util.applyMvi
 import io.reactivex.Observable
 
 internal class MainViewModel(
@@ -62,9 +63,6 @@ internal class MainViewModel(
     }
 
     private fun fetchAccessToken(): Observable<MainResult> =
-            authInteractor.fetchAccessToken().map { MainResult.Success }
-                    .ofType(MainResult::class.java)
-                    .onErrorReturn { MainResult.Error(it) }
-                    .applySchedulers()
-                    .startWith(MainResult.InProgress)
+            authInteractor.fetchAccessToken().applyMvi({ MainResult.Success },
+                    { MainResult.Error(it) }, { MainResult.InProgress })
 }
