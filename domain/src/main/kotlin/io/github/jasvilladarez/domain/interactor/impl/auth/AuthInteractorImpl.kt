@@ -24,6 +24,7 @@
 
 package io.github.jasvilladarez.domain.interactor.impl.auth
 
+import io.github.jasvilladarez.domain.entity.Token
 import io.github.jasvilladarez.domain.interactor.AuthInteractor
 import io.github.jasvilladarez.domain.preference.auth.AuthPreference
 import io.github.jasvilladarez.domain.util.applySchedulers
@@ -36,12 +37,12 @@ internal class AuthInteractorImpl(
         private val authPreference: AuthPreference
 ) : AuthInteractor {
 
-    override fun fetchAccessToken(): Observable<String> {
+    override fun fetchAccessToken(): Observable<Token> {
         return (authPreference.token?.takeIf {
             it.createdAt + it.expiresIn > TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
         }?.toSingle() ?: authApi.fetchPublicToken().map { it.token }).map {
             authPreference.token = it
-            "${it.tokenType} ${it.accessToken}"
+            it
         }.toObservable().applySchedulers()
     }
 

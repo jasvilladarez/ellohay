@@ -24,6 +24,7 @@
 
 package io.github.jasvilladarez.domain.interactor
 
+import io.github.jasvilladarez.domain.entity.Token
 import io.reactivex.Observable
 
 /**
@@ -35,5 +36,5 @@ interface AuthInteractor {
     /**
      * Fetch a token to use for the APIs
      */
-    fun fetchAccessToken(): Observable<String>
+    fun fetchAccessToken(): Observable<Token>
 }
