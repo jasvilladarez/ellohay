@@ -22,23 +22,21 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.dagger
+package io.github.jasvilladarez.ello.main
 
+import android.arch.lifecycle.ViewModel
 import dagger.Module
-import dagger.android.ContributesAndroidInjector
-import io.github.jasvilladarez.domain.interactor.impl.auth.AuthInteractorModule
-import io.github.jasvilladarez.ello.discover.editorial.EditorialBuilder
-import io.github.jasvilladarez.ello.main.MainActivity
-import io.github.jasvilladarez.ello.main.MainModule
+import dagger.Provides
+import dagger.multibindings.IntoMap
+import io.github.jasvilladarez.domain.interactor.AuthInteractor
+import io.github.jasvilladarez.ello.viewmodel.ViewModelKey
 
 @Module
-internal abstract class ActivityBuilder {
+internal class MainModule {
 
-    @ContributesAndroidInjector(modules = arrayOf(
-            AuthInteractorModule::class,
-            MainModule::class,
-            EditorialBuilder::class,
-            ViewModelBuilder::class
-    ))
-    abstract fun bindMainActivity(): MainActivity
+    @Provides
+    @IntoMap
+    @ViewModelKey(MainViewModel::class)
+    fun providesMainViewModel(authInteractor: AuthInteractor): ViewModel =
+            MainViewModel(authInteractor)
 }

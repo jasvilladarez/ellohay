@@ -22,23 +22,18 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.dagger
+package io.github.jasvilladarez.ello.common
 
-import dagger.Module
-import dagger.android.ContributesAndroidInjector
-import io.github.jasvilladarez.domain.interactor.impl.auth.AuthInteractorModule
-import io.github.jasvilladarez.ello.discover.editorial.EditorialBuilder
-import io.github.jasvilladarez.ello.main.MainActivity
-import io.github.jasvilladarez.ello.main.MainModule
+import android.os.Bundle
+import dagger.android.support.DaggerAppCompatActivity
 
-@Module
-internal abstract class ActivityBuilder {
+internal abstract class BaseActivity : DaggerAppCompatActivity() {
 
-    @ContributesAndroidInjector(modules = arrayOf(
-            AuthInteractorModule::class,
-            MainModule::class,
-            EditorialBuilder::class,
-            ViewModelBuilder::class
-    ))
-    abstract fun bindMainActivity(): MainActivity
+    protected val rxLifecycle: RxLifecycle = RxLifecycle()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        lifecycle.addObserver(rxLifecycle)
+    }
 }

@@ -24,18 +24,61 @@
 
 package io.github.jasvilladarez.ello.main
 
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import dagger.android.support.DaggerAppCompatActivity
 import io.github.jasvilladarez.ello.R
+import io.github.jasvilladarez.ello.common.BaseActivity
+import io.github.jasvilladarez.ello.common.MviView
 import io.github.jasvilladarez.ello.discover.editorial.EditorialFragment
+import io.github.jasvilladarez.ello.util.setVisible
+import io.reactivex.Observable
+import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
-internal class MainActivity : DaggerAppCompatActivity() {
+internal class MainActivity : BaseActivity(), MviView<MainIntent, MainViewState> {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel: MainViewModel by lazy {
+        ViewModelProviders.of(this, viewModelFactory)[MainViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, EditorialFragment())
-                .commit()
+
+        viewModel.state.observe(this, Observer {
+            it?.let { render(it) }
+        })
+        viewModel.processIntents(intents())
     }
+
+    override fun intents(): Observable<MainIntent> =
+            loadIntent()
+
+    override fun render(state: MainViewState) {
+        when (state) {
+            is MainViewState.View -> {
+                fragmentContainer.setVisible(!state.isLoading)
+                loadingView.setVisible(state.isLoading)
+                state.token?.let {
+                    supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragmentContainer, EditorialFragment())
+                            .commit()
+                }
+            }
+            is MainViewState.Error -> {
+                loadingView.setVisible(false)
+                fragmentContainer.setVisible(false)
+            }
+        }
+    }
+
+    private fun loadIntent(): Observable<MainIntent> = rxLifecycle.filter {
+        it == Lifecycle.Event.ON_START
+    }.map { MainIntent.Load }
 }

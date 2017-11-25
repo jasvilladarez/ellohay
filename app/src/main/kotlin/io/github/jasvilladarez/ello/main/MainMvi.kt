@@ -22,23 +22,39 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.dagger
+package io.github.jasvilladarez.ello.main
 
-import dagger.Module
-import dagger.android.ContributesAndroidInjector
-import io.github.jasvilladarez.domain.interactor.impl.auth.AuthInteractorModule
-import io.github.jasvilladarez.ello.discover.editorial.EditorialBuilder
-import io.github.jasvilladarez.ello.main.MainActivity
-import io.github.jasvilladarez.ello.main.MainModule
+import io.github.jasvilladarez.domain.entity.Token
+import io.github.jasvilladarez.ello.common.MviIntent
+import io.github.jasvilladarez.ello.common.MviResult
+import io.github.jasvilladarez.ello.common.MviViewState
 
-@Module
-internal abstract class ActivityBuilder {
+internal sealed class MainIntent : MviIntent {
 
-    @ContributesAndroidInjector(modules = arrayOf(
-            AuthInteractorModule::class,
-            MainModule::class,
-            EditorialBuilder::class,
-            ViewModelBuilder::class
-    ))
-    abstract fun bindMainActivity(): MainActivity
+    object Load : MainIntent()
+}
+
+internal sealed class MainResult : MviResult {
+
+    data class Success(
+            val token: Token
+    ) : MainResult()
+
+    data class Error(
+            val error: Throwable
+    ) : MainResult()
+
+    object InProgress : MainResult()
+}
+
+internal sealed class MainViewState : MviViewState {
+
+    data class View(
+            val isLoading: Boolean = false,
+            val token: Token? = null
+    ) : MainViewState()
+
+    data class Error(
+            val errorMessage: String
+    ) : MainViewState()
 }
