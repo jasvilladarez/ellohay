@@ -25,7 +25,11 @@
 package io.github.jasvilladarez.domain.dagger
 
 import dagger.Component
+import io.github.jasvilladarez.domain.entity.Token
 
 @DomainScope
 @Component(modules = arrayOf(AccountModule::class))
-interface DomainComponent
+interface DomainComponent {
+
+    fun getToken(): Token
+}
