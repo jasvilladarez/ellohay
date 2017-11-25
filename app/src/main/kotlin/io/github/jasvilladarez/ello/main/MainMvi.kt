@@ -54,6 +54,6 @@ internal sealed class MainViewState : MviViewState {
     ) : MainViewState()
 
     data class Error(
-            val errorMessage: String
+            val errorMessage: String?
     ) : MainViewState()
 }

@@ -34,6 +34,7 @@ import io.github.jasvilladarez.ello.common.BaseActivity
 import io.github.jasvilladarez.ello.common.MviView
 import io.github.jasvilladarez.ello.discover.editorial.EditorialFragment
 import io.github.jasvilladarez.ello.util.setVisible
+import io.github.jasvilladarez.ello.util.showError
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -74,6 +75,7 @@ internal class MainActivity : BaseActivity(), MviView<MainIntent, MainViewState>
             is MainViewState.Error -> {
                 loadingView.setVisible(false)
                 fragmentContainer.setVisible(false)
+                showError(state.errorMessage)
             }
         }
     }
