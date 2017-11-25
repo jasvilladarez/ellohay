@@ -29,12 +29,15 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
+import io.github.jasvilladarez.domain.interactor.EditorialInterator
+import io.github.jasvilladarez.domain.interactor.impl.editorial.EditorialInteractorModule
 import io.github.jasvilladarez.ello.viewmodel.ViewModelKey
 
 @Module
 internal abstract class EditorialBuilder {
 
     @ContributesAndroidInjector(modules = arrayOf(
+            EditorialInteractorModule::class,
             EditorialModule::class))
     abstract fun editorialFragment(): EditorialFragment
 }
@@ -45,5 +48,6 @@ internal class EditorialModule {
     @Provides
     @IntoMap
     @ViewModelKey(EditorialViewModel::class)
-    fun provideEditorialViewModel(): ViewModel = EditorialViewModel()
+    fun provideEditorialViewModel(editorialInterator: EditorialInterator): ViewModel =
+            EditorialViewModel(editorialInterator)
 }
