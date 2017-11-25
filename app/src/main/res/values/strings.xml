@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">ello</string>
+    <string name="app_name">Ello</string>
+
+    <string name="ok">OK</string>
+
+    <string name="general_exception">Something went wrong…</string>
 </resources>
