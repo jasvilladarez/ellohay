@@ -34,7 +34,8 @@ import java.util.concurrent.TimeUnit
 
 internal class AuthInteractorImpl(
         private val authApi: AuthApi,
-        private val authPreference: AuthPreference
+        private val authPreference: AuthPreference,
+        private val token: Token
 ) : AuthInteractor {
 
     override fun fetchAccessToken(): Observable<Token> {
@@ -42,6 +43,7 @@ internal class AuthInteractorImpl(
             it.createdAt + it.expiresIn > TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
         }?.toSingle() ?: authApi.fetchPublicToken().map { it.token }).map {
             authPreference.token = it
+            token.copy(it)
             it
         }.toObservable().applySchedulers()
     }

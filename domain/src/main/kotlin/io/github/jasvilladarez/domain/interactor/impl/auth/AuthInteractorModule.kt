@@ -28,6 +28,7 @@ import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import io.github.jasvilladarez.domain.ApiFactory
+import io.github.jasvilladarez.domain.entity.Token
 import io.github.jasvilladarez.domain.interactor.AuthInteractor
 import io.github.jasvilladarez.domain.preference.auth.AuthPreference
 import io.github.jasvilladarez.domain.preference.auth.AuthPreferenceImpl
@@ -46,6 +47,7 @@ class AuthInteractorModule {
 
     @Provides
     internal fun providesAuthInteractory(authApi: AuthApi,
-                                         authPreference: AuthPreference): AuthInteractor =
-            AuthInteractorImpl(authApi, authPreference)
+                                         authPreference: AuthPreference,
+                                         token: Token): AuthInteractor =
+            AuthInteractorImpl(authApi, authPreference, token)
 }
