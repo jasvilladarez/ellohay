@@ -34,6 +34,7 @@ import io.github.jasvilladarez.ello.ElloApp
 @AppScope
 @Component(modules = arrayOf(
         AndroidSupportInjectionModule::class,
+        AppModule::class,
         ActivityBuilder::class
 ), dependencies = arrayOf(DomainComponent::class))
 internal interface AppComponent : AndroidInjector<DaggerApplication> {

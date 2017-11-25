@@ -22,19 +22,20 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello
+package io.github.jasvilladarez.ello.dagger
 
-import dagger.android.AndroidInjector
-import dagger.android.DaggerApplication
-import io.github.jasvilladarez.domain.Domain
-import io.github.jasvilladarez.domain.dagger.DaggerDomainComponent
-import io.github.jasvilladarez.domain.dagger.DomainComponent
-import io.github.jasvilladarez.ello.dagger.AppModule
-import io.github.jasvilladarez.ello.dagger.DaggerAppComponent
+import android.content.Context
+import android.content.SharedPreferences
+import dagger.Module
+import dagger.Provides
 
-internal class ElloApp : DaggerApplication() {
+@Module
+internal class AppModule(
+        private val context: Context
+) {
 
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
-            DaggerAppComponent.builder().appModule(AppModule(this))
-                    .domainComponent(Domain.createComponent()).build()
+    @Provides
+    @AppScope
+    fun providesSharedPreferences(): SharedPreferences =
+            context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
 }
