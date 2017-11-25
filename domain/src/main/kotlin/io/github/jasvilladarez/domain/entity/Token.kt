@@ -28,22 +28,60 @@ import com.google.gson.annotations.SerializedName
 
 data class Token(
         @SerializedName("token_type")
-        val tokenType: String,
+        private var _tokenType: String,
         @SerializedName("access_token")
-        val accessToken: String,
+        private var _accessToken: String,
         @SerializedName("created_at")
-        val createdAt: Long,
+        private var _createdAt: Long,
         @SerializedName("expires_in")
-        val expiresIn: Long,
+        private var _expiresIn: Long,
         /**
          * Used to get a new token w/o username and password
          */
         @SerializedName("refresh_token")
-        val refreshToken: String? = null
+        private var _refreshToken: String? = null
 ) {
+
+    var tokenType: String
+        get() = _tokenType
+        private set(value) {
+            _tokenType = value
+        }
+
+    var accessToken: String
+        get() = _accessToken
+        private set(value) {
+            _accessToken = value
+        }
+
+    var createdAt: Long
+        get() = _createdAt
+        private set(value) {
+            _createdAt = value
+        }
+
+    var expiresIn: Long
+        get() = _expiresIn
+        private set(value) {
+            _expiresIn = value
+        }
+
+    var refreshToken: String?
+        get() = _refreshToken
+        private set(value) {
+            _refreshToken = value
+        }
 
     companion object {
         internal fun default(): Token = Token("", "",
                 0, 0)
+    }
+
+    internal fun copy(token: Token) {
+        tokenType = token.tokenType
+        accessToken = token.accessToken
+        createdAt = token.createdAt
+        expiresIn = token.expiresIn
+        refreshToken = token.refreshToken
     }
 }
