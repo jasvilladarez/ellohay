@@ -45,7 +45,7 @@ dependencies {
 
     implementation dependencies.rxJava
     implementation dependencies.rxRelay
-    implementation dependencies.rxBindingKotlin
+    implementation dependencies.rxBindingV4
 
     testImplementation dependencies.junit
     androidTestImplementation dependencies.testRunner

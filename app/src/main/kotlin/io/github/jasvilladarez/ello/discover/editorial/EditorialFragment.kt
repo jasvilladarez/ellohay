@@ -32,9 +32,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
 import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.common.BaseFragment
 import io.github.jasvilladarez.ello.common.MviView
+import io.github.jasvilladarez.ello.util.showError
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_editorial.*
 import javax.inject.Inject
@@ -49,11 +51,11 @@ internal class EditorialFragment : BaseFragment(),
         ViewModelProviders.of(this, viewModelFactory)[EditorialViewModel::class.java]
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? =
-            inflater?.inflate(R.layout.fragment_editorial, container, false)
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?, savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.fragment_editorial, container, false)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.state.observe(this, Observer {
@@ -64,16 +66,20 @@ internal class EditorialFragment : BaseFragment(),
         viewModel.processIntents(intents())
     }
 
-    override fun intents(): Observable<EditorialIntent> =
-            loadIntent()
+    override fun intents(): Observable<EditorialIntent> = Observable.merge(
+            loadIntent(),
+            refreshIntent()
+    )
 
-    override fun render(state: EditorialViewState) = when (state) {
-        is EditorialViewState.View -> {
-            swipeRefreshLayout.isRefreshing = state.isLoading
-        }
-        is EditorialViewState.Error -> {
-            swipeRefreshLayout.isRefreshing = false
-            // TODO: write error
+    override fun render(state: EditorialViewState) {
+        when (state) {
+            is EditorialViewState.View -> {
+                swipeRefreshLayout.isRefreshing = state.isLoading
+            }
+            is EditorialViewState.Error -> {
+                swipeRefreshLayout.isRefreshing = false
+                context?.showError(state.errorMessage)
+            }
         }
     }
 
@@ -81,4 +87,6 @@ internal class EditorialFragment : BaseFragment(),
         it == Lifecycle.Event.ON_START
     }.map { EditorialIntent.Load() }
 
+    private fun refreshIntent(): Observable<EditorialIntent> = RxSwipeRefreshLayout
+            .refreshes(swipeRefreshLayout).map { EditorialIntent.Load() }
 }

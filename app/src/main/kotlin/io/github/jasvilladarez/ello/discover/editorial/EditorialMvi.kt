@@ -59,6 +59,6 @@ internal sealed class EditorialViewState : MviViewState {
     ) : EditorialViewState()
 
     data class Error(
-            val errorMessage: String
+            val errorMessage: String?
     ) : EditorialViewState()
 }

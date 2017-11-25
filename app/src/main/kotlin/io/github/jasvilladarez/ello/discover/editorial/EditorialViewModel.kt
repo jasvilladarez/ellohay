@@ -47,7 +47,7 @@ internal class EditorialViewModel(
                         EditorialViewState.View(result.editorials)
                     }
                     is EditorialResult.Error -> {
-                        EditorialViewState.Error("test")
+                        EditorialViewState.Error(result.error.message)
                     }
                     is EditorialResult.InProgress -> EditorialViewState.View(isLoading = true)
                 }
