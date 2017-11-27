@@ -17,6 +17,8 @@ ext {
             // Architecture Components
             lifecycleCompiler    : "android.arch.lifecycle:compiler:$architectureComponentsVersion",
             lifecycleExtensions  : "android.arch.lifecycle:extensions:$architectureComponentsVersion",
+            room                 : "android.arch.persistence.room:runtime:$architectureComponentsVersion",
+            roomCompiler        : "android.arch.persistence.room:compiler:$architectureComponentsVersion",
 
             // UI
             materialDialogCore   : "com.afollestad.material-dialogs:core:$materialDialogVersion",

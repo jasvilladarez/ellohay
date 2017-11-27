@@ -38,6 +38,9 @@ dependencies {
     implementation dependencies.materialDialogCore
     implementation dependencies.materialDialogCommons
 
+    kapt dependencies.roomCompiler
+    implementation dependencies.room
+
     kapt dependencies.daggerAndroidCompiler
     kapt dependencies.daggerCompiler
     implementation dependencies.dagger
