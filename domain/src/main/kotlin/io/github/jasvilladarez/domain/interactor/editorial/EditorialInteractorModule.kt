@@ -41,7 +41,7 @@ class EditorialInteractorModule {
 
     @Provides
     internal fun providesEditorialInteractor(
-            editorialApi: EditorialApi): EditorialInterator =
+            editorialApi: EditorialApi): EditorialInteractor =
             EditorialInteractorImpl(editorialApi)
 
 }

@@ -27,7 +27,7 @@ package io.github.jasvilladarez.domain.interactor.editorial
 import io.github.jasvilladarez.domain.entity.Editorial
 import io.reactivex.Observable
 
-interface EditorialInterator {
+interface EditorialInteractor {
 
     fun fetchEditorials(): Observable<List<Editorial>>
 }

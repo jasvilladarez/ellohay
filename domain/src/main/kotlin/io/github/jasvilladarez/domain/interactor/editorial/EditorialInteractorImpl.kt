@@ -30,7 +30,7 @@ import io.reactivex.Observable
 
 internal class EditorialInteractorImpl(
         private val editorialApi: EditorialApi
-) : EditorialInterator {
+) : EditorialInteractor {
 
     override fun fetchEditorials(): Observable<List<Editorial>> {
         return editorialApi.fetchEditorials().map {
