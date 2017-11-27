@@ -28,7 +28,6 @@ import dagger.Module
 import dagger.Provides
 import io.github.jasvilladarez.domain.ApiFactory
 import io.github.jasvilladarez.domain.entity.Token
-import io.github.jasvilladarez.domain.interactor.EditorialInterator
 import io.github.jasvilladarez.domain.network.AuthHeader
 import io.github.jasvilladarez.ello.BuildConfig
 

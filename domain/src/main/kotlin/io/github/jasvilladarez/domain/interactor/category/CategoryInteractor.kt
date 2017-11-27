@@ -22,12 +22,23 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.interactor
+package io.github.jasvilladarez.domain.interactor.category
 
-import io.github.jasvilladarez.domain.entity.Editorial
+import io.github.jasvilladarez.domain.entity.Category
 import io.reactivex.Observable
 
-interface EditorialInterator {
+/**
+ * This class conntains all functionality involving fetching categories
+ * and their content.
+ */
+interface CategoryInteractor {
 
-    fun fetchEditorials(): Observable<List<Editorial>>
+    /**
+     * This function fetches all categories
+     *
+     * @param withMeta - Include meta categories like featured, trending, etc
+     * @param all - Include all categories, even archived ones
+     */
+    fun fetchCategories(withMeta: Boolean = false,
+                        all: Boolean = false): Observable<List<Category>>
 }

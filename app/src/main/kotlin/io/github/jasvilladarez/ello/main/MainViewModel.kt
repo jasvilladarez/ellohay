@@ -26,7 +26,7 @@ package io.github.jasvilladarez.ello.main
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
-import io.github.jasvilladarez.domain.interactor.AuthInteractor
+import io.github.jasvilladarez.domain.interactor.auth.AuthInteractor
 import io.github.jasvilladarez.ello.common.MviStateMachine
 import io.github.jasvilladarez.ello.common.MviViewModel
 import io.github.jasvilladarez.ello.util.applyMvi

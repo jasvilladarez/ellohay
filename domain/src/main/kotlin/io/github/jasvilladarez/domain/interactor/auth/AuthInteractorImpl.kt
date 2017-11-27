@@ -25,7 +25,6 @@
 package io.github.jasvilladarez.domain.interactor.auth
 
 import io.github.jasvilladarez.domain.entity.Token
-import io.github.jasvilladarez.domain.interactor.AuthInteractor
 import io.github.jasvilladarez.domain.preference.auth.AuthPreference
 import io.github.jasvilladarez.domain.util.applySchedulers
 import io.reactivex.Observable

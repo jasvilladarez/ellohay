@@ -29,7 +29,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
-import io.github.jasvilladarez.domain.interactor.EditorialInterator
+import io.github.jasvilladarez.domain.interactor.editorial.EditorialInterator
 import io.github.jasvilladarez.domain.interactor.editorial.EditorialInteractorModule
 import io.github.jasvilladarez.ello.viewmodel.ViewModelKey
 

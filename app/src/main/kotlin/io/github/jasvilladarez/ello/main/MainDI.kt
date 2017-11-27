@@ -28,7 +28,7 @@ import android.arch.lifecycle.ViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
-import io.github.jasvilladarez.domain.interactor.AuthInteractor
+import io.github.jasvilladarez.domain.interactor.auth.AuthInteractor
 import io.github.jasvilladarez.ello.viewmodel.ViewModelKey
 
 @Module

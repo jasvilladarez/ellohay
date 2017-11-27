@@ -25,7 +25,6 @@
 package io.github.jasvilladarez.domain.interactor.editorial
 
 import io.github.jasvilladarez.domain.entity.Editorial
-import io.github.jasvilladarez.domain.interactor.EditorialInterator
 import io.github.jasvilladarez.domain.util.applySchedulers
 import io.reactivex.Observable
 

@@ -26,7 +26,7 @@ package io.github.jasvilladarez.ello.discover.editorial
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
-import io.github.jasvilladarez.domain.interactor.EditorialInterator
+import io.github.jasvilladarez.domain.interactor.editorial.EditorialInterator
 import io.github.jasvilladarez.ello.common.MviStateMachine
 import io.github.jasvilladarez.ello.common.MviViewModel
 import io.github.jasvilladarez.ello.util.applyMvi

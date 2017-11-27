@@ -29,7 +29,6 @@ import dagger.Module
 import dagger.Provides
 import io.github.jasvilladarez.domain.ApiFactory
 import io.github.jasvilladarez.domain.entity.Token
-import io.github.jasvilladarez.domain.interactor.AuthInteractor
 import io.github.jasvilladarez.domain.preference.auth.AuthPreference
 import io.github.jasvilladarez.domain.preference.auth.AuthPreferenceImpl
 import io.github.jasvilladarez.ello.BuildConfig
