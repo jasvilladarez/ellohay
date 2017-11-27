@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.interactor.impl.auth
+package io.github.jasvilladarez.domain.interactor.auth
 
 import io.github.jasvilladarez.domain.entity.Token
 import io.github.jasvilladarez.domain.interactor.AuthInteractor

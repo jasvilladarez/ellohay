@@ -22,17 +22,20 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.interactor.impl.category
+package io.github.jasvilladarez.domain.interactor.editorial
 
-import retrofit2.http.GET
-import retrofit2.http.Query
+import io.github.jasvilladarez.domain.entity.Editorial
+import io.github.jasvilladarez.domain.interactor.EditorialInterator
+import io.github.jasvilladarez.domain.util.applySchedulers
+import io.reactivex.Observable
 
-/**
- * Created by Jasmine on 11/12/17.
- */
-internal interface CategoryApi {
+internal class EditorialInteractorImpl(
+        private val editorialApi: EditorialApi
+) : EditorialInterator {
 
-    @GET("v2/categories")
-    fun getCategories(@Query("meta") withMeta: Boolean = false,
-                      @Query("all") all: Boolean = false)
+    override fun fetchEditorials(): Observable<List<Editorial>> {
+        return editorialApi.fetchEditorials().map {
+            it.editorials
+        }.toObservable().applySchedulers()
+    }
 }

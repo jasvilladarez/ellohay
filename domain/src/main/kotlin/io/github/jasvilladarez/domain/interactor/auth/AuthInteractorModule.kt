@@ -22,20 +22,32 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.interactor.impl.editorial
+package io.github.jasvilladarez.domain.interactor.auth
 
-import io.github.jasvilladarez.domain.entity.Editorial
-import io.github.jasvilladarez.domain.interactor.EditorialInterator
-import io.github.jasvilladarez.domain.util.applySchedulers
-import io.reactivex.Observable
+import android.content.SharedPreferences
+import dagger.Module
+import dagger.Provides
+import io.github.jasvilladarez.domain.ApiFactory
+import io.github.jasvilladarez.domain.entity.Token
+import io.github.jasvilladarez.domain.interactor.AuthInteractor
+import io.github.jasvilladarez.domain.preference.auth.AuthPreference
+import io.github.jasvilladarez.domain.preference.auth.AuthPreferenceImpl
+import io.github.jasvilladarez.ello.BuildConfig
 
-internal class EditorialInteractorImpl(
-        private val editorialApi: EditorialApi
-) : EditorialInterator {
+@Module
+class AuthInteractorModule {
 
-    override fun fetchEditorials(): Observable<List<Editorial>> {
-        return editorialApi.fetchEditorials().map {
-            it.editorials
-        }.toObservable().applySchedulers()
-    }
+    @Provides
+    internal fun providesAuthApi(): AuthApi = ApiFactory.createApi(AuthApi::class.java,
+            isDebug = BuildConfig.DEBUG)
+
+    @Provides
+    internal fun providesAuthPreference(sharedPreferences: SharedPreferences): AuthPreference =
+            AuthPreferenceImpl(sharedPreferences)
+
+    @Provides
+    internal fun providesAuthInteractory(authApi: AuthApi,
+                                         authPreference: AuthPreference,
+                                         token: Token): AuthInteractor =
+            AuthInteractorImpl(authApi, authPreference, token)
 }

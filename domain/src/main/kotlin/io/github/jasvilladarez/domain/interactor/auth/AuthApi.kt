@@ -22,27 +22,17 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.interactor.impl.editorial
+package io.github.jasvilladarez.domain.interactor.auth
 
-import dagger.Module
-import dagger.Provides
-import io.github.jasvilladarez.domain.ApiFactory
-import io.github.jasvilladarez.domain.entity.Token
-import io.github.jasvilladarez.domain.interactor.EditorialInterator
-import io.github.jasvilladarez.domain.network.AuthHeader
-import io.github.jasvilladarez.ello.BuildConfig
+import io.github.jasvilladarez.domain.network.response.TokenResponse
+import io.reactivex.Single
+import retrofit2.http.GET
 
-@Module
-class EditorialInteractorModule {
+/**
+ * Created by Jasmine on 11/12/17.
+ */
+internal interface AuthApi {
 
-    @Provides
-    internal fun providesEditorialApi(token: Token) =
-            ApiFactory.createApi(EditorialApi::class.java, ApiFactory.ELLO_V2_PREFIX,
-                    BuildConfig.DEBUG, AuthHeader(token))
-
-    @Provides
-    internal fun providesEditorialInteractor(
-            editorialApi: EditorialApi): EditorialInterator =
-            EditorialInteractorImpl(editorialApi)
-
+    @GET("webapp-token")
+    fun fetchPublicToken(): Single<TokenResponse>
 }

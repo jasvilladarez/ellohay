@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.interactor.impl.editorial
+package io.github.jasvilladarez.domain.interactor.editorial
 
 import io.github.jasvilladarez.domain.network.response.EditorialsResponse
 import io.reactivex.Single

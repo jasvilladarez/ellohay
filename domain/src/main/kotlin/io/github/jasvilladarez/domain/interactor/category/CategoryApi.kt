@@ -22,32 +22,17 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.interactor.impl.auth
+package io.github.jasvilladarez.domain.interactor.category
 
-import android.content.SharedPreferences
-import dagger.Module
-import dagger.Provides
-import io.github.jasvilladarez.domain.ApiFactory
-import io.github.jasvilladarez.domain.entity.Token
-import io.github.jasvilladarez.domain.interactor.AuthInteractor
-import io.github.jasvilladarez.domain.preference.auth.AuthPreference
-import io.github.jasvilladarez.domain.preference.auth.AuthPreferenceImpl
-import io.github.jasvilladarez.ello.BuildConfig
+import retrofit2.http.GET
+import retrofit2.http.Query
 
-@Module
-class AuthInteractorModule {
+/**
+ * Created by Jasmine on 11/12/17.
+ */
+internal interface CategoryApi {
 
-    @Provides
-    internal fun providesAuthApi(): AuthApi = ApiFactory.createApi(AuthApi::class.java,
-            isDebug = BuildConfig.DEBUG)
-
-    @Provides
-    internal fun providesAuthPreference(sharedPreferences: SharedPreferences): AuthPreference =
-            AuthPreferenceImpl(sharedPreferences)
-
-    @Provides
-    internal fun providesAuthInteractory(authApi: AuthApi,
-                                         authPreference: AuthPreference,
-                                         token: Token): AuthInteractor =
-            AuthInteractorImpl(authApi, authPreference, token)
+    @GET("v2/categories")
+    fun getCategories(@Query("meta") withMeta: Boolean = false,
+                      @Query("all") all: Boolean = false)
 }
