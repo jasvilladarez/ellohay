@@ -31,4 +31,7 @@ dependencies {
     implementation dependencies.rxAndroid
     implementation dependencies.rxJava
     implementation dependencies.rxKotlin
+
+    kapt dependencies.roomCompiler
+    implementation dependencies.room
 }
