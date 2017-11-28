@@ -28,7 +28,7 @@ import android.arch.lifecycle.ViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
-import io.github.jasvilladarez.domain.interactor.auth.AuthInteractor
+import io.github.jasvilladarez.domain.interactor.auth.AuthRepository
 import io.github.jasvilladarez.ello.viewmodel.ViewModelKey
 
 @Module
@@ -37,6 +37,6 @@ internal class MainModule {
     @Provides
     @IntoMap
     @ViewModelKey(MainViewModel::class)
-    fun providesMainViewModel(authInteractor: AuthInteractor): ViewModel =
-            MainViewModel(authInteractor)
+    fun providesMainViewModel(authRepository: AuthRepository): ViewModel =
+            MainViewModel(authRepository)
 }

@@ -26,14 +26,14 @@ package io.github.jasvilladarez.ello.main
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
-import io.github.jasvilladarez.domain.interactor.auth.AuthInteractor
+import io.github.jasvilladarez.domain.interactor.auth.AuthRepository
 import io.github.jasvilladarez.ello.common.MviStateMachine
 import io.github.jasvilladarez.ello.common.MviViewModel
 import io.github.jasvilladarez.ello.util.applyMvi
 import io.reactivex.Observable
 
 internal class MainViewModel(
-        private val authInteractor: AuthInteractor
+        private val authRepository: AuthRepository
 ) : ViewModel(), MviViewModel<MainIntent, MainViewState> {
 
     private val stateMachine =
@@ -62,6 +62,6 @@ internal class MainViewModel(
     }
 
     private fun fetchAccessToken(): Observable<MainResult> =
-            authInteractor.fetchAccessToken().applyMvi({ MainResult.Success },
+            authRepository.fetchAccessToken().applyMvi({ MainResult.Success },
                     { MainResult.Error(it) }, { MainResult.InProgress })
 }

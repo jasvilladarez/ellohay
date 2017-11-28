@@ -24,29 +24,27 @@
 
 package io.github.jasvilladarez.domain.interactor.auth
 
-import android.content.SharedPreferences
-import dagger.Module
-import dagger.Provides
-import io.github.jasvilladarez.domain.ApiFactory
 import io.github.jasvilladarez.domain.entity.Token
 import io.github.jasvilladarez.domain.preference.auth.AuthPreference
-import io.github.jasvilladarez.domain.preference.auth.AuthPreferenceImpl
-import io.github.jasvilladarez.ello.BuildConfig
+import io.github.jasvilladarez.domain.util.applySchedulers
+import io.reactivex.Observable
+import io.reactivex.rxkotlin.toSingle
+import java.util.concurrent.TimeUnit
 
-@Module
-class AuthInteractorModule {
+internal class AuthRepositoryImpl(
+        private val authApi: AuthApi,
+        private val authPreference: AuthPreference,
+        private val token: Token
+) : AuthRepository {
 
-    @Provides
-    internal fun providesAuthApi(): AuthApi = ApiFactory.createApi(AuthApi::class.java,
-            isDebug = BuildConfig.DEBUG)
+    override fun fetchAccessToken(): Observable<Token> {
+        return (authPreference.token?.takeIf {
+            it.createdAt + it.expiresIn > TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
+        }?.toSingle() ?: authApi.fetchPublicToken().map { it.token }).map {
+            authPreference.token = it
+            token.copy(it)
+            it
+        }.toObservable().applySchedulers()
+    }
 
-    @Provides
-    internal fun providesAuthPreference(sharedPreferences: SharedPreferences): AuthPreference =
-            AuthPreferenceImpl(sharedPreferences)
-
-    @Provides
-    internal fun providesAuthInteractory(authApi: AuthApi,
-                                         authPreference: AuthPreference,
-                                         token: Token): AuthInteractor =
-            AuthInteractorImpl(authApi, authPreference, token)
 }

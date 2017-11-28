@@ -26,7 +26,7 @@ package io.github.jasvilladarez.ello.dagger
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import io.github.jasvilladarez.domain.interactor.auth.AuthInteractorModule
+import io.github.jasvilladarez.domain.interactor.auth.AuthRepositoryModule
 import io.github.jasvilladarez.ello.discover.editorial.EditorialBuilder
 import io.github.jasvilladarez.ello.main.MainActivity
 import io.github.jasvilladarez.ello.main.MainModule
@@ -35,7 +35,7 @@ import io.github.jasvilladarez.ello.main.MainModule
 internal abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = arrayOf(
-            AuthInteractorModule::class,
+            AuthRepositoryModule::class,
             MainModule::class,
             EditorialBuilder::class,
             ViewModelBuilder::class

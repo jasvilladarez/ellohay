@@ -31,7 +31,7 @@ import io.reactivex.Observable
  * This class involves fetching public access token
  * and logging in.
  */
-interface AuthInteractor {
+interface AuthRepository {
 
     /**
      * Fetch a token to use for the APIs
