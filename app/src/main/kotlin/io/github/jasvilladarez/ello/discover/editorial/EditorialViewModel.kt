@@ -26,14 +26,14 @@ package io.github.jasvilladarez.ello.discover.editorial
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
-import io.github.jasvilladarez.domain.interactor.editorial.EditorialInteractor
+import io.github.jasvilladarez.domain.interactor.editorial.EditorialRepository
 import io.github.jasvilladarez.ello.common.MviStateMachine
 import io.github.jasvilladarez.ello.common.MviViewModel
 import io.github.jasvilladarez.ello.util.applyMvi
 import io.reactivex.Observable
 
 internal class EditorialViewModel(
-        private val editorialInteractor: EditorialInteractor
+        private val editorialRepository: EditorialRepository
 ) : ViewModel(), MviViewModel<EditorialIntent, EditorialViewState> {
 
     private val stateMachine =
@@ -68,7 +68,7 @@ internal class EditorialViewModel(
     }
 
     private fun fetchEditorials(): Observable<EditorialResult> =
-            editorialInteractor.fetchEditorials().applyMvi({ EditorialResult.Success(it) },
+            editorialRepository.fetchEditorials().applyMvi({ EditorialResult.Success(it) },
                     { EditorialResult.Error(it) }, { EditorialResult.InProgress })
 
 }

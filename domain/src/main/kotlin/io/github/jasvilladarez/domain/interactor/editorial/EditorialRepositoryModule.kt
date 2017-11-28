@@ -24,17 +24,24 @@
 
 package io.github.jasvilladarez.domain.interactor.editorial
 
-import io.github.jasvilladarez.domain.entity.Editorial
-import io.github.jasvilladarez.domain.util.applySchedulers
-import io.reactivex.Observable
+import dagger.Module
+import dagger.Provides
+import io.github.jasvilladarez.domain.ApiFactory
+import io.github.jasvilladarez.domain.entity.Token
+import io.github.jasvilladarez.domain.network.AuthHeader
+import io.github.jasvilladarez.ello.BuildConfig
 
-internal class EditorialInteractorImpl(
-        private val editorialApi: EditorialApi
-) : EditorialInteractor {
+@Module
+class EditorialRepositoryModule {
 
-    override fun fetchEditorials(): Observable<List<Editorial>> {
-        return editorialApi.fetchEditorials().map {
-            it.editorials
-        }.toObservable().applySchedulers()
-    }
+    @Provides
+    internal fun providesEditorialApi(token: Token) =
+            ApiFactory.createApi(EditorialApi::class.java, ApiFactory.ELLO_V2_PREFIX,
+                    BuildConfig.DEBUG, AuthHeader(token))
+
+    @Provides
+    internal fun providesEditorialRepository(
+            editorialApi: EditorialApi): EditorialRepository =
+            EditorialRepositoryImpl(editorialApi)
+
 }
