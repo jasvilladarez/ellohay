@@ -22,26 +22,29 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.interactor.editorial
+package io.github.jasvilladarez.domain.repository.auth
 
-import dagger.Module
-import dagger.Provides
-import io.github.jasvilladarez.domain.ApiFactory
 import io.github.jasvilladarez.domain.entity.Token
-import io.github.jasvilladarez.domain.network.AuthHeader
-import io.github.jasvilladarez.ello.BuildConfig
+import io.github.jasvilladarez.domain.preference.auth.AuthPreference
+import io.github.jasvilladarez.domain.util.applySchedulers
+import io.reactivex.Observable
+import io.reactivex.rxkotlin.toSingle
+import java.util.concurrent.TimeUnit
 
-@Module
-class EditorialRepositoryModule {
+internal class AuthRepositoryImpl(
+        private val authApi: AuthApi,
+        private val authPreference: AuthPreference,
+        private val token: Token
+) : AuthRepository {
 
-    @Provides
-    internal fun providesEditorialApi(token: Token) =
-            ApiFactory.createApi(EditorialApi::class.java, ApiFactory.ELLO_V2_PREFIX,
-                    BuildConfig.DEBUG, AuthHeader(token))
-
-    @Provides
-    internal fun providesEditorialRepository(
-            editorialApi: EditorialApi): EditorialRepository =
-            EditorialRepositoryImpl(editorialApi)
+    override fun fetchAccessToken(): Observable<Token> {
+        return (authPreference.token?.takeIf {
+            it.createdAt + it.expiresIn > TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
+        }?.toSingle() ?: authApi.fetchPublicToken().map { it.token }).map {
+            authPreference.token = it
+            token.copy(it)
+            it
+        }.toObservable().applySchedulers()
+    }
 
 }

@@ -22,14 +22,26 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.interactor.editorial
+package io.github.jasvilladarez.domain.repository.editorial
 
-import io.github.jasvilladarez.domain.network.response.EditorialsResponse
-import io.reactivex.Single
-import retrofit2.http.GET
+import dagger.Module
+import dagger.Provides
+import io.github.jasvilladarez.domain.ApiFactory
+import io.github.jasvilladarez.domain.entity.Token
+import io.github.jasvilladarez.domain.network.AuthHeader
+import io.github.jasvilladarez.ello.BuildConfig
 
-internal interface EditorialApi {
+@Module
+class EditorialRepositoryModule {
 
-    @GET("editorials")
-    fun fetchEditorials(): Single<EditorialsResponse>
+    @Provides
+    internal fun providesEditorialApi(token: Token) =
+            ApiFactory.createApi(EditorialApi::class.java, ApiFactory.ELLO_V2_PREFIX,
+                    BuildConfig.DEBUG, AuthHeader(token))
+
+    @Provides
+    internal fun providesEditorialRepository(
+            editorialApi: EditorialApi): EditorialRepository =
+            EditorialRepositoryImpl(editorialApi)
+
 }

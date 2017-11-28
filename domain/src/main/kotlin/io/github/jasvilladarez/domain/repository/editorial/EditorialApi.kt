@@ -22,31 +22,14 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.interactor.auth
+package io.github.jasvilladarez.domain.repository.editorial
 
-import android.content.SharedPreferences
-import dagger.Module
-import dagger.Provides
-import io.github.jasvilladarez.domain.ApiFactory
-import io.github.jasvilladarez.domain.entity.Token
-import io.github.jasvilladarez.domain.preference.auth.AuthPreference
-import io.github.jasvilladarez.domain.preference.auth.AuthPreferenceImpl
-import io.github.jasvilladarez.ello.BuildConfig
+import io.github.jasvilladarez.domain.network.response.EditorialsResponse
+import io.reactivex.Single
+import retrofit2.http.GET
 
-@Module
-class AuthRepositoryModule {
+internal interface EditorialApi {
 
-    @Provides
-    internal fun providesAuthApi(): AuthApi = ApiFactory.createApi(AuthApi::class.java,
-            isDebug = BuildConfig.DEBUG)
-
-    @Provides
-    internal fun providesAuthPreference(sharedPreferences: SharedPreferences): AuthPreference =
-            AuthPreferenceImpl(sharedPreferences)
-
-    @Provides
-    internal fun providesAuthRepository(authApi: AuthApi,
-                                         authPreference: AuthPreference,
-                                         token: Token): AuthRepository =
-            AuthRepositoryImpl(authApi, authPreference, token)
+    @GET("editorials")
+    fun fetchEditorials(): Single<EditorialsResponse>
 }

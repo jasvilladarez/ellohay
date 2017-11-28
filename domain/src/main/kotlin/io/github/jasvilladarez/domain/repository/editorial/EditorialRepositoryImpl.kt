@@ -22,12 +22,19 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.interactor.editorial
+package io.github.jasvilladarez.domain.repository.editorial
 
 import io.github.jasvilladarez.domain.entity.Editorial
+import io.github.jasvilladarez.domain.util.applySchedulers
 import io.reactivex.Observable
 
-interface EditorialRepository {
+internal class EditorialRepositoryImpl(
+        private val editorialApi: EditorialApi
+) : EditorialRepository {
 
-    fun fetchEditorials(): Observable<List<Editorial>>
+    override fun fetchEditorials(): Observable<List<Editorial>> {
+        return editorialApi.fetchEditorials().map {
+            it.editorials
+        }.toObservable().applySchedulers()
+    }
 }

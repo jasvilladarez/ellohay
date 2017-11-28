@@ -22,19 +22,31 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.interactor.auth
+package io.github.jasvilladarez.domain.repository.auth
 
+import android.content.SharedPreferences
+import dagger.Module
+import dagger.Provides
+import io.github.jasvilladarez.domain.ApiFactory
 import io.github.jasvilladarez.domain.entity.Token
-import io.reactivex.Observable
+import io.github.jasvilladarez.domain.preference.auth.AuthPreference
+import io.github.jasvilladarez.domain.preference.auth.AuthPreferenceImpl
+import io.github.jasvilladarez.ello.BuildConfig
 
-/**
- * This class involves fetching public access token
- * and logging in.
- */
-interface AuthRepository {
+@Module
+class AuthRepositoryModule {
 
-    /**
-     * Fetch a token to use for the APIs
-     */
-    fun fetchAccessToken(): Observable<Token>
+    @Provides
+    internal fun providesAuthApi(): AuthApi = ApiFactory.createApi(AuthApi::class.java,
+            isDebug = BuildConfig.DEBUG)
+
+    @Provides
+    internal fun providesAuthPreference(sharedPreferences: SharedPreferences): AuthPreference =
+            AuthPreferenceImpl(sharedPreferences)
+
+    @Provides
+    internal fun providesAuthRepository(authApi: AuthApi,
+                                         authPreference: AuthPreference,
+                                         token: Token): AuthRepository =
+            AuthRepositoryImpl(authApi, authPreference, token)
 }

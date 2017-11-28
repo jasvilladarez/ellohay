@@ -22,17 +22,19 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.interactor.auth
+package io.github.jasvilladarez.domain.repository.auth
 
-import io.github.jasvilladarez.domain.network.response.TokenResponse
-import io.reactivex.Single
-import retrofit2.http.GET
+import io.github.jasvilladarez.domain.entity.Token
+import io.reactivex.Observable
 
 /**
- * Created by Jasmine on 11/12/17.
+ * This class involves fetching public access token
+ * and logging in.
  */
-internal interface AuthApi {
+interface AuthRepository {
 
-    @GET("webapp-token")
-    fun fetchPublicToken(): Single<TokenResponse>
+    /**
+     * Fetch a token to use for the APIs
+     */
+    fun fetchAccessToken(): Observable<Token>
 }

@@ -22,29 +22,17 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.interactor.auth
+package io.github.jasvilladarez.domain.repository.auth
 
-import io.github.jasvilladarez.domain.entity.Token
-import io.github.jasvilladarez.domain.preference.auth.AuthPreference
-import io.github.jasvilladarez.domain.util.applySchedulers
-import io.reactivex.Observable
-import io.reactivex.rxkotlin.toSingle
-import java.util.concurrent.TimeUnit
+import io.github.jasvilladarez.domain.network.response.TokenResponse
+import io.reactivex.Single
+import retrofit2.http.GET
 
-internal class AuthRepositoryImpl(
-        private val authApi: AuthApi,
-        private val authPreference: AuthPreference,
-        private val token: Token
-) : AuthRepository {
+/**
+ * Created by Jasmine on 11/12/17.
+ */
+internal interface AuthApi {
 
-    override fun fetchAccessToken(): Observable<Token> {
-        return (authPreference.token?.takeIf {
-            it.createdAt + it.expiresIn > TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
-        }?.toSingle() ?: authApi.fetchPublicToken().map { it.token }).map {
-            authPreference.token = it
-            token.copy(it)
-            it
-        }.toObservable().applySchedulers()
-    }
-
+    @GET("webapp-token")
+    fun fetchPublicToken(): Single<TokenResponse>
 }
