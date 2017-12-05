@@ -26,18 +26,7 @@ package io.github.jasvilladarez.domain.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class Editorial(
-        @SerializedName("id")
-        val id: Long,
-        @SerializedName("title")
-        val title: String,
-        @SerializedName("subtitle")
-        val subtitle: String? = null,
-        /**
-         * Html formatted version of the subtitle
-         */
-        @SerializedName("rendered_subtitle")
-        val renderedSubtitle: String? = null,
-        @SerializedName("two_by_two_image")
-        val image: ImageAsset? = null
+data class ImageSize(
+        @SerializedName("url")
+        val url: String
 )
