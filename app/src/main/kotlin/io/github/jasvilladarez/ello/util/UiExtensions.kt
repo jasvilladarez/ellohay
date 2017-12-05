@@ -24,9 +24,17 @@
 
 package io.github.jasvilladarez.ello.util
 
+import android.graphics.drawable.Drawable
 import android.view.View
+import android.widget.ImageView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestBuilder
 
 fun View.setVisible(isVisible: Boolean) {
     visibility = if (isVisible) View.VISIBLE
     else View.GONE
 }
+
+fun ImageView.loadImage(imageUrl: String,
+                        init: (RequestBuilder<Drawable>.() -> RequestBuilder<Drawable>)? = null) =
+        Glide.with(this).load(imageUrl).apply { init?.invoke(this) }.into(this)

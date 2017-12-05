@@ -2,6 +2,7 @@ ext {
     architectureComponentsVersion = '1.0.0'
     daggerVersion = '2.13'
     espressoVersion = '3.0.1'
+    glideVersion = '4.4.0'
     materialDialogVersion = '0.9.6.0'
     moshiVersion = '1.5.0'
     okHttpVersion = '3.9.0'
@@ -18,9 +19,11 @@ ext {
             lifecycleCompiler    : "android.arch.lifecycle:compiler:$architectureComponentsVersion",
             lifecycleExtensions  : "android.arch.lifecycle:extensions:$architectureComponentsVersion",
             room                 : "android.arch.persistence.room:runtime:$architectureComponentsVersion",
-            roomCompiler        : "android.arch.persistence.room:compiler:$architectureComponentsVersion",
+            roomCompiler         : "android.arch.persistence.room:compiler:$architectureComponentsVersion",
 
             // UI
+            glide                : "com.github.bumptech.glide:glide:$glideVersion",
+            glideCompiler        : "com.github.bumptech.glide:compiler:$glideVersion",
             materialDialogCore   : "com.afollestad.material-dialogs:core:$materialDialogVersion",
             materialDialogCommons: "com.afollestad.material-dialogs:commons:$materialDialogVersion",
 

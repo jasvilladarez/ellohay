@@ -35,6 +35,8 @@ dependencies {
     implementation dependencies.lifecycleExtensions
     implementation dependencies.appCompat
     implementation dependencies.design
+    implementation dependencies.glide
+    kapt dependencies.glideCompiler
     implementation dependencies.materialDialogCore
     implementation dependencies.materialDialogCommons
 
