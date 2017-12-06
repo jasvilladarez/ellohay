@@ -70,9 +70,6 @@ internal class EditorialFragment : BaseFragment(),
             }
         })
         viewModel.processIntents(intents())
-        recyclerView.adapter = editorialAdapter
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
     }
 
     override fun intents(): Observable<EditorialIntent> = Observable.merge(
@@ -84,6 +81,11 @@ internal class EditorialFragment : BaseFragment(),
         when (state) {
             is EditorialViewState.View -> {
                 swipeRefreshLayout.isRefreshing = state.isLoading
+                recyclerView.adapter ?: let {
+                    recyclerView.adapter = editorialAdapter
+                    recyclerView.layoutManager = LinearLayoutManager(context)
+                    recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+                }
                 editorialAdapter.list = state.editorials
             }
             is EditorialViewState.Error -> {
