@@ -29,6 +29,7 @@ import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.request.target.ViewTarget
 
 fun View.setVisible(isVisible: Boolean) {
     visibility = if (isVisible) View.VISIBLE
@@ -36,5 +37,5 @@ fun View.setVisible(isVisible: Boolean) {
 }
 
 fun ImageView.loadImage(imageUrl: String,
-                        init: (RequestBuilder<Drawable>.() -> RequestBuilder<Drawable>)? = null) =
+                        init: (RequestBuilder<Drawable>.() -> RequestBuilder<Drawable>)? = null): ViewTarget<ImageView, Drawable> =
         Glide.with(this).load(imageUrl).apply { init?.invoke(this) }.into(this)
