@@ -5,6 +5,13 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:textColorPrimary">@color/ello_white</item>
+    </style>
+
+    <style name="ElloTheme.Title" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/title_textSize</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>

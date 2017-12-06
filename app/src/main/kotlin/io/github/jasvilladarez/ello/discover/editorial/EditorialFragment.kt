@@ -29,6 +29,8 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,6 +53,10 @@ internal class EditorialFragment : BaseFragment(),
         ViewModelProviders.of(this, viewModelFactory)[EditorialViewModel::class.java]
     }
 
+    private val editorialAdapter: EditorialListAdapter by lazy {
+        EditorialListAdapter()
+    }
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_editorial, container, false)
@@ -64,6 +70,9 @@ internal class EditorialFragment : BaseFragment(),
             }
         })
         viewModel.processIntents(intents())
+        recyclerView.adapter = editorialAdapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
     }
 
     override fun intents(): Observable<EditorialIntent> = Observable.merge(
@@ -75,6 +84,7 @@ internal class EditorialFragment : BaseFragment(),
         when (state) {
             is EditorialViewState.View -> {
                 swipeRefreshLayout.isRefreshing = state.isLoading
+                editorialAdapter.list = state.editorials
             }
             is EditorialViewState.Error -> {
                 swipeRefreshLayout.isRefreshing = false
