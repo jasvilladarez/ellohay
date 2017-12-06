@@ -22,30 +22,45 @@
   ~ SOFTWARE.
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:foreground="?selectableItemBackground"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/editorialImage"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/li_default_height"
-        android:foreground="@color/ello_foreground"
-        android:scaleType="centerCrop" />
+        tools:ignore="UselessParent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/default_padding">
-
-        <TextView
-            android:id="@+id/title"
-            style="@style/ElloTheme.Title"
+        <ImageView
+            android:id="@+id/editorialImage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="2" />
-    </LinearLayout>
+            android:layout_height="@dimen/li_default_height"
+            android:foreground="@color/ello_foreground"
+            android:scaleType="centerCrop" />
 
-</RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/default_padding">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:textAppearance="?attr/titleTextAppearance" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="bottom"
+                android:textAppearance="?attr/subtitleTextAppearance" />
+        </RelativeLayout>
+    </FrameLayout>
+
+</LinearLayout>

@@ -30,6 +30,7 @@ import android.view.ViewGroup
 import io.github.jasvilladarez.domain.entity.Editorial
 import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.util.loadImage
+import io.github.jasvilladarez.ello.util.ui.fromHtml
 import kotlinx.android.synthetic.main.li_editorial.view.*
 
 internal class EditorialListAdapter(
@@ -61,6 +62,7 @@ internal class EditorialListAdapter(
                 itemView.editorialImage.loadImage(it)
             }
             itemView.title.text = editorial.title
+            itemView.description.text = editorial.renderedSubtitle?.fromHtml()
         }
     }
 }

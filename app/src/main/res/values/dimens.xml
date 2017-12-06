@@ -25,5 +25,5 @@
 <resources>
     <dimen name="default_padding">16dp</dimen>
 
-    <dimen name="li_default_height">250dp</dimen>
+    <dimen name="li_default_height">280dp</dimen>
 </resources>

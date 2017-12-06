@@ -7,11 +7,16 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="android:textColorPrimary">@color/ello_white</item>
+        <item name="android:textColorLink">@color/ello_white</item>
+
+        <item name="titleTextAppearance">@style/ElloTheme.Title</item>
+        <item name="subtitleTextAppearance">@style/ElloTheme.SubTitle</item>
     </style>
 
-    <style name="ElloTheme.Title" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">@dimen/title_textSize</item>
+    <style name="ElloTheme.Title" parent="TextAppearance.AppCompat.Headline">
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="ElloTheme.SubTitle" parent="TextAppearance.AppCompat.Subhead" />
 
 </resources>
