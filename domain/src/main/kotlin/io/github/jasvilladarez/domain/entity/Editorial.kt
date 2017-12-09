@@ -41,9 +41,15 @@ data class Editorial(
         @SerializedName("rendered_subtitle")
         val renderedSubtitle: String? = null,
         @SerializedName("two_by_two_image")
-        val image: Image? = null
-)
+        val image: Image? = null,
+        @SerializedName("links")
+        private val linksList: Links? = null
+) {
 
-enum class EditorialType {
-    POST, INTERNAL, EXTERNAL, POST_STREAM
+    val links: List<Link>?
+        get() = linksList?.links
+
+    enum class EditorialType {
+        POST, INTERNAL, EXTERNAL, POST_STREAM
+    }
 }

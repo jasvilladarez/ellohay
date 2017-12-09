@@ -28,6 +28,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import io.github.jasvilladarez.domain.entity.Editorial
+import io.github.jasvilladarez.domain.entity.PostStreamLink
 import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.util.loadImage
 import io.github.jasvilladarez.ello.util.ui.fromHtml
@@ -63,6 +64,11 @@ internal class EditorialListAdapter(
             }
             itemView.title.text = editorial.title
             itemView.description.text = editorial.renderedSubtitle?.fromHtml()
+            editorial.links?.let {
+                it.mapNotNull { it as? PostStreamLink }.firstOrNull()?.let {
+                    itemView.description.text = it.href
+                }
+            }
         }
     }
 }

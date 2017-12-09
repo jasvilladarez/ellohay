@@ -32,12 +32,15 @@ import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
+import io.github.jasvilladarez.domain.entity.Links
+import io.github.jasvilladarez.domain.entity.LinksTypeAdapter
 import java.io.IOException
 import java.util.*
 import kotlin.reflect.KClass
 
 internal val gson: Gson = GsonBuilder()
         .registerTypeAdapterFactory(LowercaseEnumTypeAdapterFactory())
+        .registerTypeAdapter(Links::class.java, LinksTypeAdapter())
         .create()
 
 internal fun <T : Any> T.toJson(): String =
