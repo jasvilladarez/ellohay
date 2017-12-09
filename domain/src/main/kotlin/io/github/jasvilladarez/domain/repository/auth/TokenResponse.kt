@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.network.response
+package io.github.jasvilladarez.domain.repository.auth
 
 import com.google.gson.annotations.SerializedName
 import io.github.jasvilladarez.domain.entity.Token

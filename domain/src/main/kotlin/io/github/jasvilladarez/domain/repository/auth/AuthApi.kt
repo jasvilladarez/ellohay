@@ -24,7 +24,6 @@
 
 package io.github.jasvilladarez.domain.repository.auth
 
-import io.github.jasvilladarez.domain.network.response.TokenResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 
