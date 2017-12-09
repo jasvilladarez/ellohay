@@ -36,15 +36,22 @@ internal class EditorialViewModel(
         private val editorialRepository: EditorialRepository
 ) : ViewModel(), MviViewModel<EditorialIntent, EditorialViewState> {
 
+    private var nextItem: Int? = null
+
     private val stateMachine =
             MviStateMachine<EditorialIntent, EditorialResult, EditorialViewState>(EditorialViewState(), {
                 when (it) {
                     is EditorialIntent.Load -> fetchEditorials()
+                    is EditorialIntent.LoadMore -> fetchEditorials(nextItem)
                 }
             }, { state, result ->
                 when (result) {
-                    is EditorialResult.Success -> state.copy(editorials = result.editorials,
-                            isLoading = false, errorMessage = null)
+                    is EditorialResult.Success -> {
+                        nextItem = result.editorialStream.next
+                        state.copy(
+                                editorials = result.editorialStream.editorials,
+                                isLoading = false, errorMessage = null)
+                    }
                     is EditorialResult.Error -> state.copy(isLoading = false, errorMessage = null)
                     is EditorialResult.InProgress -> state.copy(isLoading = true)
                 }
@@ -64,8 +71,8 @@ internal class EditorialViewModel(
         stateMachine.clear()
     }
 
-    private fun fetchEditorials(): Observable<EditorialResult> =
-            editorialRepository.fetchEditorials().applyMvi({ EditorialResult.Success(it) },
+    private fun fetchEditorials(nextItem: Int? = null): Observable<EditorialResult> =
+            editorialRepository.fetchEditorials(nextItem).applyMvi({ EditorialResult.Success(it) },
                     { EditorialResult.Error(it) }, { EditorialResult.InProgress })
 
 }

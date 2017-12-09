@@ -96,8 +96,8 @@ internal class EditorialFragment : BaseFragment(),
 
     private fun loadIntent(): Observable<EditorialIntent> = rxLifecycle.filter {
         it == Lifecycle.Event.ON_START
-    }.map { EditorialIntent.Load() }
+    }.map { EditorialIntent.Load }
 
     private fun refreshIntent(): Observable<EditorialIntent> = RxSwipeRefreshLayout
-            .refreshes(swipeRefreshLayout).map { EditorialIntent.Load() }
+            .refreshes(swipeRefreshLayout).map { EditorialIntent.Load }
 }

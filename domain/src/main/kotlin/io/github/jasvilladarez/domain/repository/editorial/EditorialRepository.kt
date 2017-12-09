@@ -24,10 +24,10 @@
 
 package io.github.jasvilladarez.domain.repository.editorial
 
-import io.github.jasvilladarez.domain.entity.Editorial
+import io.github.jasvilladarez.domain.entity.EditorialStream
 import io.reactivex.Observable
 
 interface EditorialRepository {
 
-    fun fetchEditorials(): Observable<List<Editorial>>
+    fun fetchEditorials(nextItems: Int? = null): Observable<EditorialStream>
 }

@@ -24,7 +24,8 @@
 
 package io.github.jasvilladarez.domain.repository.editorial
 
-import io.github.jasvilladarez.domain.entity.Editorial
+import android.net.Uri
+import io.github.jasvilladarez.domain.entity.EditorialStream
 import io.github.jasvilladarez.domain.util.applySchedulers
 import io.reactivex.Observable
 
@@ -32,9 +33,11 @@ internal class EditorialRepositoryImpl(
         private val editorialApi: EditorialApi
 ) : EditorialRepository {
 
-    override fun fetchEditorials(): Observable<List<Editorial>> {
-        return editorialApi.fetchEditorials().map {
-            it.editorials
+    override fun fetchEditorials(nextItems: Int?): Observable<EditorialStream> {
+        return editorialApi.fetchEditorials(nextItems).map {
+            val next = Uri.parse(it.headers().get("link")?.substringBefore(">")
+                    ?.substringAfter("<")).getQueryParameter("before")
+            it.body()?.apply { this.next = next?.toInt() } ?: EditorialStream(emptyList())
         }.toObservable().applySchedulers()
     }
 }

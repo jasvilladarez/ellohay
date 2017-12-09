@@ -25,22 +25,23 @@
 package io.github.jasvilladarez.ello.discover.editorial
 
 import io.github.jasvilladarez.domain.entity.Editorial
+import io.github.jasvilladarez.domain.entity.EditorialStream
 import io.github.jasvilladarez.ello.common.MviIntent
 import io.github.jasvilladarez.ello.common.MviResult
 import io.github.jasvilladarez.ello.common.MviViewState
 
 internal sealed class EditorialIntent : MviIntent {
 
-    data class Load(
-            val endItem: String? = null
-    ) : EditorialIntent()
+    object Load : EditorialIntent()
+
+    object LoadMore : EditorialIntent()
 
 }
 
 internal sealed class EditorialResult : MviResult {
 
     data class Success(
-            val editorials: List<Editorial> = emptyList()
+            val editorialStream: EditorialStream = EditorialStream(emptyList())
     ) : EditorialResult()
 
     data class Error(
