@@ -37,19 +37,16 @@ internal class EditorialViewModel(
 ) : ViewModel(), MviViewModel<EditorialIntent, EditorialViewState> {
 
     private val stateMachine =
-            MviStateMachine<EditorialIntent, EditorialResult, EditorialViewState>(EditorialViewState.View(), {
+            MviStateMachine<EditorialIntent, EditorialResult, EditorialViewState>(EditorialViewState(), {
                 when (it) {
                     is EditorialIntent.Load -> fetchEditorials()
                 }
-            }, { _, result ->
+            }, { state, result ->
                 when (result) {
-                    is EditorialResult.Success -> {
-                        EditorialViewState.View(result.editorials)
-                    }
-                    is EditorialResult.Error -> {
-                        EditorialViewState.Error(result.error.message)
-                    }
-                    is EditorialResult.InProgress -> EditorialViewState.View(isLoading = true)
+                    is EditorialResult.Success -> state.copy(editorials = result.editorials,
+                            isLoading = false, errorMessage = null)
+                    is EditorialResult.Error -> state.copy(isLoading = false, errorMessage = null)
+                    is EditorialResult.InProgress -> state.copy(isLoading = true)
                 }
             })
 

@@ -78,21 +78,18 @@ internal class EditorialFragment : BaseFragment(),
     )
 
     override fun render(state: EditorialViewState) {
-        when (state) {
-            is EditorialViewState.View -> {
-                swipeRefreshLayout.isRefreshing = state.isLoading
-                recyclerView.adapter ?: let {
-                    recyclerView.adapter = editorialAdapter
-                    recyclerView.layoutManager = LinearLayoutManager(context)
-                    recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-                }
-                editorialAdapter.list = state.editorials
-            }
-            is EditorialViewState.Error -> {
-                swipeRefreshLayout.isRefreshing = false
-                context?.showError(state.errorMessage)
-            }
+        swipeRefreshLayout.isRefreshing = state.isLoading
+
+        state.errorMessage?.let {
+            context?.showError(it)
         }
+
+        recyclerView.adapter ?: let {
+            recyclerView.adapter = editorialAdapter
+            recyclerView.layoutManager = LinearLayoutManager(context)
+            recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        }
+        editorialAdapter.list = state.editorials
     }
 
     private fun loadIntent(): Observable<EditorialIntent> = rxLifecycle.filter {
