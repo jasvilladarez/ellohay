@@ -29,6 +29,8 @@ import com.google.gson.annotations.SerializedName
 data class Editorial(
         @SerializedName("id")
         val id: Long,
+        @SerializedName("kind")
+        val kind: EditorialType,
         @SerializedName("title")
         val title: String,
         @SerializedName("subtitle")
@@ -39,5 +41,9 @@ data class Editorial(
         @SerializedName("rendered_subtitle")
         val renderedSubtitle: String? = null,
         @SerializedName("two_by_two_image")
-        val image: ImageAsset? = null
+        val image: Image? = null
 )
+
+enum class EditorialType {
+    POST, INTERNAL, EXTERNAL, POST_STREAM
+}
