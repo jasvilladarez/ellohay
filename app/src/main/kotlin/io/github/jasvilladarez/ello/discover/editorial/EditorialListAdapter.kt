@@ -58,7 +58,7 @@ internal class EditorialListAdapter(
     internal inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(editorial: Editorial) {
-            editorial.image?.thumbnail?.url?.let {
+            editorial.image?.ldpi?.url?.let {
                 itemView.editorialImage.loadImage(it)
             }
             itemView.title.text = editorial.title
