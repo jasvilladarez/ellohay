@@ -35,10 +35,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
+import io.github.jasvilladarez.domain.entity.Editorial
 import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.common.BaseFragment
 import io.github.jasvilladarez.ello.common.MviView
 import io.github.jasvilladarez.ello.util.ui.showError
+import io.github.jasvilladarez.ello.widget.RecyclerAdapter
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_editorial.*
 import javax.inject.Inject
@@ -53,8 +55,8 @@ internal class EditorialFragment : BaseFragment(),
         ViewModelProviders.of(this, viewModelFactory)[EditorialViewModel::class.java]
     }
 
-    private val editorialAdapter: EditorialListAdapter by lazy {
-        EditorialListAdapter()
+    private val editorialAdapter: RecyclerAdapter<Editorial> by lazy {
+        RecyclerAdapter(EditorialViewItem())
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -89,7 +91,7 @@ internal class EditorialFragment : BaseFragment(),
             recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
-        editorialAdapter.list = state.editorials
+        editorialAdapter.items = state.editorials
     }
 
     private fun loadIntent(): Observable<EditorialIntent> = rxLifecycle.filter {
