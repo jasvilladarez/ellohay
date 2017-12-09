@@ -24,12 +24,12 @@
 
 package io.github.jasvilladarez.ello.util.ui
 
-import android.os.Build
-import android.text.Html
-import android.text.Spanned
+import android.graphics.drawable.Drawable
+import android.widget.ImageView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.request.target.ViewTarget
 
-fun String.fromHtml(): Spanned? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-    Html.fromHtml(this, Html.FROM_HTML_MODE_COMPACT)
-} else {
-    Html.fromHtml(this)
-}
+fun ImageView.loadImage(imageUrl: String,
+                        init: (RequestBuilder<Drawable>.() -> RequestBuilder<Drawable>)? = null): ViewTarget<ImageView, Drawable> =
+        Glide.with(this).load(imageUrl).apply { init?.invoke(this) }.into(this)

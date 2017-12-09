@@ -22,20 +22,17 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.util
+package io.github.jasvilladarez.ello.util.ui
 
-import android.graphics.drawable.Drawable
-import android.view.View
-import android.widget.ImageView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.RequestBuilder
-import com.bumptech.glide.request.target.ViewTarget
+import android.content.Context
+import com.afollestad.materialdialogs.MaterialDialog
+import io.github.jasvilladarez.ello.R
 
-fun View.setVisible(isVisible: Boolean) {
-    visibility = if (isVisible) View.VISIBLE
-    else View.GONE
+fun Context.showError(message: String?) {
+    val errorMessage = message?.let { it } ?: getString(R.string.general_exception)
+    MaterialDialog.Builder(this)
+            .iconRes(R.drawable.ic_warning)
+            .title(errorMessage)
+            .positiveText(R.string.ok)
+            .show()
 }
-
-fun ImageView.loadImage(imageUrl: String,
-                        init: (RequestBuilder<Drawable>.() -> RequestBuilder<Drawable>)? = null): ViewTarget<ImageView, Drawable> =
-        Glide.with(this).load(imageUrl).apply { init?.invoke(this) }.into(this)

@@ -38,7 +38,7 @@ import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
 import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.common.BaseFragment
 import io.github.jasvilladarez.ello.common.MviView
-import io.github.jasvilladarez.ello.util.showError
+import io.github.jasvilladarez.ello.util.ui.showError
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_editorial.*
 import javax.inject.Inject

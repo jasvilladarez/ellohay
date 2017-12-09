@@ -28,10 +28,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import io.github.jasvilladarez.domain.entity.Editorial
-import io.github.jasvilladarez.domain.entity.PostStreamLink
 import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.util.loadImage
-import io.github.jasvilladarez.ello.util.ui.fromHtml
+import io.github.jasvilladarez.ello.util.fromHtml
 import kotlinx.android.synthetic.main.li_editorial.view.*
 
 internal class EditorialListAdapter(

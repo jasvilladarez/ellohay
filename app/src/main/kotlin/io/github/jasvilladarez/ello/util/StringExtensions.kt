@@ -24,15 +24,12 @@
 
 package io.github.jasvilladarez.ello.util
 
-import android.content.Context
-import com.afollestad.materialdialogs.MaterialDialog
-import io.github.jasvilladarez.ello.R
+import android.os.Build
+import android.text.Html
+import android.text.Spanned
 
-fun Context.showError(message: String?) {
-    val errorMessage = message?.let { it } ?: getString(R.string.general_exception)
-    MaterialDialog.Builder(this)
-            .iconRes(R.drawable.ic_warning)
-            .title(errorMessage)
-            .positiveText(R.string.ok)
-            .show()
+fun String.fromHtml(): Spanned? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+    Html.fromHtml(this, Html.FROM_HTML_MODE_COMPACT)
+} else {
+    Html.fromHtml(this)
 }

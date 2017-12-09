@@ -33,8 +33,8 @@ import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.common.BaseActivity
 import io.github.jasvilladarez.ello.common.MviView
 import io.github.jasvilladarez.ello.discover.editorial.EditorialFragment
-import io.github.jasvilladarez.ello.util.setVisible
-import io.github.jasvilladarez.ello.util.showError
+import io.github.jasvilladarez.ello.util.ui.setVisible
+import io.github.jasvilladarez.ello.util.ui.showError
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
