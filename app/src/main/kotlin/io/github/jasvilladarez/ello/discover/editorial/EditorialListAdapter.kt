@@ -38,6 +38,11 @@ internal class EditorialListAdapter(
         editorialList: List<Editorial>? = null
 ) : RecyclerView.Adapter<EditorialListAdapter.ViewHolder>() {
 
+    companion object {
+        private const val VIEW_TYPE_DEFAULT = 0
+        private const val VIEW_TYPE_POST_STREAM = 1
+    }
+
     var list: List<Editorial>? = editorialList
         set(value) {
             field = value
@@ -56,19 +61,18 @@ internal class EditorialListAdapter(
 
     override fun getItemCount(): Int = list?.size ?: 0
 
+    override fun getItemViewType(position: Int): Int = list?.getOrNull(position)?.takeIf {
+        it.kind == Editorial.EditorialType.POST_STREAM
+    }?.let { VIEW_TYPE_POST_STREAM } ?: VIEW_TYPE_DEFAULT
+
     internal inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(editorial: Editorial) {
-            editorial.image?.ldpi?.url?.let {
+            editorial.image?.mdpi?.url?.let {
                 itemView.editorialImage.loadImage(it)
             }
             itemView.title.text = editorial.title
             itemView.description.text = editorial.renderedSubtitle?.fromHtml()
-            editorial.links?.let {
-                it.mapNotNull { it as? PostStreamLink }.firstOrNull()?.let {
-                    itemView.description.text = it.href
-                }
-            }
         }
     }
 }
