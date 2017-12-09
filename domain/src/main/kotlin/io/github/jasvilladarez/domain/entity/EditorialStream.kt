@@ -22,16 +22,16 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.network.response
+package io.github.jasvilladarez.domain.entity
 
 import com.google.gson.annotations.SerializedName
-import io.github.jasvilladarez.domain.entity.Editorial
 
 /**
  * Response from calling
  * @see https://ello.co/api/v2/editorials
  */
-internal data class EditorialsResponse(
+data class EditorialStream(
         @SerializedName("editorials")
-        val editorials: List<Editorial>
+        val editorials: List<Editorial>,
+        var next: Int? = null
 )

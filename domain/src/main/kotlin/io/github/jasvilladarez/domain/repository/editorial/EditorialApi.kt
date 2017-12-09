@@ -24,12 +24,14 @@
 
 package io.github.jasvilladarez.domain.repository.editorial
 
-import io.github.jasvilladarez.domain.network.response.EditorialsResponse
+import io.github.jasvilladarez.domain.entity.EditorialStream
 import io.reactivex.Single
+import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 internal interface EditorialApi {
 
     @GET("editorials")
-    fun fetchEditorials(): Single<EditorialsResponse>
+    fun fetchEditorials(@Query("before") before: Int? = null): Single<Response<EditorialStream>>
 }
