@@ -26,7 +26,7 @@ package io.github.jasvilladarez.domain.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class ImageSize(
+data class ImageVersion(
         @SerializedName("url")
         val url: String
 )
