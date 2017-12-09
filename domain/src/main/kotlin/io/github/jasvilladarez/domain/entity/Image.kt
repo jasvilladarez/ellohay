@@ -26,7 +26,7 @@ package io.github.jasvilladarez.domain.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class ImageAsset(
+data class Image(
         @SerializedName("mdpi")
         val thumbnail: ImageSize,
         @SerializedName("optimized")
