@@ -29,5 +29,5 @@ import io.reactivex.Observable
 
 interface EditorialRepository {
 
-    fun fetchEditorials(nextItems: Int? = null): Observable<EditorialStream>
+    fun fetchEditorials(nextPageId: Int? = null): Observable<EditorialStream>
 }

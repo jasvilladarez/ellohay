@@ -38,6 +38,7 @@ import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
 import io.github.jasvilladarez.domain.entity.Editorial
 import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.common.BaseFragment
+import io.github.jasvilladarez.ello.common.ElloAdapter
 import io.github.jasvilladarez.ello.common.MviView
 import io.github.jasvilladarez.ello.util.ui.showError
 import io.github.jasvilladarez.ello.widget.RecyclerAdapter
@@ -55,8 +56,8 @@ internal class EditorialFragment : BaseFragment(),
         ViewModelProviders.of(this, viewModelFactory)[EditorialViewModel::class.java]
     }
 
-    private val editorialAdapter: RecyclerAdapter<Editorial> by lazy {
-        RecyclerAdapter(EditorialViewItem())
+    private val editorialAdapter: ElloAdapter<Editorial> by lazy {
+        ElloAdapter(EditorialViewItem())
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -81,18 +82,34 @@ internal class EditorialFragment : BaseFragment(),
     )
 
     override fun render(state: EditorialViewState) {
-        swipeRefreshLayout.isRefreshing = state.isLoading
+        when (state) {
+            is EditorialViewState.DefaultView -> {
+                swipeRefreshLayout.isRefreshing = false
 
-        state.errorMessage?.let {
-            context?.showError(it)
-        }
+                recyclerView.adapter ?: let {
+                    recyclerView.adapter = editorialAdapter
+                    recyclerView.layoutManager = LinearLayoutManager(context)
+                    recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+                }
+                editorialAdapter.nextPageId = state.nextPageId
 
-        recyclerView.adapter ?: let {
-            recyclerView.adapter = editorialAdapter
-            recyclerView.layoutManager = LinearLayoutManager(context)
-            recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+                if (state.isMoreLoaded) editorialAdapter.addItems(state.editorials)
+                else editorialAdapter.items = state.editorials
+            }
+            is EditorialViewState.ErrorView -> {
+                swipeRefreshLayout.isRefreshing = false
+                state.errorMessage?.let {
+                    context?.showError(it)
+                }
+            }
+            is EditorialViewState.LoadingView -> {
+                if (state.isLoadingMore) {
+                    swipeRefreshLayout.isRefreshing = true
+                } else {
+                    swipeRefreshLayout.isRefreshing = true
+                }
+            }
         }
-        editorialAdapter.addItems(state.editorials)
     }
 
     private fun loadIntent(): Observable<EditorialIntent> = rxLifecycle.filter {
@@ -103,6 +120,6 @@ internal class EditorialFragment : BaseFragment(),
             .refreshes(swipeRefreshLayout).map { EditorialIntent.Load }
 
     private fun loadMoreIntent(): Observable<EditorialIntent> = editorialAdapter.loadMore()
-            .map { EditorialIntent.LoadMore }
+            .map { EditorialIntent.LoadMore(editorialAdapter.nextPageId) }
 
 }

@@ -33,8 +33,8 @@ internal class EditorialRepositoryImpl(
         private val editorialApi: EditorialApi
 ) : EditorialRepository {
 
-    override fun fetchEditorials(nextItems: Int?): Observable<EditorialStream> {
-        return editorialApi.fetchEditorials(nextItems).map {
+    override fun fetchEditorials(nextPageId: Int?): Observable<EditorialStream> {
+        return editorialApi.fetchEditorials(nextPageId).map {
             val next = Uri.parse(it.headers().get("link")?.substringBefore(">")
                     ?.substringAfter("<")).getQueryParameter("before")
             it.body()?.apply { this.next = next?.toInt() } ?: EditorialStream(emptyList())
