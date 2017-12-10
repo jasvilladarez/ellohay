@@ -76,7 +76,8 @@ internal class EditorialFragment : BaseFragment(),
 
     override fun intents(): Observable<EditorialIntent> = Observable.merge(
             loadIntent(),
-            refreshIntent()
+            refreshIntent(),
+            loadMoreIntent()
     )
 
     override fun render(state: EditorialViewState) {
@@ -91,7 +92,7 @@ internal class EditorialFragment : BaseFragment(),
             recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
-        editorialAdapter.items = state.editorials
+        editorialAdapter.addItems(state.editorials)
     }
 
     private fun loadIntent(): Observable<EditorialIntent> = rxLifecycle.filter {
@@ -100,4 +101,8 @@ internal class EditorialFragment : BaseFragment(),
 
     private fun refreshIntent(): Observable<EditorialIntent> = RxSwipeRefreshLayout
             .refreshes(swipeRefreshLayout).map { EditorialIntent.Load }
+
+    private fun loadMoreIntent(): Observable<EditorialIntent> = editorialAdapter.loadMore()
+            .map { EditorialIntent.LoadMore }
+
 }
