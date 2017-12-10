@@ -27,32 +27,78 @@ package io.github.jasvilladarez.ello.widget
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import io.reactivex.Observable
+import io.reactivex.Observer
+import io.reactivex.android.MainThreadDisposable
 
 internal class RecyclerAdapter<T>(
-        private val viewItem: RecyclerViewItem<T>
-) : RecyclerView.Adapter<RecyclerAdapter<T>.ViewHolder>() {
+        private val viewItem: RecyclerViewItem<T>,
+        private val loadMoreDistance: Int = 1
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var items: List<T> = emptyList()
+    private var _items: MutableList<T> = mutableListOf()
+
+    var items: List<T>
+        get() = _items
         set(value) {
-            field = value
+            _items = value.toMutableList()
             notifyDataSetChanged()
         }
 
-    override fun getItemCount(): Int = items.size
+    var onLoadMore: (() -> Unit)? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder? = parent?.let {
-        val view = View.inflate(it.context, viewItem.viewItemLayout, null)
-        ViewHolder(view)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+            object : RecyclerView.ViewHolder(View.inflate(parent.context,
+                    viewItem.viewItemLayout, null)) {}
 
-    override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        holder?.bind(items[position])
-    }
-
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-        fun bind(item: T) {
-            viewItem.bind(itemView, item)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        viewItem.bind(holder.itemView, items[position])
+        if (position == itemCount - loadMoreDistance) {
+            onLoadMore?.invoke()
         }
     }
+
+    override fun getItemCount(): Int = items.size
+
+    fun loadMore(): Observable<Unit> = OnLoadMoreItems(this)
+
+    fun addItems(items: List<T>) {
+        if (this.items.containsAll(items)) {
+            return
+        }
+        val prevCount = itemCount
+        _items.addAll(items)
+        notifyItemRangeInserted(prevCount, itemCount)
+    }
+
+    fun addItem(item: T) {
+        if (items.contains(item)) {
+            return
+        }
+        _items.add(item)
+        notifyItemInserted(itemCount)
+    }
+}
+
+internal class OnLoadMoreItems(
+        private val adapter: RecyclerAdapter<*>
+) : Observable<Unit>() {
+
+    override fun subscribeActual(observer: Observer<in Unit>?) {
+        observer?.let {
+            adapter.onLoadMore = object : Function0<Unit>, MainThreadDisposable() {
+
+                override fun invoke() {
+                    if (!isDisposed) {
+                        it.onNext(Unit)
+                    }
+                }
+
+                override fun onDispose() {
+                    adapter.onLoadMore = null
+                }
+            }
+        }
+    }
+
 }
