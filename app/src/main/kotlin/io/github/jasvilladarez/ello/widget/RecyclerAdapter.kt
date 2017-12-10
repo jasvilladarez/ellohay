@@ -31,7 +31,7 @@ import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.MainThreadDisposable
 
-internal class RecyclerAdapter<T>(
+internal open class RecyclerAdapter<T>(
         private val viewItem: RecyclerViewItem<T>,
         private val loadMoreDistance: Int = 1
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
