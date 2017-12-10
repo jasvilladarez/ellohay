@@ -32,6 +32,11 @@ import retrofit2.http.Query
 
 internal interface EditorialApi {
 
+    /**
+     * Fetch editorials
+     *
+     * @param before - before ID from Link header
+     */
     @GET("editorials")
     fun fetchEditorials(@Query("before") before: Int? = null): Single<Response<EditorialStream>>
 }
