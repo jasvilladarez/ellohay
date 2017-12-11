@@ -41,7 +41,6 @@ import io.github.jasvilladarez.ello.common.BaseFragment
 import io.github.jasvilladarez.ello.common.ElloAdapter
 import io.github.jasvilladarez.ello.common.MviView
 import io.github.jasvilladarez.ello.util.ui.showError
-import io.github.jasvilladarez.ello.widget.RecyclerAdapter
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_editorial.*
 import javax.inject.Inject
@@ -85,16 +84,18 @@ internal class EditorialFragment : BaseFragment(),
         when (state) {
             is EditorialViewState.DefaultView -> {
                 swipeRefreshLayout.isRefreshing = false
-
                 recyclerView.adapter ?: let {
                     recyclerView.adapter = editorialAdapter
                     recyclerView.layoutManager = LinearLayoutManager(context)
                     recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
                 }
                 editorialAdapter.nextPageId = state.nextPageId
-
-                if (state.isMoreLoaded) editorialAdapter.addItems(state.editorials)
-                else editorialAdapter.items = state.editorials
+                editorialAdapter.items = state.editorials
+            }
+            is EditorialViewState.MoreView -> {
+                swipeRefreshLayout.isRefreshing = false
+                editorialAdapter.nextPageId = state.nextPageId
+                editorialAdapter.addItems(state.editorials)
             }
             is EditorialViewState.ErrorView -> {
                 swipeRefreshLayout.isRefreshing = false
@@ -102,13 +103,8 @@ internal class EditorialFragment : BaseFragment(),
                     context?.showError(it)
                 }
             }
-            is EditorialViewState.LoadingView -> {
-                if (state.isLoadingMore) {
-                    swipeRefreshLayout.isRefreshing = true
-                } else {
-                    swipeRefreshLayout.isRefreshing = true
-                }
-            }
+            is EditorialViewState.InitialLoadingView -> swipeRefreshLayout.isRefreshing = true
+            is EditorialViewState.MoreLoadingView -> swipeRefreshLayout.isRefreshing = true
         }
     }
 

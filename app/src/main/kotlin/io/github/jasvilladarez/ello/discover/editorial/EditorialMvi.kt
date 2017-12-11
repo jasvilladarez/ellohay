@@ -42,9 +42,13 @@ internal sealed class EditorialIntent : MviIntent {
 
 internal sealed class EditorialResult : MviResult {
 
+    enum class EditorialMode {
+        LOAD, LOAD_MORE
+    }
+
     data class Success(
             val editorialStream: EditorialStream = EditorialStream(emptyList()),
-            val isLoadingMore: Boolean = false
+            val mode: EditorialMode
     ) : EditorialResult()
 
     data class Error(
@@ -52,7 +56,7 @@ internal sealed class EditorialResult : MviResult {
     ) : EditorialResult()
 
     data class InProgress(
-            val isLoadingMore: Boolean = false
+            val mode: EditorialMode
     ) : EditorialResult()
 
 }
@@ -61,13 +65,17 @@ internal sealed class EditorialViewState : MviViewState {
 
     data class DefaultView(
             val editorials: List<Editorial> = emptyList(),
-            val nextPageId: Int? = null,
-            val isMoreLoaded: Boolean = false
+            val nextPageId: Int? = null
     ) : EditorialViewState()
 
-    data class LoadingView(
-            val isLoadingMore: Boolean = false
+    data class MoreView(
+            val editorials: List<Editorial> = emptyList(),
+            val nextPageId: Int? = null
     ) : EditorialViewState()
+
+    object InitialLoadingView : EditorialViewState()
+
+    object MoreLoadingView : EditorialViewState()
 
     data class ErrorView(
             val errorMessage: String?

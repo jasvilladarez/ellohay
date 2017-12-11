@@ -45,14 +45,19 @@ internal class EditorialViewModel(
                 }
             }, { _, result ->
                 when (result) {
-                    is EditorialResult.Success ->
-                        EditorialViewState.DefaultView(
-                                result.editorialStream.editorials, result.editorialStream.next,
-                                result.isLoadingMore)
-                    is EditorialResult.Error -> EditorialViewState.ErrorView(
-                            result.error.message)
-                    is EditorialResult.InProgress -> EditorialViewState.LoadingView(
-                            result.isLoadingMore)
+                    is EditorialResult.Success -> when (result.mode) {
+                        EditorialResult.EditorialMode.LOAD ->
+                            EditorialViewState.MoreView(result.editorialStream.editorials,
+                                    result.editorialStream.next)
+                        EditorialResult.EditorialMode.LOAD_MORE ->
+                            EditorialViewState.DefaultView(result.editorialStream.editorials,
+                                    result.editorialStream.next)
+                    }
+                    is EditorialResult.Error -> EditorialViewState.ErrorView(result.error.message)
+                    is EditorialResult.InProgress -> when (result.mode) {
+                        EditorialResult.EditorialMode.LOAD -> EditorialViewState.InitialLoadingView
+                        EditorialResult.EditorialMode.LOAD_MORE -> EditorialViewState.MoreLoadingView
+                    }
                 }
             })
 
@@ -72,8 +77,16 @@ internal class EditorialViewModel(
 
     private fun fetchEditorials(nextPageId: Int? = null): Observable<EditorialResult> =
             editorialRepository.fetchEditorials(nextPageId).applyMvi(
-                    { EditorialResult.Success(it, nextPageId != null) },
+                    {
+                        EditorialResult.Success(it, nextPageId?.let {
+                            EditorialResult.EditorialMode.LOAD_MORE
+                        } ?: EditorialResult.EditorialMode.LOAD)
+                    },
                     { EditorialResult.Error(it) },
-                    { EditorialResult.InProgress(nextPageId != null) })
+                    {
+                        EditorialResult.InProgress(nextPageId?.let {
+                            EditorialResult.EditorialMode.LOAD_MORE
+                        } ?: EditorialResult.EditorialMode.LOAD)
+                    })
 
 }
