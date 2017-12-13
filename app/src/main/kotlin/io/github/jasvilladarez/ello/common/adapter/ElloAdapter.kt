@@ -22,15 +22,15 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.common
+package io.github.jasvilladarez.ello.common.adapter
 
 import io.github.jasvilladarez.ello.widget.RecyclerAdapter
 import io.github.jasvilladarez.ello.widget.RecyclerViewItem
 
 internal class ElloAdapter<T>(
-        private val viewItem: RecyclerViewItem<T>,
-        private val loadMoreDistance: Int = 1
-) : RecyclerAdapter<T>(viewItem, loadMoreDistance) {
+        viewItem: RecyclerViewItem<T>,
+        loadMoreDistance: Int = 1
+) : RecyclerAdapter<T>(viewItem, loadMoreDistance, ProgressViewItem()) {
 
     var nextPageId: Int? = null
 }

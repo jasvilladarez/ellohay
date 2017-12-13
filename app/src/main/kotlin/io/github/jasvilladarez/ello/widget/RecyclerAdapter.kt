@@ -25,6 +25,7 @@
 package io.github.jasvilladarez.ello.widget
 
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.reactivex.Observable
@@ -32,9 +33,15 @@ import io.reactivex.Observer
 import io.reactivex.android.MainThreadDisposable
 
 internal open class RecyclerAdapter<T>(
-        private val viewItem: RecyclerViewItem<T>,
-        private val loadMoreDistance: Int = 1
+        private val defaultViewItem: RecyclerViewItem<T>,
+        private val loadMoreDistance: Int = 1,
+        private val loadMoreItem: RecyclerViewItem<Unit>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    companion object {
+        private const val VIEW_ITEM_DEFAULT = 0
+        private const val VIEW_ITEM_PROGRESS = 1
+    }
 
     private var _items: MutableList<T> = mutableListOf()
 
@@ -46,19 +53,38 @@ internal open class RecyclerAdapter<T>(
         }
 
     var onLoadMore: (() -> Unit)? = null
+    var isLoading: Boolean = false
+        set(value) {
+            field = value
+            notifyItemChanged(itemCount)
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-            object : RecyclerView.ViewHolder(View.inflate(parent.context,
-                    viewItem.viewItemLayout, null)) {}
+            object : RecyclerView.ViewHolder(LayoutInflater.from(parent.context)
+                    .inflate(when (viewType) {
+                        VIEW_ITEM_PROGRESS -> loadMoreItem.viewItemLayout
+                        else -> defaultViewItem.viewItemLayout
+                    }, parent, false)) {}
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        viewItem.bind(holder.itemView, items[position])
-        if (position == itemCount - loadMoreDistance) {
-            onLoadMore?.invoke()
+        when (getItemViewType(position)) {
+            VIEW_ITEM_PROGRESS -> loadMoreItem.bind(holder.itemView, Unit)
+            else -> {
+                defaultViewItem.bind(holder.itemView, items[position])
+                if (position == itemCount - loadMoreDistance) {
+                    onLoadMore?.invoke()
+                }
+            }
         }
     }
 
-    override fun getItemCount(): Int = items.size
+    override fun getItemCount(): Int = if (isLoading) items.size + 1 else items.size
+
+    override fun getItemViewType(position: Int): Int = if (isLoading && position == itemCount - 1) {
+        VIEW_ITEM_PROGRESS
+    } else {
+        VIEW_ITEM_DEFAULT
+    }
 
     fun loadMore(): Observable<Unit> = OnLoadMoreItems(this)
 
@@ -72,6 +98,7 @@ internal open class RecyclerAdapter<T>(
     }
 
     fun addItem(item: T) {
+        isLoading = false
         if (items.contains(item)) {
             return
         }

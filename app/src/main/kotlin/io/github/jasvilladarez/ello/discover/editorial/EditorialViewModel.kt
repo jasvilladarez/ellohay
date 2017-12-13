@@ -47,10 +47,10 @@ internal class EditorialViewModel(
                 when (result) {
                     is EditorialResult.Success -> when (result.mode) {
                         EditorialResult.EditorialMode.LOAD ->
-                            EditorialViewState.MoreView(result.editorialStream.editorials,
+                            EditorialViewState.DefaultView(result.editorialStream.editorials,
                                     result.editorialStream.next)
                         EditorialResult.EditorialMode.LOAD_MORE ->
-                            EditorialViewState.DefaultView(result.editorialStream.editorials,
+                            EditorialViewState.MoreView(result.editorialStream.editorials,
                                     result.editorialStream.next)
                     }
                     is EditorialResult.Error -> EditorialViewState.ErrorView(result.error.message)

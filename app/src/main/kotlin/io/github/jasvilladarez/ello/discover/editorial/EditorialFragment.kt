@@ -38,7 +38,7 @@ import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
 import io.github.jasvilladarez.domain.entity.Editorial
 import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.common.BaseFragment
-import io.github.jasvilladarez.ello.common.ElloAdapter
+import io.github.jasvilladarez.ello.common.adapter.ElloAdapter
 import io.github.jasvilladarez.ello.common.MviView
 import io.github.jasvilladarez.ello.util.ui.showError
 import io.reactivex.Observable
@@ -93,9 +93,9 @@ internal class EditorialFragment : BaseFragment(),
                 editorialAdapter.items = state.editorials
             }
             is EditorialViewState.MoreView -> {
-                swipeRefreshLayout.isRefreshing = false
                 editorialAdapter.nextPageId = state.nextPageId
                 editorialAdapter.addItems(state.editorials)
+                editorialAdapter.isLoading = false
             }
             is EditorialViewState.ErrorView -> {
                 swipeRefreshLayout.isRefreshing = false
@@ -104,7 +104,7 @@ internal class EditorialFragment : BaseFragment(),
                 }
             }
             is EditorialViewState.InitialLoadingView -> swipeRefreshLayout.isRefreshing = true
-            is EditorialViewState.MoreLoadingView -> swipeRefreshLayout.isRefreshing = true
+            is EditorialViewState.MoreLoadingView -> editorialAdapter.isLoading = true
         }
     }
 
