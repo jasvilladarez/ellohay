@@ -64,9 +64,10 @@ internal class MainActivity : BaseActivity(), MviView<MainIntent, MainViewState>
     override fun render(state: MainViewState) {
         when (state) {
             is MainViewState.View -> {
-                fragmentContainer.setVisible(!state.isLoading)
-                loadingView.setVisible(state.isLoading)
-                if (state.isSuccessful) {
+                loadingView.setVisible(false)
+                fragmentContainer.setVisible(true)
+                if (state.isSuccessful
+                        && supportFragmentManager.findFragmentById(R.id.fragmentContainer) == null) {
                     supportFragmentManager.beginTransaction()
                             .replace(R.id.fragmentContainer, EditorialFragment())
                             .commit()
@@ -77,6 +78,7 @@ internal class MainActivity : BaseActivity(), MviView<MainIntent, MainViewState>
                 fragmentContainer.setVisible(false)
                 showError(state.errorMessage)
             }
+            is MainViewState.LoadingView -> loadingView.setVisible(true)
         }
     }
 

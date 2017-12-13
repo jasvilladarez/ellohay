@@ -43,9 +43,9 @@ internal class MainViewModel(
                 }
             }, { _, result ->
                 when (result) {
-                    is MainResult.Success -> MainViewState.View(false, true)
+                    is MainResult.Success -> MainViewState.View(true)
                     is MainResult.Error -> MainViewState.Error(result.error.message)
-                    is MainResult.InProgress -> MainViewState.View(true)
+                    is MainResult.InProgress -> MainViewState.LoadingView
                 }
             })
 

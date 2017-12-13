@@ -47,11 +47,12 @@ internal sealed class MainResult : MviResult {
 internal sealed class MainViewState : MviViewState {
 
     data class View(
-            val isLoading: Boolean = false,
             val isSuccessful: Boolean = false,
             // TODO handle logged in view (Phase 2 implementation)
             val isLoggedIn: Boolean = false
     ) : MainViewState()
+
+    object LoadingView : MainViewState()
 
     data class Error(
             val errorMessage: String?
