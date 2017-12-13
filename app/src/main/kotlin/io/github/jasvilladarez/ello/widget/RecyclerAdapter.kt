@@ -58,6 +58,8 @@ open class RecyclerAdapter<T>(
             notifyItemChanged(itemCount)
         }
 
+    var onItemClick: ((T) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
             object : RecyclerView.ViewHolder(LayoutInflater.from(parent.context)
                     .inflate(when (viewType) {
@@ -70,6 +72,9 @@ open class RecyclerAdapter<T>(
             VIEW_ITEM_PROGRESS -> loadMoreItem.bind(holder.itemView, Unit)
             else -> {
                 defaultViewItem.bind(holder.itemView, items[position])
+                holder.itemView.setOnClickListener {
+                    onItemClick?.invoke(items[position])
+                }
                 if (position == itemCount - loadMoreDistance) {
                     onLoadMore?.invoke()
                 }
@@ -85,7 +90,9 @@ open class RecyclerAdapter<T>(
         VIEW_ITEM_DEFAULT
     }
 
-    fun loadMore(): Observable<Unit> = OnLoadMoreItems(this)
+    fun onLoadMore(): Observable<Unit> = OnLoadMoreItems(this)
+
+    fun onItemClick(): Observable<T> = ItemClick(this)
 
     fun addItems(items: List<T>) {
         if (this.items.containsAll(items)) {
@@ -127,4 +134,26 @@ internal class OnLoadMoreItems(
         }
     }
 
+}
+
+internal class ItemClick<T>(
+        private val adapter: RecyclerAdapter<T>
+) : Observable<T>() {
+
+    override fun subscribeActual(observer: Observer<in T>?) {
+        observer?.let {
+            adapter.onItemClick = object : Function1<T, Unit>, MainThreadDisposable() {
+
+                override fun invoke(item: T) {
+                    if (!isDisposed) {
+                        it.onNext(item)
+                    }
+                }
+
+                override fun onDispose() {
+                    adapter.onItemClick = null
+                }
+            }
+        }
+    }
 }
