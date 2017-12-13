@@ -30,7 +30,7 @@ import io.github.jasvilladarez.ello.widget.RecyclerViewItem
 internal class ElloAdapter<T>(
         viewItem: RecyclerViewItem<T>,
         loadMoreDistance: Int = 1
-) : RecyclerAdapter<T>(viewItem, loadMoreDistance, ProgressViewItem()) {
+) : RecyclerAdapter<T>(viewItem, loadMoreDistance, ElloProgressViewItem()) {
 
     var nextPageId: Int? = null
 }

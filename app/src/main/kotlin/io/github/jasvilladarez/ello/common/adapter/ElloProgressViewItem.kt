@@ -28,7 +28,7 @@ import android.view.View
 import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.widget.RecyclerViewItem
 
-internal class ProgressViewItem : RecyclerViewItem<Unit> {
+internal class ElloProgressViewItem : RecyclerViewItem<Unit> {
 
     override val viewItemLayout: Int
         get() = R.layout.li_progress
