@@ -26,7 +26,7 @@ package io.github.jasvilladarez.ello.widget
 
 import android.view.View
 
-internal interface RecyclerViewItem<in T> {
+interface RecyclerViewItem<in T> {
 
     val viewItemLayout: Int
 
