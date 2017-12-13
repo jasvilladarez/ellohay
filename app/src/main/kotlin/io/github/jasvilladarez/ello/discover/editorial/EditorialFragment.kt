@@ -75,9 +75,7 @@ internal class EditorialFragment : BaseFragment(),
     }
 
     override fun intents(): Observable<EditorialIntent> = Observable.merge(
-            loadIntent(),
-            refreshIntent(),
-            loadMoreIntent()
+            loadIntent(), refreshIntent(), loadMoreIntent(), itemClickIntent()
     )
 
     override fun render(state: EditorialViewState) {
@@ -115,7 +113,9 @@ internal class EditorialFragment : BaseFragment(),
     private fun refreshIntent(): Observable<EditorialIntent> = RxSwipeRefreshLayout
             .refreshes(swipeRefreshLayout).map { EditorialIntent.Load }
 
-    private fun loadMoreIntent(): Observable<EditorialIntent> = editorialAdapter.loadMore()
+    private fun loadMoreIntent(): Observable<EditorialIntent> = editorialAdapter.onLoadMore()
             .map { EditorialIntent.LoadMore(editorialAdapter.nextPageId) }
 
+    private fun itemClickIntent(): Observable<EditorialIntent> = editorialAdapter.onItemClick()
+            .map { EditorialIntent.ItemClick(it) }
 }

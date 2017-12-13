@@ -38,6 +38,10 @@ internal sealed class EditorialIntent : MviIntent {
             val nextPageId: Int?
     ) : EditorialIntent()
 
+    data class ItemClick(
+            val item: Editorial
+    ) : EditorialIntent()
+
 }
 
 internal sealed class EditorialResult : MviResult {

@@ -42,6 +42,10 @@ internal class EditorialViewModel(
                 when (it) {
                     is EditorialIntent.Load -> fetchEditorials()
                     is EditorialIntent.LoadMore -> fetchEditorials(it.nextPageId)
+                    is EditorialIntent.ItemClick -> {
+                        //FIXME Change this to open viewing of editorial page
+                        Observable.just(EditorialResult.InProgress(EditorialResult.EditorialMode.LOAD))
+                    }
                 }
             }, { _, result ->
                 when (result) {
