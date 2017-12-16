@@ -36,9 +36,9 @@ import io.github.jasvilladarez.ello.viewmodel.ViewModelKey
 @Module
 internal abstract class EditorialBuilder {
 
-    @ContributesAndroidInjector(modules = arrayOf(
-            EditorialRepositoryModule::class,
-            EditorialModule::class))
+    @ContributesAndroidInjector(modules = [
+        EditorialRepositoryModule::class, EditorialModule::class
+    ])
     abstract fun editorialFragment(): EditorialFragment
 }
 
