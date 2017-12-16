@@ -22,33 +22,24 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.discover.editorial
+package io.github.jasvilladarez.ello.discover
 
-import android.arch.lifecycle.ViewModel
-import dagger.Module
-import dagger.Provides
-import dagger.android.ContributesAndroidInjector
-import dagger.multibindings.IntoMap
-import io.github.jasvilladarez.domain.repository.editorial.EditorialRepository
-import io.github.jasvilladarez.domain.repository.editorial.EditorialRepositoryModule
-import io.github.jasvilladarez.ello.viewmodel.ViewModelKey
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import io.github.jasvilladarez.ello.R
+import io.github.jasvilladarez.ello.common.BaseFragment
 
-@Module
-internal abstract class EditorialBuilder {
+internal class BrowseFragment : BaseFragment() {
 
-    @ContributesAndroidInjector(modules = [
-        EditorialRepositoryModule::class,
-        EditorialModule::class
-    ])
-    abstract fun editorialFragment(): EditorialFragment
-}
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.fragment_browse, container, false)
 
-@Module
-internal class EditorialModule {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    @Provides
-    @IntoMap
-    @ViewModelKey(EditorialViewModel::class)
-    fun provideEditorialViewModel(editorialRepository: EditorialRepository): ViewModel =
-            EditorialViewModel(editorialRepository)
+    }
+
 }

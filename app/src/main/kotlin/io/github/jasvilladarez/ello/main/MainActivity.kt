@@ -32,7 +32,7 @@ import android.os.Bundle
 import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.common.BaseActivity
 import io.github.jasvilladarez.ello.common.MviView
-import io.github.jasvilladarez.ello.discover.editorial.EditorialFragment
+import io.github.jasvilladarez.ello.discover.BrowseFragment
 import io.github.jasvilladarez.ello.util.ui.setVisible
 import io.github.jasvilladarez.ello.util.ui.showError
 import io.reactivex.Observable
@@ -69,7 +69,7 @@ internal class MainActivity : BaseActivity(), MviView<MainIntent, MainViewState>
                 if (state.isSuccessful
                         && supportFragmentManager.findFragmentById(R.id.fragmentContainer) == null) {
                     supportFragmentManager.beginTransaction()
-                            .replace(R.id.fragmentContainer, EditorialFragment())
+                            .replace(R.id.fragmentContainer, BrowseFragment())
                             .commit()
                 }
             }

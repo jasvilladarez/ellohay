@@ -27,18 +27,16 @@ package io.github.jasvilladarez.ello.dagger
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import io.github.jasvilladarez.domain.repository.auth.AuthRepositoryModule
-import io.github.jasvilladarez.ello.discover.editorial.EditorialBuilder
+import io.github.jasvilladarez.ello.discover.BrowseBuilder
 import io.github.jasvilladarez.ello.main.MainActivity
 import io.github.jasvilladarez.ello.main.MainModule
 
 @Module
 internal abstract class ActivityBuilder {
 
-    @ContributesAndroidInjector(modules = arrayOf(
-            AuthRepositoryModule::class,
-            MainModule::class,
-            EditorialBuilder::class,
-            ViewModelBuilder::class
-    ))
+    @ContributesAndroidInjector(modules = [AuthRepositoryModule::class, ViewModelBuilder::class,
+        MainModule::class,
+        BrowseBuilder::class
+    ])
     abstract fun bindMainActivity(): MainActivity
 }
