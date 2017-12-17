@@ -22,15 +22,27 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.discover
+package io.github.jasvilladarez.ello.browse.editorial
 
-import dagger.Module
-import dagger.android.ContributesAndroidInjector
+import android.view.View
+import io.github.jasvilladarez.domain.entity.Editorial
+import io.github.jasvilladarez.ello.R
+import io.github.jasvilladarez.ello.util.fromHtml
+import io.github.jasvilladarez.ello.util.ui.loadImage
+import io.github.jasvilladarez.ello.widget.RecyclerViewItem
+import kotlinx.android.synthetic.main.li_editorial.view.*
 
-@Module
-internal abstract class BrowseBuilder {
+internal class EditorialViewItem : RecyclerViewItem<Editorial> {
 
-    @ContributesAndroidInjector
-    abstract fun browseFragment(): BrowseFragment
+    override val viewItemLayout: Int
+        get() = R.layout.li_editorial
+
+    override fun bind(view: View, item: Editorial) {
+        item.image?.mdpi?.url?.let {
+            view.editorialImage?.loadImage(it)
+        }
+        view.title?.text = item.title
+        view.description?.text = item.renderedSubtitle?.fromHtml()
+    }
 
 }

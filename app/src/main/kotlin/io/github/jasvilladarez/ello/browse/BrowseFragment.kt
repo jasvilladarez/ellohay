@@ -22,27 +22,24 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.discover.editorial
+package io.github.jasvilladarez.ello.browse
 
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import io.github.jasvilladarez.domain.entity.Editorial
+import android.view.ViewGroup
 import io.github.jasvilladarez.ello.R
-import io.github.jasvilladarez.ello.util.fromHtml
-import io.github.jasvilladarez.ello.util.ui.loadImage
-import io.github.jasvilladarez.ello.widget.RecyclerViewItem
-import kotlinx.android.synthetic.main.li_editorial.view.*
+import io.github.jasvilladarez.ello.common.BaseFragment
 
-internal class EditorialViewItem : RecyclerViewItem<Editorial> {
+internal class BrowseFragment : BaseFragment() {
 
-    override val viewItemLayout: Int
-        get() = R.layout.li_editorial
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.fragment_browse, container, false)
 
-    override fun bind(view: View, item: Editorial) {
-        item.image?.mdpi?.url?.let {
-            view.editorialImage?.loadImage(it)
-        }
-        view.title?.text = item.title
-        view.description?.text = item.renderedSubtitle?.fromHtml()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
     }
 
 }

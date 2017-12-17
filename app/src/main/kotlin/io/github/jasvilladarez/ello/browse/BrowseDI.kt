@@ -22,24 +22,18 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.discover
+package io.github.jasvilladarez.ello.browse
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import io.github.jasvilladarez.ello.R
-import io.github.jasvilladarez.ello.common.BaseFragment
+import dagger.Module
+import dagger.android.ContributesAndroidInjector
+import io.github.jasvilladarez.ello.browse.editorial.EditorialBuilder
 
-internal class BrowseFragment : BaseFragment() {
+@Module
+internal abstract class BrowseBuilder {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.fragment_browse, container, false)
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
+    @ContributesAndroidInjector(modules = [
+        EditorialBuilder::class
+    ])
+    abstract fun browseFragment(): BrowseFragment
 
 }

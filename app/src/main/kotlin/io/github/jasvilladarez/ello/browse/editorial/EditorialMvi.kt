@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.discover.editorial
+package io.github.jasvilladarez.ello.browse.editorial
 
 import io.github.jasvilladarez.domain.entity.Editorial
 import io.github.jasvilladarez.domain.entity.EditorialStream

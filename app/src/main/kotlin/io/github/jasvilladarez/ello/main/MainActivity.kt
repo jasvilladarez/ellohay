@@ -32,7 +32,7 @@ import android.os.Bundle
 import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.common.BaseActivity
 import io.github.jasvilladarez.ello.common.MviView
-import io.github.jasvilladarez.ello.discover.BrowseFragment
+import io.github.jasvilladarez.ello.browse.BrowseFragment
 import io.github.jasvilladarez.ello.util.ui.setVisible
 import io.github.jasvilladarez.ello.util.ui.showError
 import io.reactivex.Observable

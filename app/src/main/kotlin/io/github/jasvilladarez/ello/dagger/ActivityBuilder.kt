@@ -27,7 +27,7 @@ package io.github.jasvilladarez.ello.dagger
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import io.github.jasvilladarez.domain.repository.auth.AuthRepositoryModule
-import io.github.jasvilladarez.ello.discover.BrowseBuilder
+import io.github.jasvilladarez.ello.browse.BrowseBuilder
 import io.github.jasvilladarez.ello.main.MainActivity
 import io.github.jasvilladarez.ello.main.MainModule
 
