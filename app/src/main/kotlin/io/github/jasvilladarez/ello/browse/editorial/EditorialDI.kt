@@ -44,7 +44,7 @@ internal abstract class EditorialBuilder {
 }
 
 @Module
-internal class EditorialModule {
+private class EditorialModule {
 
     @Provides
     @IntoMap

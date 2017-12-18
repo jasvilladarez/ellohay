@@ -42,7 +42,7 @@ import io.github.jasvilladarez.ello.common.adapter.ElloAdapter
 import io.github.jasvilladarez.ello.common.MviView
 import io.github.jasvilladarez.ello.util.ui.showError
 import io.reactivex.Observable
-import kotlinx.android.synthetic.main.fragment_editorial.*
+import kotlinx.android.synthetic.main.ello_loading_list.*
 import javax.inject.Inject
 
 internal class EditorialFragment : BaseFragment(),
@@ -61,7 +61,7 @@ internal class EditorialFragment : BaseFragment(),
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.fragment_editorial, container, false)
+            inflater.inflate(R.layout.ello_loading_list, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
