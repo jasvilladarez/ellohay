@@ -26,17 +26,19 @@ package io.github.jasvilladarez.domain.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class Image(
-        @SerializedName("ldpi")
-        val ldpi: ImageVersion?,
-        @SerializedName("mdpi")
-        val mdpi: ImageVersion?,
-        @SerializedName("hdpi")
-        val hdpi: ImageVersion?,
-        @SerializedName("xhdpi")
-        val xhdpi: ImageVersion?,
-        @SerializedName("optimized")
-        val optimized: ImageVersion?,
-        @SerializedName("original")
-        val original: ImageVersion?
+data class ArtistInvite(
+        @SerializedName("id")
+        val id: Long,
+        @SerializedName("title")
+        val title: String,
+        @SerializedName("invite_type")
+        val inviteType: String,
+        @SerializedName("short_description")
+        val shortDescription: String,
+        @SerializedName("description")
+        val description: String,
+        @SerializedName("header_image")
+        val headerImage: Image,
+        @SerializedName("logo_image")
+        val logoImage: Image
 )
