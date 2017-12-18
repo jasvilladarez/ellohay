@@ -27,20 +27,26 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:gravity="center"
-        android:text="@string/app_name"
-        android:textAllCaps="true"
-        android:textColor="@color/ello_black"
-        android:textSize="@dimen/title_textSize"
-        android:textStyle="bold" />
+        android:layout_height="wrap_content">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textAllCaps="true"
+            android:textColor="@color/ello_black"
+            android:textSize="@dimen/title_textSize"
+            android:textStyle="bold" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabLayout"
+            style="@style/ElloTheme.TabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize" />
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"

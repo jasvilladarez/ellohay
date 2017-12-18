@@ -13,6 +13,7 @@
 
         <item name="titleTextAppearance">@style/ElloTheme.Title</item>
         <item name="subtitleTextAppearance">@style/ElloTheme.SubTitle</item>
+
     </style>
 
     <style name="ElloTheme.Title" parent="TextAppearance.AppCompat.Headline">
@@ -20,5 +21,12 @@
     </style>
 
     <style name="ElloTheme.SubTitle" parent="TextAppearance.AppCompat.Subhead" />
+
+    <style name="ElloTheme.TabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabBackground">?android:attr/selectableItemBackground</item>
+        <item name="tabGravity">center</item>
+        <item name="tabIndicatorColor">@color/ello_black</item>
+        <item name="tabSelectedTextColor">@color/ello_black</item>
+    </style>
 
 </resources>

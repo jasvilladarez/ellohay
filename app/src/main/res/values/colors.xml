@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">@color/ello_white</color>
-    <color name="colorPrimaryDark">#aaaaaa</color>
+    <color name="colorPrimaryDark">@color/ello_grey</color>
     <color name="colorAccent">#00d100</color>
 
     <color name="ello_white">#ffffff</color>
     <color name="ello_black">#000000</color>
     <color name="ello_red">#dd0000</color>
+    <color name="ello_grey">#aaaaaa</color>
 
     <color name="ello_foreground">#80000000</color>
 </resources>
