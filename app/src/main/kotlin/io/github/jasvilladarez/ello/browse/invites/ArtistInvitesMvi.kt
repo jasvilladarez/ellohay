@@ -22,33 +22,25 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.browse.editorial
+package io.github.jasvilladarez.ello.browse.invites
 
-import android.arch.lifecycle.ViewModel
-import dagger.Module
-import dagger.Provides
-import dagger.android.ContributesAndroidInjector
-import dagger.multibindings.IntoMap
-import io.github.jasvilladarez.domain.repository.editorial.EditorialRepository
-import io.github.jasvilladarez.domain.repository.editorial.EditorialRepositoryModule
-import io.github.jasvilladarez.ello.viewmodel.ViewModelKey
+import io.github.jasvilladarez.ello.common.MviIntent
+import io.github.jasvilladarez.ello.common.MviResult
+import io.github.jasvilladarez.ello.common.MviViewState
 
-@Module
-internal abstract class EditorialBuilder {
+internal sealed class ArtistInvitesIntent : MviIntent {
 
-    @ContributesAndroidInjector(modules = [
-        EditorialRepositoryModule::class,
-        EditorialModule::class
-    ])
-    abstract fun editorialFragment(): EditorialFragment
+    object Load : ArtistInvitesIntent()
 }
 
-@Module
-internal class EditorialModule {
+internal sealed class ArtistInvitesResult : MviResult {
 
-    @Provides
-    @IntoMap
-    @ViewModelKey(EditorialViewModel::class)
-    fun provideEditorialViewModel(editorialRepository: EditorialRepository): ViewModel =
-            EditorialViewModel(editorialRepository)
+    object Success: ArtistInvitesResult()
+}
+
+internal sealed class ArtistInvitesViewState : MviViewState {
+
+    object DefaultView : ArtistInvitesViewState()
+
+    object LoadingView : ArtistInvitesViewState()
 }

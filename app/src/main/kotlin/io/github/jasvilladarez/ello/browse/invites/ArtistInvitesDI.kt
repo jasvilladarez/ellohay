@@ -24,12 +24,28 @@
 
 package io.github.jasvilladarez.ello.browse.invites
 
+import android.arch.lifecycle.ViewModel
 import dagger.Module
+import dagger.Provides
 import dagger.android.ContributesAndroidInjector
+import dagger.multibindings.IntoMap
+import io.github.jasvilladarez.ello.viewmodel.ViewModelKey
 
 @Module
 internal abstract class ArtistInvitesBuilder {
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [
+        ArtistInvitesModule::class
+    ])
     abstract fun artistInvitesFragment(): ArtistInvitesFragment
+}
+
+@Module
+internal class ArtistInvitesModule {
+
+    @Provides
+    @IntoMap
+    @ViewModelKey(ArtistInvitesViewModel::class)
+    fun providesArtistInvitesViewModel(): ViewModel =
+            ArtistInvitesViewModel()
 }

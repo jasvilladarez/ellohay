@@ -22,33 +22,38 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.browse.editorial
+package io.github.jasvilladarez.ello.browse.invites
 
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
-import dagger.Module
-import dagger.Provides
-import dagger.android.ContributesAndroidInjector
-import dagger.multibindings.IntoMap
-import io.github.jasvilladarez.domain.repository.editorial.EditorialRepository
-import io.github.jasvilladarez.domain.repository.editorial.EditorialRepositoryModule
-import io.github.jasvilladarez.ello.viewmodel.ViewModelKey
+import io.github.jasvilladarez.ello.common.MviStateMachine
+import io.github.jasvilladarez.ello.common.MviViewModel
+import io.reactivex.Observable
 
-@Module
-internal abstract class EditorialBuilder {
+internal class ArtistInvitesViewModel : ViewModel(), MviViewModel<ArtistInvitesIntent,
+        ArtistInvitesViewState> {
 
-    @ContributesAndroidInjector(modules = [
-        EditorialRepositoryModule::class,
-        EditorialModule::class
-    ])
-    abstract fun editorialFragment(): EditorialFragment
-}
+    private val stateMachine =
+            MviStateMachine<ArtistInvitesIntent, ArtistInvitesResult, ArtistInvitesViewState>(
+                    ArtistInvitesViewState.DefaultView, {
+                when (it) {
+                    is ArtistInvitesIntent.Load -> Observable.just(ArtistInvitesResult.Success)
+                }
+            }, { _, result ->
+                when (result) {
+                    is ArtistInvitesResult.Success -> ArtistInvitesViewState.DefaultView
+                }
+            })
 
-@Module
-internal class EditorialModule {
+    override val state: LiveData<ArtistInvitesViewState>
+        get() = stateMachine.state
 
-    @Provides
-    @IntoMap
-    @ViewModelKey(EditorialViewModel::class)
-    fun provideEditorialViewModel(editorialRepository: EditorialRepository): ViewModel =
-            EditorialViewModel(editorialRepository)
+    override fun processIntents(intents: Observable<ArtistInvitesIntent>) {
+        stateMachine.processIntents(intents)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        stateMachine.clear()
+    }
 }

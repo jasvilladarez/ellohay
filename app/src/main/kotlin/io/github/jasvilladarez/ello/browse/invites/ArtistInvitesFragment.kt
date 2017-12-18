@@ -24,8 +24,58 @@
 
 package io.github.jasvilladarez.ello.browse.invites
 
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.common.BaseFragment
+import io.github.jasvilladarez.ello.common.MviView
+import io.reactivex.Observable
+import kotlinx.android.synthetic.main.ello_loading_list.*
+import javax.inject.Inject
 
-internal class ArtistInvitesFragment : BaseFragment() {
+internal class ArtistInvitesFragment : BaseFragment(),
+        MviView<ArtistInvitesIntent, ArtistInvitesViewState> {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel: ArtistInvitesViewModel by lazy {
+        ViewModelProviders.of(this, viewModelFactory)[ArtistInvitesViewModel::class.java]
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.ello_loading_list, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.state.observe(this, Observer {
+            it?.let {
+                render(it)
+            }
+        })
+        viewModel.processIntents(intents())
+    }
+
+    override fun intents(): Observable<ArtistInvitesIntent> = loadIntent()
+
+    override fun render(state: ArtistInvitesViewState) {
+        when (state) {
+            is ArtistInvitesViewState.DefaultView -> {
+
+            }
+            is ArtistInvitesViewState.LoadingView -> swipeRefreshLayout.isRefreshing = true
+        }
+    }
+
+    private fun loadIntent(): Observable<ArtistInvitesIntent> = rxLifecycle.filter {
+        it == Lifecycle.Event.ON_START
+    }.map { ArtistInvitesIntent.Load }
 }
