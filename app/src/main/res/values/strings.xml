@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">Ello</string>
 
-    <string name="ok">OK</string>
+    <string name="editorial">Editorial</string>
+    <string name="artist_invites">Artist Invites</string>
+    <string name="discover">Discover</string>
 
+    <string name="ok">OK</string>
     <string name="general_exception">Something went wrong…</string>
 </resources>

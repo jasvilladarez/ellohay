@@ -26,13 +26,17 @@ package io.github.jasvilladarez.ello.browse
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import io.github.jasvilladarez.ello.browse.discover.DiscoverBuilder
 import io.github.jasvilladarez.ello.browse.editorial.EditorialBuilder
+import io.github.jasvilladarez.ello.browse.invites.ArtistInvitesBuilder
 
 @Module
 internal abstract class BrowseBuilder {
 
     @ContributesAndroidInjector(modules = [
-        EditorialBuilder::class
+        EditorialBuilder::class,
+        ArtistInvitesBuilder::class,
+        DiscoverBuilder::class
     ])
     abstract fun browseFragment(): BrowseFragment
 

@@ -22,28 +22,14 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.browse
+package io.github.jasvilladarez.ello.browse.discover
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import io.github.jasvilladarez.ello.R
-import io.github.jasvilladarez.ello.common.BaseFragment
-import kotlinx.android.synthetic.main.fragment_browse.*
+import dagger.Module
+import dagger.android.ContributesAndroidInjector
 
-internal class BrowseFragment : BaseFragment() {
+@Module
+internal abstract class DiscoverBuilder {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.fragment_browse, container, false)
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        viewPager.adapter = BrowsePagerAdapter(view.context, childFragmentManager)
-        viewPager.offscreenPageLimit = viewPager.adapter?.count ?: 1
-        tabLayout.setupWithViewPager(viewPager)
-    }
-
+    @ContributesAndroidInjector
+    abstract fun discoverFragment(): DiscoverFragment
 }
