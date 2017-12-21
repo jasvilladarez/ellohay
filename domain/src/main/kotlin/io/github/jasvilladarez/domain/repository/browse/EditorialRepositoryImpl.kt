@@ -22,26 +22,22 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.repository.editorial
+package io.github.jasvilladarez.domain.repository.browse
 
-import dagger.Module
-import dagger.Provides
-import io.github.jasvilladarez.domain.ApiFactory
-import io.github.jasvilladarez.domain.entity.Token
-import io.github.jasvilladarez.domain.network.AuthHeader
-import io.github.jasvilladarez.ello.BuildConfig
+import android.net.Uri
+import io.github.jasvilladarez.domain.entity.EditorialStream
+import io.github.jasvilladarez.domain.util.applySchedulers
+import io.reactivex.Observable
 
-@Module
-class EditorialRepositoryModule {
+internal class EditorialRepositoryImpl(
+        private val editorialApi: EditorialApi
+) : EditorialRepository {
 
-    @Provides
-    internal fun providesEditorialApi(token: Token) =
-            ApiFactory.createApi(EditorialApi::class.java, ApiFactory.ELLO_V2_PREFIX,
-                    BuildConfig.DEBUG, AuthHeader(token))
-
-    @Provides
-    internal fun providesEditorialRepository(
-            editorialApi: EditorialApi): EditorialRepository =
-            EditorialRepositoryImpl(editorialApi)
-
+    override fun fetchEditorials(nextPageId: Int?): Observable<EditorialStream> {
+        return editorialApi.fetchEditorials(nextPageId).map {
+            val next = Uri.parse(it.headers().get("link")?.substringBefore(">")
+                    ?.substringAfter("<")).getQueryParameter("before")
+            it.body()?.apply { this.next = next?.toInt() } ?: EditorialStream(emptyList())
+        }.toObservable().applySchedulers()
+    }
 }

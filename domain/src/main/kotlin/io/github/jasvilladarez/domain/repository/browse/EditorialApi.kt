@@ -22,12 +22,21 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.repository.editorial
+package io.github.jasvilladarez.domain.repository.browse
 
 import io.github.jasvilladarez.domain.entity.EditorialStream
-import io.reactivex.Observable
+import io.reactivex.Single
+import retrofit2.Response
+import retrofit2.http.GET
+import retrofit2.http.Query
 
-interface EditorialRepository {
+internal interface EditorialApi {
 
-    fun fetchEditorials(nextPageId: Int? = null): Observable<EditorialStream>
+    /**
+     * Fetch editorials
+     *
+     * @param before - before ID from Link header
+     */
+    @GET("editorials")
+    fun fetchEditorials(@Query("before") before: Int? = null): Single<Response<EditorialStream>>
 }

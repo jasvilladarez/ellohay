@@ -29,8 +29,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
-import io.github.jasvilladarez.domain.repository.editorial.EditorialRepository
-import io.github.jasvilladarez.domain.repository.editorial.EditorialRepositoryModule
+import io.github.jasvilladarez.domain.repository.browse.EditorialRepository
+import io.github.jasvilladarez.domain.repository.browse.EditorialRepositoryModule
 import io.github.jasvilladarez.ello.viewmodel.ViewModelKey
 
 @Module
