@@ -29,12 +29,12 @@ import io.github.jasvilladarez.domain.entity.EditorialStream
 import io.github.jasvilladarez.domain.util.applySchedulers
 import io.reactivex.Observable
 
-internal class EditorialRepositoryImpl(
-        private val editorialApi: EditorialApi
-) : EditorialRepository {
+internal class BrowseRepositoryImpl(
+        private val browseApi: BrowseApi
+) : BrowseRepository {
 
     override fun fetchEditorials(nextPageId: Int?): Observable<EditorialStream> {
-        return editorialApi.fetchEditorials(nextPageId).map {
+        return browseApi.fetchEditorials(nextPageId).map {
             val next = Uri.parse(it.headers().get("link")?.substringBefore(">")
                     ?.substringAfter("<")).getQueryParameter("before")
             it.body()?.apply { this.next = next?.toInt() } ?: EditorialStream(emptyList())

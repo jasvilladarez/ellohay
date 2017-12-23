@@ -24,10 +24,24 @@
 
 package io.github.jasvilladarez.domain.repository.browse
 
-import io.github.jasvilladarez.domain.entity.EditorialStream
-import io.reactivex.Observable
+import dagger.Module
+import dagger.Provides
+import io.github.jasvilladarez.domain.ApiFactory
+import io.github.jasvilladarez.domain.entity.Token
+import io.github.jasvilladarez.domain.network.AuthHeader
+import io.github.jasvilladarez.ello.BuildConfig
 
-interface EditorialRepository {
+@Module
+class BrowseRepositoryModule {
 
-    fun fetchEditorials(nextPageId: Int? = null): Observable<EditorialStream>
+    @Provides
+    internal fun providesBrowseApi(token: Token) =
+            ApiFactory.createApi(BrowseApi::class.java, ApiFactory.ELLO_V2_PREFIX,
+                    BuildConfig.DEBUG, AuthHeader(token))
+
+    @Provides
+    internal fun providesBrowseRepository(
+            browseApi: BrowseApi): BrowseRepository =
+            BrowseRepositoryImpl(browseApi)
+
 }
