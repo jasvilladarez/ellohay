@@ -32,6 +32,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
 import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.common.BaseFragment
 import io.github.jasvilladarez.ello.common.MviView
@@ -64,7 +65,10 @@ internal class ArtistInvitesFragment : BaseFragment(),
         viewModel.processIntents(intents())
     }
 
-    override fun intents(): Observable<ArtistInvitesIntent> = loadIntent()
+    override fun intents(): Observable<ArtistInvitesIntent> = Observable.merge(
+            loadIntent(),
+            refreshIntent()
+    )
 
     override fun render(state: ArtistInvitesViewState) {
         when (state) {
@@ -78,4 +82,8 @@ internal class ArtistInvitesFragment : BaseFragment(),
     private fun loadIntent(): Observable<ArtistInvitesIntent> = rxLifecycle.filter {
         it == Lifecycle.Event.ON_START
     }.map { ArtistInvitesIntent.Load }
+
+    private fun refreshIntent(): Observable<ArtistInvitesIntent> =
+            RxSwipeRefreshLayout.refreshes(swipeRefreshLayout)
+                    .map { ArtistInvitesIntent.Load }
 }

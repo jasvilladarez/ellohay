@@ -29,6 +29,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
+import io.github.jasvilladarez.domain.repository.browse.BrowseRepository
 import io.github.jasvilladarez.ello.viewmodel.ViewModelKey
 
 @Module
@@ -46,6 +47,6 @@ internal class ArtistInvitesModule {
     @Provides
     @IntoMap
     @ViewModelKey(ArtistInvitesViewModel::class)
-    fun providesArtistInvitesViewModel(): ViewModel =
-            ArtistInvitesViewModel()
+    fun providesArtistInvitesViewModel(browseRepository: BrowseRepository): ViewModel =
+            ArtistInvitesViewModel(browseRepository)
 }

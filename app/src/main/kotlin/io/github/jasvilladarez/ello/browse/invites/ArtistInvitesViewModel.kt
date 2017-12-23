@@ -26,22 +26,31 @@ package io.github.jasvilladarez.ello.browse.invites
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
+import io.github.jasvilladarez.domain.repository.browse.BrowseRepository
 import io.github.jasvilladarez.ello.common.MviStateMachine
 import io.github.jasvilladarez.ello.common.MviViewModel
+import io.github.jasvilladarez.ello.util.applyMvi
 import io.reactivex.Observable
 
-internal class ArtistInvitesViewModel : ViewModel(), MviViewModel<ArtistInvitesIntent,
+internal class ArtistInvitesViewModel(
+        private val browseRepository: BrowseRepository
+) : ViewModel(), MviViewModel<ArtistInvitesIntent,
         ArtistInvitesViewState> {
 
     private val stateMachine =
             MviStateMachine<ArtistInvitesIntent, ArtistInvitesResult, ArtistInvitesViewState>(
-                    ArtistInvitesViewState.DefaultView, {
+                    ArtistInvitesViewState.DefaultView(), {
                 when (it) {
-                    is ArtistInvitesIntent.Load -> Observable.just(ArtistInvitesResult.Success)
+                    is ArtistInvitesIntent.Load -> fetchArtistInvites()
                 }
             }, { _, result ->
                 when (result) {
-                    is ArtistInvitesResult.Success -> ArtistInvitesViewState.DefaultView
+                    is ArtistInvitesResult.Success ->
+                        ArtistInvitesViewState.DefaultView(result.artistInviteStream.artistInvites,
+                                result.artistInviteStream.next)
+                    is ArtistInvitesResult.Error ->
+                        ArtistInvitesViewState.ErrorView(result.error.message)
+                    is ArtistInvitesResult.InProgress -> ArtistInvitesViewState.LoadingView
                 }
             })
 
@@ -56,4 +65,11 @@ internal class ArtistInvitesViewModel : ViewModel(), MviViewModel<ArtistInvitesI
         super.onCleared()
         stateMachine.clear()
     }
+
+    private fun fetchArtistInvites(nextPageId: Int? = null): Observable<ArtistInvitesResult> =
+            browseRepository.fetchArtistInvites(nextPageId).applyMvi(
+                    { ArtistInvitesResult.Success(it) },
+                    { ArtistInvitesResult.Error(it) },
+                    { ArtistInvitesResult.InProgress })
+
 }

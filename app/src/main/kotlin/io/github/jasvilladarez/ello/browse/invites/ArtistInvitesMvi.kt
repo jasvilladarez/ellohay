@@ -24,6 +24,8 @@
 
 package io.github.jasvilladarez.ello.browse.invites
 
+import io.github.jasvilladarez.domain.entity.ArtistInvite
+import io.github.jasvilladarez.domain.entity.ArtistInviteStream
 import io.github.jasvilladarez.ello.common.MviIntent
 import io.github.jasvilladarez.ello.common.MviResult
 import io.github.jasvilladarez.ello.common.MviViewState
@@ -35,12 +37,27 @@ internal sealed class ArtistInvitesIntent : MviIntent {
 
 internal sealed class ArtistInvitesResult : MviResult {
 
-    object Success: ArtistInvitesResult()
+    data class Success(
+            val artistInviteStream: ArtistInviteStream = ArtistInviteStream(emptyList())
+    ) : ArtistInvitesResult()
+
+    data class Error(
+            val error: Throwable
+    ) : ArtistInvitesResult()
+
+    object InProgress : ArtistInvitesResult()
 }
 
 internal sealed class ArtistInvitesViewState : MviViewState {
 
-    object DefaultView : ArtistInvitesViewState()
+    data class DefaultView(
+            val artistInvites: List<ArtistInvite> = emptyList(),
+            val nextPageId: Int? = null
+    ) : ArtistInvitesViewState()
+
+    data class ErrorView(
+            val errorMessage: String?
+    ) : ArtistInvitesViewState()
 
     object LoadingView : ArtistInvitesViewState()
 }
