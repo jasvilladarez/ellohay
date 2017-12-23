@@ -22,15 +22,12 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.repository.browse
+package io.github.jasvilladarez.domain.entity
 
-import io.github.jasvilladarez.domain.entity.ArtistInviteStream
-import io.github.jasvilladarez.domain.entity.EditorialStream
-import io.reactivex.Observable
+import com.google.gson.annotations.SerializedName
 
-interface BrowseRepository {
-
-    fun fetchEditorials(nextPageId: Int? = null): Observable<EditorialStream>
-
-    fun fetchArtistInvites(nextPageId: Int? = null) : Observable<ArtistInviteStream>
-}
+data class ArtistInviteStream(
+        @SerializedName("artist_invites")
+        val artistInvites: List<ArtistInvite>,
+        var next: Int? = null
+)

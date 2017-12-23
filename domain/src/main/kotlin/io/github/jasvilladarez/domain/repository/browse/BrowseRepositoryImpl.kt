@@ -25,8 +25,10 @@
 package io.github.jasvilladarez.domain.repository.browse
 
 import android.net.Uri
+import io.github.jasvilladarez.domain.entity.ArtistInviteStream
 import io.github.jasvilladarez.domain.entity.EditorialStream
 import io.github.jasvilladarez.domain.util.applySchedulers
+import io.github.jasvilladarez.domain.util.getParameterInLink
 import io.reactivex.Observable
 
 internal class BrowseRepositoryImpl(
@@ -35,9 +37,17 @@ internal class BrowseRepositoryImpl(
 
     override fun fetchEditorials(nextPageId: Int?): Observable<EditorialStream> {
         return browseApi.fetchEditorials(nextPageId).map {
-            val next = Uri.parse(it.headers().get("link")?.substringBefore(">")
-                    ?.substringAfter("<")).getQueryParameter("before")
-            it.body()?.apply { this.next = next?.toInt() } ?: EditorialStream(emptyList())
+            val next = it.headers().getParameterInLink("before")
+            it.body()?.apply { this.next = next?.toIntOrNull() }
+                    ?: EditorialStream(emptyList())
+        }.toObservable().applySchedulers()
+    }
+
+    override fun fetchArtistInvites(nextPageId: Int?): Observable<ArtistInviteStream> {
+        return browseApi.fetchArtistInvites(nextPageId).map {
+            val next = it.headers().getParameterInLink("page")
+            it.body()?.apply { this.next = next?.toIntOrNull() }
+                    ?: ArtistInviteStream(emptyList())
         }.toObservable().applySchedulers()
     }
 }

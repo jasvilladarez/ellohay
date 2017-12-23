@@ -22,15 +22,21 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.repository.browse
+package io.github.jasvilladarez.domain.util
 
-import io.github.jasvilladarez.domain.entity.ArtistInviteStream
-import io.github.jasvilladarez.domain.entity.EditorialStream
-import io.reactivex.Observable
+import android.net.Uri
+import okhttp3.Headers
 
-interface BrowseRepository {
-
-    fun fetchEditorials(nextPageId: Int? = null): Observable<EditorialStream>
-
-    fun fetchArtistInvites(nextPageId: Int? = null) : Observable<ArtistInviteStream>
+internal fun Headers.getLink(): String? {
+    return this.get("link")
 }
+
+/**
+ * Gets the query parameter in link header
+ */
+internal fun Headers.getParameterInLink(parameterName: String): String? =
+        getLink()?.let {
+            Uri.parse(getLink()?.substringBefore(">")
+                    ?.substringAfter("<"))
+                    ?.getQueryParameter(parameterName)
+        }

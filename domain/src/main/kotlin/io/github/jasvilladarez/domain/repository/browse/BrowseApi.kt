@@ -24,6 +24,7 @@
 
 package io.github.jasvilladarez.domain.repository.browse
 
+import io.github.jasvilladarez.domain.entity.ArtistInviteStream
 import io.github.jasvilladarez.domain.entity.EditorialStream
 import io.reactivex.Single
 import retrofit2.Response
@@ -38,5 +39,15 @@ internal interface BrowseApi {
      * @param before - before ID from Link header
      */
     @GET("editorials")
-    fun fetchEditorials(@Query("before") before: Int? = null): Single<Response<EditorialStream>>
+    fun fetchEditorials(@Query("before") before: Int? = null)
+            : Single<Response<EditorialStream>>
+
+    /**
+     * Fetch artist invites
+     *
+     * @param page - page ID from Link header
+     */
+    @GET("artist_invites")
+    fun fetchArtistInvites(@Query("page") page: Int? = null)
+            : Single<Response<ArtistInviteStream>>
 }
