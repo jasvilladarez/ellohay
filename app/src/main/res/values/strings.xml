@@ -14,4 +14,5 @@
     <string name="invite_closed">Invite Closed</string>
     <string name="hold_tight">Hold Tight</string>
     <string name="days_remaining">Days Remaining</string>
+    <string name="opens">Opens</string>
 </resources>

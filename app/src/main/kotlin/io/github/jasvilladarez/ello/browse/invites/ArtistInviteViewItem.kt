@@ -76,6 +76,11 @@ internal class ArtistInviteViewItem : RecyclerViewItem<ArtistInvite> {
     private fun setTime(view: View, artistInvite: ArtistInvite) {
         view.time?.setVisible(true)
         when (artistInvite.status) {
+            ArtistInvite.Status.UPCOMING -> {
+                val opensDay = "${view.context.getString(R.string.opens)} " +
+                        artistInvite.openedAt.formatDate("MMMM dd, yyyy")
+                view.time?.text = opensDay
+            }
             ArtistInvite.Status.OPEN -> {
                 val daysRemaining = "${artistInvite.closedAt.getDaysRemaining()} " +
                         view.context.getString(R.string.days_remaining)
