@@ -53,6 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:gravity="bottom"
+            android:paddingBottom="@dimen/default_padding"
             android:textAppearance="?attr/subtitleTextAppearance" />
     </RelativeLayout>
 </FrameLayout>
