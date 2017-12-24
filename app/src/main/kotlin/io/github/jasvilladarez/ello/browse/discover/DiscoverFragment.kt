@@ -24,6 +24,63 @@
 
 package io.github.jasvilladarez.ello.browse.discover
 
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.common.BaseFragment
+import io.github.jasvilladarez.ello.common.MviView
+import io.github.jasvilladarez.ello.util.ui.showError
+import io.reactivex.Observable
+import kotlinx.android.synthetic.main.ello_loading_list.*
+import javax.inject.Inject
 
-internal class DiscoverFragment : BaseFragment()
+internal class DiscoverFragment : BaseFragment(), MviView<DiscoverIntent, DiscoverViewState> {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel: DiscoverViewModel by lazy {
+        ViewModelProviders.of(this, viewModelFactory)[DiscoverViewModel::class.java]
+    }
+
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.fragment_discover, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.state.observe(this, Observer {
+            it?.let {
+                render(it)
+            }
+        })
+        viewModel.processIntents(intents())
+    }
+
+    override fun intents(): Observable<DiscoverIntent> = loadCategoryIntent()
+
+    override fun render(state: DiscoverViewState) {
+        when(state) {
+            is DiscoverViewState.DefaultCategoryView -> {
+
+            }
+            is DiscoverViewState.ErrorView -> {
+                swipeRefreshLayout.isRefreshing = false
+                context?.showError(state.errorMessage)
+            }
+            is DiscoverViewState.LoadingView -> swipeRefreshLayout.isRefreshing = true
+        }
+    }
+
+    private fun loadCategoryIntent(): Observable<DiscoverIntent> = rxLifecycle.filter {
+        it == Lifecycle.Event.ON_START
+    }.map { DiscoverIntent.LoadCategories }
+}

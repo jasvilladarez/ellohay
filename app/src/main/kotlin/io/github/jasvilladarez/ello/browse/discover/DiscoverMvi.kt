@@ -24,29 +24,38 @@
 
 package io.github.jasvilladarez.ello.browse.discover
 
-import android.arch.lifecycle.ViewModel
-import dagger.Module
-import dagger.Provides
-import dagger.android.ContributesAndroidInjector
-import dagger.multibindings.IntoMap
-import io.github.jasvilladarez.domain.repository.browse.BrowseRepository
-import io.github.jasvilladarez.ello.viewmodel.ViewModelKey
+import io.github.jasvilladarez.domain.entity.Category
+import io.github.jasvilladarez.ello.common.MviIntent
+import io.github.jasvilladarez.ello.common.MviResult
+import io.github.jasvilladarez.ello.common.MviViewState
 
-@Module
-internal abstract class DiscoverBuilder {
+internal sealed class DiscoverIntent : MviIntent {
 
-    @ContributesAndroidInjector(modules = [
-        DiscoverModule::class
-    ])
-    abstract fun discoverFragment(): DiscoverFragment
+    object LoadCategories : DiscoverIntent()
 }
 
-@Module
-internal class DiscoverModule {
+internal sealed class DiscoverResult : MviResult {
 
-    @Provides
-    @IntoMap
-    @ViewModelKey(DiscoverViewModel::class)
-    fun providesDiscoverViewModel(browseRepository: BrowseRepository): ViewModel =
-            DiscoverViewModel(browseRepository)
+    data class SuccessCategories(
+            val categories: List<Category> = emptyList()
+    ) : DiscoverResult()
+
+    data class Error(
+            val error: Throwable
+    ) : DiscoverResult()
+
+    object InProgress : DiscoverResult()
+}
+
+internal sealed class DiscoverViewState : MviViewState {
+
+    data class DefaultCategoryView(
+            val categories: List<Category> = emptyList()
+    ) : DiscoverViewState()
+
+    data class ErrorView(
+            val errorMessage: String?
+    ) : DiscoverViewState()
+
+    object LoadingView : DiscoverViewState()
 }
