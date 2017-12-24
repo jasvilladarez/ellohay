@@ -32,6 +32,7 @@
     android:layout_marginTop="@dimen/default_half_padding"
     android:background="@color/ello_light_grey"
     android:elevation="@dimen/li_default_elevation"
+    android:foreground="?attr/selectableItemBackground"
     android:orientation="vertical"
     app:elevation="@dimen/li_default_elevation">
 
@@ -79,13 +80,26 @@
             android:textAppearance="?attr/subtitleTextAppearance"
             android:textColor="@color/ello_grey" />
 
-        <TextView
-            android:id="@+id/status"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:paddingBottom="@dimen/default_padding"
-            android:paddingTop="@dimen/default_half_padding"
-            android:textAppearance="?attr/subtitleTextAppearance"/>
+            android:paddingTop="@dimen/default_padding">
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/subtitleTextAppearance" />
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/subtitleTextAppearance"
+                android:textColor="@color/ello_grey" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/description"

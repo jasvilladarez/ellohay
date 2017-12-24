@@ -27,8 +27,11 @@ package io.github.jasvilladarez.ello.browse.invites
 import android.view.View
 import io.github.jasvilladarez.domain.entity.ArtistInvite
 import io.github.jasvilladarez.ello.R
+import io.github.jasvilladarez.ello.util.getDaysRemaining
+import io.github.jasvilladarez.ello.util.formatDate
 import io.github.jasvilladarez.ello.util.fromHtml
 import io.github.jasvilladarez.ello.util.ui.loadImage
+import io.github.jasvilladarez.ello.util.ui.setVisible
 import io.github.jasvilladarez.ello.widget.RecyclerViewItem
 import kotlinx.android.synthetic.main.li_artist_invite.view.*
 
@@ -47,23 +50,42 @@ internal class ArtistInviteViewItem : RecyclerViewItem<ArtistInvite> {
         view.title?.text = item.title
         view.inviteType?.text = item.inviteType
         view.description?.text = item.shortDescription.fromHtml()
-        when (item.status) {
-            ArtistInvite.Status.UPCOMING -> {
-                view.status?.text = view.context.getString(R.string.upcoming)
-                view.status?.setTextColor(view.context.resources.getColor(R.color.ello_purple))
-            }
+        setStatusText(view, item.status)
+        setTime(view, item)
+    }
+
+    private fun setStatusText(view: View, status: ArtistInvite.Status) = when (status) {
+        ArtistInvite.Status.UPCOMING -> {
+            view.status?.text = view.context.getString(R.string.upcoming)
+            view.status?.setTextColor(view.context.resources.getColor(R.color.ello_purple))
+        }
+        ArtistInvite.Status.OPEN -> {
+            view.status?.text = view.context.getString(R.string.open_for_submissions)
+            view.status?.setTextColor(view.context.resources.getColor(R.color.ello_green))
+        }
+        ArtistInvite.Status.SELECTING -> {
+            view.status?.text = view.context.getString(R.string.selection_in_progress)
+            view.status?.setTextColor(view.context.resources.getColor(R.color.ello_orange))
+        }
+        else -> {
+            view.status?.text = view.context.getString(R.string.invite_closed)
+            view.status?.setTextColor(view.context.resources.getColor(R.color.ello_red))
+        }
+    }
+
+    private fun setTime(view: View, artistInvite: ArtistInvite) {
+        view.time?.setVisible(true)
+        when (artistInvite.status) {
             ArtistInvite.Status.OPEN -> {
-                view.status?.text = view.context.getString(R.string.open_for_submissions)
-                view.status?.setTextColor(view.context.resources.getColor(R.color.ello_green))
+                val daysRemaining = "${artistInvite.closedAt.getDaysRemaining()} " +
+                        view.context.getString(R.string.days_remaining)
+                view.time?.text = daysRemaining
             }
-            ArtistInvite.Status.SELECTING -> {
-                view.status?.text = view.context.getString(R.string.selection_in_progress)
-                view.status?.setTextColor(view.context.resources.getColor(R.color.ello_orange))
-            }
-            else -> {
-                view.status?.text = view.context.getString(R.string.invite_closed)
-                view.status?.setTextColor(view.context.resources.getColor(R.color.ello_red))
-            }
+            ArtistInvite.Status.SELECTING ->
+                view.time?.text = view.context.getString(R.string.hold_tight)
+            ArtistInvite.Status.CLOSED ->
+                view.time?.text = artistInvite.openedAt.formatDate("MMMM yyyy")
+            else -> view.time?.setVisible(false)
         }
     }
 }

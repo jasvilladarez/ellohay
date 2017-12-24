@@ -22,33 +22,22 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.entity
+package io.github.jasvilladarez.ello.util
 
-import com.google.gson.annotations.SerializedName
+import android.text.format.DateUtils
+import java.text.SimpleDateFormat
+import java.util.*
 
-data class ArtistInvite(
-        @SerializedName("id")
-        val id: Long,
-        @SerializedName("title")
-        val title: String,
-        @SerializedName("invite_type")
-        val inviteType: String,
-        @SerializedName("short_description")
-        val shortDescription: String,
-        @SerializedName("description")
-        val description: String,
-        @SerializedName("header_image")
-        val headerImage: Image,
-        @SerializedName("logo_image")
-        val logoImage: Image,
-        @SerializedName("status")
-        val status: Status,
-        @SerializedName("opened_at")
-        val openedAt: String,
-        @SerializedName("closed_at")
-        val closedAt: String
-) {
-    enum class Status {
-        UPCOMING, OPEN, SELECTING, CLOSED, PREVIEW
-    }
+private val ELLO_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+
+internal fun String.formatDate(format: String): String {
+    val dateFormat = SimpleDateFormat(ELLO_DATE_FORMAT, Locale.getDefault())
+    val formatter = SimpleDateFormat(format, Locale.getDefault())
+    return formatter.format(dateFormat.parse(this))
+}
+
+internal fun String.getDaysRemaining(): Int {
+    val dateFormat = SimpleDateFormat(ELLO_DATE_FORMAT, Locale.getDefault())
+    val date = dateFormat.parse(this)
+    return ((date.time - System.currentTimeMillis()) / DateUtils.DAY_IN_MILLIS).toInt()
 }

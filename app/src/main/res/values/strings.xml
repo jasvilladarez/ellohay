@@ -12,4 +12,6 @@
     <string name="open_for_submissions">Open For Submissions</string>
     <string name="selection_in_progress">Selection In Progress</string>
     <string name="invite_closed">Invite Closed</string>
+    <string name="hold_tight">Hold Tight</string>
+    <string name="days_remaining">Days Remaining</string>
 </resources>

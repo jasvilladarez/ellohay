@@ -28,7 +28,7 @@
 
     <!-- List Dimensions -->
     <dimen name="li_default_height">280dp</dimen>
-    <dimen name="li_default_elevation">4dp</dimen>
+    <dimen name="li_default_elevation">6dp</dimen>
 
     <!-- Artist Invites Dimensions -->
     <dimen name="li_artist_invite_image_height">180dp</dimen>
