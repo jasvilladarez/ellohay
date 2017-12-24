@@ -29,15 +29,19 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import io.github.jasvilladarez.domain.entity.Category
 import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.common.BaseFragment
 import io.github.jasvilladarez.ello.common.MviView
+import io.github.jasvilladarez.ello.common.adapter.ElloAdapter
 import io.github.jasvilladarez.ello.util.ui.showError
 import io.reactivex.Observable
-import kotlinx.android.synthetic.main.ello_loading_list.*
+import kotlinx.android.synthetic.main.fragment_discover.*
 import javax.inject.Inject
 
 internal class DiscoverFragment : BaseFragment(), MviView<DiscoverIntent, DiscoverViewState> {
@@ -47,6 +51,10 @@ internal class DiscoverFragment : BaseFragment(), MviView<DiscoverIntent, Discov
 
     private val viewModel: DiscoverViewModel by lazy {
         ViewModelProviders.of(this, viewModelFactory)[DiscoverViewModel::class.java]
+    }
+
+    private val categoriesAdapter: ElloAdapter<Category> by lazy {
+        ElloAdapter(CategoryViewItem())
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -68,9 +76,17 @@ internal class DiscoverFragment : BaseFragment(), MviView<DiscoverIntent, Discov
     override fun intents(): Observable<DiscoverIntent> = loadCategoryIntent()
 
     override fun render(state: DiscoverViewState) {
-        when(state) {
+        when (state) {
             is DiscoverViewState.DefaultCategoryView -> {
-
+                swipeRefreshLayout.isRefreshing = false
+                categoriesRecyclerView.adapter ?: let {
+                    categoriesRecyclerView.adapter = categoriesAdapter
+                    categoriesRecyclerView.layoutManager = LinearLayoutManager(context,
+                            LinearLayoutManager.HORIZONTAL, false)
+                    categoriesRecyclerView.addItemDecoration(DividerItemDecoration(context,
+                            DividerItemDecoration.HORIZONTAL))
+                }
+                categoriesAdapter.items = state.categories
             }
             is DiscoverViewState.ErrorView -> {
                 swipeRefreshLayout.isRefreshing = false

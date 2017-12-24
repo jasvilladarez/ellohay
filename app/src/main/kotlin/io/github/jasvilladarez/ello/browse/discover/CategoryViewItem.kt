@@ -22,23 +22,25 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.entity
+package io.github.jasvilladarez.ello.browse.discover
 
-import com.google.gson.annotations.SerializedName
+import android.view.View
+import io.github.jasvilladarez.domain.entity.Category
+import io.github.jasvilladarez.ello.R
+import io.github.jasvilladarez.ello.util.ui.loadImage
+import io.github.jasvilladarez.ello.widget.RecyclerViewItem
+import kotlinx.android.synthetic.main.li_category.view.*
 
-data class Category(
-        @SerializedName("id")
-        val id: String,
-        @SerializedName("name")
-        val name: String,
-        @SerializedName("slug")
-        val slug: String,
-        @SerializedName("tile_image")
-        val image: Image,
-        @SerializedName("order")
-        val order: Int = 0,
-        @SerializedName("description")
-        val description: String? = null,
-        @SerializedName("uses_page_promotionals")
-        val usesPagePromotionals: Boolean = false
-)
+internal class CategoryViewItem : RecyclerViewItem<Category> {
+
+    override val viewItemLayout: Int
+        get() = R.layout.li_category
+
+    override fun bind(view: View, item: Category) {
+        item.image.original?.url?.let {
+            view.categoryImage?.loadImage(it)
+        }
+        view.categoryName.text = item.name
+    }
+
+}

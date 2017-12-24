@@ -30,6 +30,8 @@
     <dimen name="li_default_height">280dp</dimen>
     <dimen name="li_default_elevation">6dp</dimen>
 
-    <!-- Artist Invites Dimensions -->
+    <!-- Browse Dimensions -->
     <dimen name="li_artist_invite_image_height">180dp</dimen>
+    <dimen name="li_category_width">120dp</dimen>
+    <dimen name="li_category_height">80dp</dimen>
 </resources>
