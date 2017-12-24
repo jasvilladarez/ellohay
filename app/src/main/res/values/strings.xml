@@ -7,4 +7,9 @@
 
     <string name="ok">OK</string>
     <string name="general_exception">Something went wrong…</string>
+    
+    <string name="upcoming">Upcoming</string>
+    <string name="open_for_submissions">Open For Submissions</string>
+    <string name="selection_in_progress">Selection In Progress</string>
+    <string name="invite_closed">Invite Closed</string>
 </resources>

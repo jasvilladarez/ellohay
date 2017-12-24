@@ -47,5 +47,23 @@ internal class ArtistInviteViewItem : RecyclerViewItem<ArtistInvite> {
         view.title?.text = item.title
         view.inviteType?.text = item.inviteType
         view.description?.text = item.shortDescription.fromHtml()
+        when (item.status) {
+            ArtistInvite.Status.UPCOMING -> {
+                view.status?.text = view.context.getString(R.string.upcoming)
+                view.status?.setTextColor(view.context.resources.getColor(R.color.ello_purple))
+            }
+            ArtistInvite.Status.OPEN -> {
+                view.status?.text = view.context.getString(R.string.open_for_submissions)
+                view.status?.setTextColor(view.context.resources.getColor(R.color.ello_green))
+            }
+            ArtistInvite.Status.SELECTING -> {
+                view.status?.text = view.context.getString(R.string.selection_in_progress)
+                view.status?.setTextColor(view.context.resources.getColor(R.color.ello_orange))
+            }
+            else -> {
+                view.status?.text = view.context.getString(R.string.invite_closed)
+                view.status?.setTextColor(view.context.resources.getColor(R.color.ello_red))
+            }
+        }
     }
 }

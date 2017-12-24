@@ -40,5 +40,11 @@ data class ArtistInvite(
         @SerializedName("header_image")
         val headerImage: Image,
         @SerializedName("logo_image")
-        val logoImage: Image
-)
+        val logoImage: Image,
+        @SerializedName("status")
+        val status: Status
+) {
+    enum class Status {
+        UPCOMING, OPEN, SELECTING, CLOSED, PREVIEW
+    }
+}

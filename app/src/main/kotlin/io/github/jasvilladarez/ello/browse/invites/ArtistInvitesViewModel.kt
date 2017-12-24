@@ -46,12 +46,22 @@ internal class ArtistInvitesViewModel(
                 }
             }, { _, result ->
                 when (result) {
-                    is ArtistInvitesResult.Success ->
-                        ArtistInvitesViewState.DefaultView(result.artistInviteStream.artistInvites,
-                                result.artistInviteStream.next)
+                    is ArtistInvitesResult.Success -> when (result.mode) {
+                        ArtistInvitesResult.ArtistInviteMode.LOAD ->
+                            ArtistInvitesViewState.DefaultView(result.artistInviteStream.artistInvites,
+                                    result.artistInviteStream.next)
+                        ArtistInvitesResult.ArtistInviteMode.LOAD_MORE ->
+                            ArtistInvitesViewState.MoreView(result.artistInviteStream.artistInvites,
+                                    result.artistInviteStream.next)
+                    }
                     is ArtistInvitesResult.Error ->
                         ArtistInvitesViewState.ErrorView(result.error.message)
-                    is ArtistInvitesResult.InProgress -> ArtistInvitesViewState.InitialLoadingView
+                    is ArtistInvitesResult.InProgress -> when (result.mode) {
+                        ArtistInvitesResult.ArtistInviteMode.LOAD ->
+                            ArtistInvitesViewState.InitialLoadingView
+                        ArtistInvitesResult.ArtistInviteMode.LOAD_MORE ->
+                            ArtistInvitesViewState.MoreLoadingView
+                    }
                 }
             })
 
