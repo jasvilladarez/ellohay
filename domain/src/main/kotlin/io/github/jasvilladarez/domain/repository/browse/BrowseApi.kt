@@ -25,6 +25,7 @@
 package io.github.jasvilladarez.domain.repository.browse
 
 import io.github.jasvilladarez.domain.entity.ArtistInviteStream
+import io.github.jasvilladarez.domain.entity.CategoryStream
 import io.github.jasvilladarez.domain.entity.EditorialStream
 import io.reactivex.Single
 import retrofit2.Response
@@ -50,4 +51,15 @@ internal interface BrowseApi {
     @GET("artist_invites")
     fun fetchArtistInvites(@Query("page") page: Int? = null)
             : Single<Response<ArtistInviteStream>>
+
+    /**
+     * Fetch categories
+     *
+     * @param meta - include 'meta' categories such as 'featured', 'trending' and 'recent'
+     * @param all - include inactive categories
+     */
+    @GET("categories")
+    fun fetchCategories(@Query("meta") meta: Boolean? = null,
+                        @Query("all") all: Boolean? = null)
+            : Single<Response<CategoryStream>>
 }

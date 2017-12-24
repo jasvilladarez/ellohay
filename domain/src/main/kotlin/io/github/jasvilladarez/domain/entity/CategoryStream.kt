@@ -26,17 +26,7 @@ package io.github.jasvilladarez.domain.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class Category(
-        @SerializedName("id")
-        val id: String,
-        @SerializedName("name")
-        val name: String,
-        @SerializedName("slug")
-        val slug: String,
-        @SerializedName("order")
-        val order: Int = 0,
-        @SerializedName("description")
-        val description: String? = null,
-        @SerializedName("uses_page_promotionals")
-        val usesPagePromotionals: Boolean = false
+internal data class CategoryStream(
+        @SerializedName("categories")
+        val categories: List<Category>
 )

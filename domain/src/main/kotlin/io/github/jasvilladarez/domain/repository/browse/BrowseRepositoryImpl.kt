@@ -26,6 +26,7 @@ package io.github.jasvilladarez.domain.repository.browse
 
 import android.net.Uri
 import io.github.jasvilladarez.domain.entity.ArtistInviteStream
+import io.github.jasvilladarez.domain.entity.Category
 import io.github.jasvilladarez.domain.entity.EditorialStream
 import io.github.jasvilladarez.domain.util.applySchedulers
 import io.github.jasvilladarez.domain.util.getParameterInLink
@@ -49,5 +50,10 @@ internal class BrowseRepositoryImpl(
             it.body()?.apply { this.next = next?.toIntOrNull() }
                     ?: ArtistInviteStream(emptyList())
         }.toObservable().applySchedulers()
+    }
+
+    override fun fetchCategories(): Observable<List<Category>> {
+        return browseApi.fetchCategories(true).map { it.body()?.categories ?: emptyList() }
+                .toObservable().applySchedulers()
     }
 }

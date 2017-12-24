@@ -25,6 +25,7 @@
 package io.github.jasvilladarez.domain.repository.browse
 
 import io.github.jasvilladarez.domain.entity.ArtistInviteStream
+import io.github.jasvilladarez.domain.entity.Category
 import io.github.jasvilladarez.domain.entity.EditorialStream
 import io.reactivex.Observable
 
@@ -32,5 +33,7 @@ interface BrowseRepository {
 
     fun fetchEditorials(nextPageId: Int? = null): Observable<EditorialStream>
 
-    fun fetchArtistInvites(nextPageId: Int? = null) : Observable<ArtistInviteStream>
+    fun fetchArtistInvites(nextPageId: Int? = null): Observable<ArtistInviteStream>
+
+    fun fetchCategories(): Observable<List<Category>>
 }
