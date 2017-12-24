@@ -22,7 +22,8 @@
   ~ SOFTWARE.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -39,7 +40,8 @@
             android:textAllCaps="true"
             android:textColor="@color/ello_black"
             android:textSize="@dimen/title_textSize"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_scrollFlags="enterAlways|scroll" />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"
@@ -51,6 +53,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
