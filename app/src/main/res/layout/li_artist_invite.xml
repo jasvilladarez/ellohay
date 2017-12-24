@@ -25,6 +25,72 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/default_half_padding"
+    android:layout_marginEnd="@dimen/default_padding"
+    android:layout_marginStart="@dimen/default_padding"
+    android:layout_marginTop="@dimen/default_half_padding"
+    android:background="@color/ello_light_grey"
     android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/li_artist_invite_image_height"
+        android:background="@color/ello_foreground">
+
+        <ImageView
+            android:id="@+id/artistInviteHeaderImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foreground="@color/ello_foreground"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/artistInviteLogoImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/default_padding" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/default_padding"
+        android:paddingEnd="@dimen/default_padding"
+        android:paddingStart="@dimen/default_padding"
+        android:paddingTop="@dimen/default_half_padding">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/titleTextAppearance"
+            android:textColor="@color/ello_black" />
+
+        <TextView
+            android:id="@+id/inviteType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/subtitleTextAppearance"
+            android:textColor="@color/ello_grey" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/default_half_padding"
+            android:textAppearance="?attr/subtitleTextAppearance" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingMultiplier="1.2"
+            android:textAppearance="?attr/subtitleTextAppearance"
+            android:textColor="@color/ello_black"
+            android:textColorLink="@color/ello_black" />
+    </LinearLayout>
 
 </LinearLayout>

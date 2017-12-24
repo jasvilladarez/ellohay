@@ -27,7 +27,10 @@ package io.github.jasvilladarez.ello.browse.invites
 import android.view.View
 import io.github.jasvilladarez.domain.entity.ArtistInvite
 import io.github.jasvilladarez.ello.R
+import io.github.jasvilladarez.ello.util.fromHtml
+import io.github.jasvilladarez.ello.util.ui.loadImage
 import io.github.jasvilladarez.ello.widget.RecyclerViewItem
+import kotlinx.android.synthetic.main.li_artist_invite.view.*
 
 internal class ArtistInviteViewItem : RecyclerViewItem<ArtistInvite> {
 
@@ -35,6 +38,14 @@ internal class ArtistInviteViewItem : RecyclerViewItem<ArtistInvite> {
         get() = R.layout.li_artist_invite
 
     override fun bind(view: View, item: ArtistInvite) {
-        
+        item.headerImage.mdpi?.url?.let {
+            view.artistInviteHeaderImage?.loadImage(it)
+        }
+        item.logoImage.optimized?.url?.let {
+            view.artistInviteLogoImage?.loadImage(it)
+        }
+        view.title?.text = item.title
+        view.inviteType?.text = item.inviteType
+        view.description?.text = item.shortDescription.fromHtml()
     }
 }

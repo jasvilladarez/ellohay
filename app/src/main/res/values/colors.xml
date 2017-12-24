@@ -8,6 +8,7 @@
     <color name="ello_black">#000000</color>
     <color name="ello_red">#dd0000</color>
     <color name="ello_grey">#aaaaaa</color>
+    <color name="ello_light_grey">#f2f2f2</color>
 
     <color name="ello_foreground">#80000000</color>
 </resources>

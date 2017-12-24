@@ -24,6 +24,10 @@
 
 <resources>
     <dimen name="default_padding">16dp</dimen>
+    <dimen name="default_half_padding">8dp</dimen>
 
     <dimen name="li_default_height">280dp</dimen>
+
+    <!-- Artist Invites Dimensions -->
+    <dimen name="li_artist_invite_image_height">180dp</dimen>
 </resources>

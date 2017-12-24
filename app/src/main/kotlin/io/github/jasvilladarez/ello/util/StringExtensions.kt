@@ -26,11 +26,10 @@ package io.github.jasvilladarez.ello.util
 
 import android.os.Build
 import android.text.Html
-import android.text.Spanned
 
-fun String.fromHtml(): Spanned? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-    Html.fromHtml(this, Html.FROM_HTML_MODE_COMPACT)
+internal fun String.fromHtml(): CharSequence? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+    Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY).trim()
 } else {
     @Suppress("DEPRECATION")
-    Html.fromHtml(this)
+    Html.fromHtml(this).trim()
 }
