@@ -91,15 +91,13 @@ internal class EditorialFragment : BaseFragment(),
                 editorialAdapter.items = state.editorials
             }
             is EditorialViewState.MoreView -> {
+                editorialAdapter.isLoading = false
                 editorialAdapter.nextPageId = state.nextPageId
                 editorialAdapter.addItems(state.editorials)
-                editorialAdapter.isLoading = false
             }
             is EditorialViewState.ErrorView -> {
                 swipeRefreshLayout.isRefreshing = false
-                state.errorMessage?.let {
-                    context?.showError(it)
-                }
+                context?.showError(state.errorMessage)
             }
             is EditorialViewState.InitialLoadingView -> swipeRefreshLayout.isRefreshing = true
             is EditorialViewState.MoreLoadingView -> editorialAdapter.isLoading = true
