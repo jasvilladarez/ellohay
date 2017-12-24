@@ -33,19 +33,30 @@ import io.github.jasvilladarez.ello.common.MviViewState
 internal sealed class ArtistInvitesIntent : MviIntent {
 
     object Load : ArtistInvitesIntent()
+
+    data class LoadMore(
+            val nextPageId: Int?
+    ) : ArtistInvitesIntent()
 }
 
 internal sealed class ArtistInvitesResult : MviResult {
 
+    enum class ArtistInviteMode {
+        LOAD, LOAD_MORE
+    }
+
     data class Success(
-            val artistInviteStream: ArtistInviteStream = ArtistInviteStream(emptyList())
+            val artistInviteStream: ArtistInviteStream = ArtistInviteStream(emptyList()),
+            val mode: ArtistInviteMode
     ) : ArtistInvitesResult()
 
     data class Error(
             val error: Throwable
     ) : ArtistInvitesResult()
 
-    object InProgress : ArtistInvitesResult()
+    data class InProgress(
+            val mode: ArtistInviteMode
+    ) : ArtistInvitesResult()
 }
 
 internal sealed class ArtistInvitesViewState : MviViewState {

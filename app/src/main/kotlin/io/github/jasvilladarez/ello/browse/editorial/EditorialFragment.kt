@@ -97,6 +97,7 @@ internal class EditorialFragment : BaseFragment(),
             }
             is EditorialViewState.ErrorView -> {
                 swipeRefreshLayout.isRefreshing = false
+                editorialAdapter.isLoading = false
                 context?.showError(state.errorMessage)
             }
             is EditorialViewState.InitialLoadingView -> swipeRefreshLayout.isRefreshing = true

@@ -35,6 +35,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
 import io.github.jasvilladarez.domain.entity.ArtistInvite
+import io.github.jasvilladarez.domain.entity.Editorial
 import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.common.BaseFragment
 import io.github.jasvilladarez.ello.common.MviView
@@ -75,7 +76,8 @@ internal class ArtistInvitesFragment : BaseFragment(),
 
     override fun intents(): Observable<ArtistInvitesIntent> = Observable.merge(
             loadIntent(),
-            refreshIntent()
+            refreshIntent(),
+            loadMoreIntent()
     )
 
     override fun render(state: ArtistInvitesViewState) {
@@ -89,11 +91,18 @@ internal class ArtistInvitesFragment : BaseFragment(),
                 artistInviteAdapter.nextPageId = state.nextPageId
                 artistInviteAdapter.items = state.artistInvites
             }
+            is ArtistInvitesViewState.MoreView -> {
+                artistInviteAdapter.isLoading = false
+                artistInviteAdapter.nextPageId = state.nextPageId
+                artistInviteAdapter.addItems(state.artistInvites)
+            }
             is ArtistInvitesViewState.ErrorView -> {
                 swipeRefreshLayout.isRefreshing = false
+                artistInviteAdapter.isLoading = false
                 context?.showError(state.errorMessage)
             }
             is ArtistInvitesViewState.InitialLoadingView -> swipeRefreshLayout.isRefreshing = true
+            is ArtistInvitesViewState.MoreLoadingView -> artistInviteAdapter.isLoading = true
         }
     }
 
@@ -103,4 +112,7 @@ internal class ArtistInvitesFragment : BaseFragment(),
 
     private fun refreshIntent(): Observable<ArtistInvitesIntent> = RxSwipeRefreshLayout
             .refreshes(swipeRefreshLayout).map { ArtistInvitesIntent.Load }
+
+    private fun loadMoreIntent(): Observable<ArtistInvitesIntent> = artistInviteAdapter.onLoadMore()
+            .map { ArtistInvitesIntent.LoadMore(artistInviteAdapter.nextPageId) }
 }

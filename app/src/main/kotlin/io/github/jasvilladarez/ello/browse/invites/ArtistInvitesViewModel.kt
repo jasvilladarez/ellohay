@@ -42,6 +42,7 @@ internal class ArtistInvitesViewModel(
                     ArtistInvitesViewState.DefaultView(), {
                 when (it) {
                     is ArtistInvitesIntent.Load -> fetchArtistInvites()
+                    is ArtistInvitesIntent.LoadMore -> fetchArtistInvites(it.nextPageId)
                 }
             }, { _, result ->
                 when (result) {
@@ -68,8 +69,16 @@ internal class ArtistInvitesViewModel(
 
     private fun fetchArtistInvites(nextPageId: Int? = null): Observable<ArtistInvitesResult> =
             browseRepository.fetchArtistInvites(nextPageId).applyMvi(
-                    { ArtistInvitesResult.Success(it) },
+                    {
+                        ArtistInvitesResult.Success(it, nextPageId?.let {
+                            ArtistInvitesResult.ArtistInviteMode.LOAD_MORE
+                        } ?: ArtistInvitesResult.ArtistInviteMode.LOAD)
+                    },
                     { ArtistInvitesResult.Error(it) },
-                    { ArtistInvitesResult.InProgress })
+                    {
+                        ArtistInvitesResult.InProgress(nextPageId?.let {
+                            ArtistInvitesResult.ArtistInviteMode.LOAD_MORE
+                        } ?: ArtistInvitesResult.ArtistInviteMode.LOAD)
+                    })
 
 }
