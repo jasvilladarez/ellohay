@@ -50,7 +50,7 @@ internal class ArtistInvitesViewModel(
                                 result.artistInviteStream.next)
                     is ArtistInvitesResult.Error ->
                         ArtistInvitesViewState.ErrorView(result.error.message)
-                    is ArtistInvitesResult.InProgress -> ArtistInvitesViewState.LoadingView
+                    is ArtistInvitesResult.InProgress -> ArtistInvitesViewState.InitialLoadingView
                 }
             })
 

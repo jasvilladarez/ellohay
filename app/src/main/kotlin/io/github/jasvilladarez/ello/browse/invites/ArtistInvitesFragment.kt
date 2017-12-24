@@ -29,13 +29,17 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
+import io.github.jasvilladarez.domain.entity.ArtistInvite
 import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.common.BaseFragment
 import io.github.jasvilladarez.ello.common.MviView
+import io.github.jasvilladarez.ello.common.adapter.ElloAdapter
+import io.github.jasvilladarez.ello.util.ui.showError
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.ello_loading_list.*
 import javax.inject.Inject
@@ -48,6 +52,10 @@ internal class ArtistInvitesFragment : BaseFragment(),
 
     private val viewModel: ArtistInvitesViewModel by lazy {
         ViewModelProviders.of(this, viewModelFactory)[ArtistInvitesViewModel::class.java]
+    }
+
+    private val artistInviteAdapter: ElloAdapter<ArtistInvite> by lazy {
+        ElloAdapter(ArtistInviteViewItem())
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -73,9 +81,19 @@ internal class ArtistInvitesFragment : BaseFragment(),
     override fun render(state: ArtistInvitesViewState) {
         when (state) {
             is ArtistInvitesViewState.DefaultView -> {
-
+                swipeRefreshLayout.isRefreshing = false
+                recyclerView.adapter ?: let {
+                    recyclerView.adapter = artistInviteAdapter
+                    recyclerView.layoutManager = LinearLayoutManager(context)
+                }
+                artistInviteAdapter.nextPageId = state.nextPageId
+                artistInviteAdapter.items = state.artistInvites
             }
-            is ArtistInvitesViewState.LoadingView -> swipeRefreshLayout.isRefreshing = true
+            is ArtistInvitesViewState.ErrorView -> {
+                swipeRefreshLayout.isRefreshing = false
+                context?.showError(state.errorMessage)
+            }
+            is ArtistInvitesViewState.InitialLoadingView -> swipeRefreshLayout.isRefreshing = true
         }
     }
 
@@ -83,7 +101,6 @@ internal class ArtistInvitesFragment : BaseFragment(),
         it == Lifecycle.Event.ON_START
     }.map { ArtistInvitesIntent.Load }
 
-    private fun refreshIntent(): Observable<ArtistInvitesIntent> =
-            RxSwipeRefreshLayout.refreshes(swipeRefreshLayout)
-                    .map { ArtistInvitesIntent.Load }
+    private fun refreshIntent(): Observable<ArtistInvitesIntent> = RxSwipeRefreshLayout
+            .refreshes(swipeRefreshLayout).map { ArtistInvitesIntent.Load }
 }

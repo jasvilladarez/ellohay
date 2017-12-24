@@ -55,9 +55,16 @@ internal sealed class ArtistInvitesViewState : MviViewState {
             val nextPageId: Int? = null
     ) : ArtistInvitesViewState()
 
+    data class MoreView(
+            val artistInvites: List<ArtistInvite> = emptyList(),
+            val nextPageId: Int? = null
+    ) : ArtistInvitesViewState()
+
     data class ErrorView(
             val errorMessage: String?
     ) : ArtistInvitesViewState()
 
-    object LoadingView : ArtistInvitesViewState()
+    object InitialLoadingView : ArtistInvitesViewState()
+
+    object MoreLoadingView : ArtistInvitesViewState()
 }
