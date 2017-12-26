@@ -30,6 +30,7 @@ import io.github.jasvilladarez.domain.entity.EditorialStream
 import io.reactivex.Single
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 internal interface BrowseApi {
@@ -37,7 +38,7 @@ internal interface BrowseApi {
     /**
      * Fetch editorials
      *
-     * @param before - before ID from Link header
+     * @param before - page ID from Link header
      */
     @GET("editorials")
     fun fetchEditorials(@Query("before") before: Int? = null)
@@ -62,4 +63,48 @@ internal interface BrowseApi {
     fun fetchCategories(@Query("meta") meta: Boolean? = null,
                         @Query("all") all: Boolean? = null)
             : Single<Response<CategoryStream>>
+
+    /**
+     * Fetch posts in each category
+     *
+     * @param slug - The url `slug` property of the category desired.
+     * @param before - The pagination cursor, returned in the `link` header of the previous page.
+     * @param limit - Number of posts to return per page. Default: 25
+     */
+    @GET("categories/{slug}/posts/recent")
+    fun fetchPostsInCategory(@Path("slug") slug: String,
+                             @Query("before") before: String? = null,
+                             @Query("per_page") limit: Int? = null)
+
+    /**
+     * Fetch ll the newest posts across all the categories  - time ordered.
+     *
+     * @param before - The pagination cursor, returned in the `link` header of the previous page.
+     * @param limit - Number of posts to return per page. Default: 25
+     */
+    @GET("categories/posts/recent")
+    fun fetchFeaturedPosts(@Query("before") before: String? = null,
+                           @Query("per_page") limit: Int? = null)
+
+    /**
+     * Fetch all the newest posts across the network - time ordered.
+     *
+     * @param before - The pagination cursor, returned in the `link` header of the previous page.
+     * @param limit - Number of posts to return per page. Default: 25
+     */
+    @GET("discover/posts/recent")
+    fun fetchRecentPosts(@Query("before") before: String? = null,
+                         @Query("per_page") limit: Int? = null)
+
+    /**
+     * Fetch trending across the entire network.
+     *
+     * @param before - What page to retrieve
+     * @param limit - Number of posts to return per page. Default: 25
+     * @param imagesOnly - Flag to return only posts with images
+     */
+    @GET("discover/posts/trending")
+    fun fetchTrendingPosts(@Query("page") page: Int? = null,
+                           @Query("per_page") limit: Int? = null,
+                           @Query("images_only") imagesOnly: Boolean = true)
 }
