@@ -33,5 +33,5 @@ internal class ElloProgressViewItem : RecyclerViewItem<Unit> {
     override val viewItemLayout: Int
         get() = R.layout.li_progress
 
-    override fun bind(view: View, item: Unit) {}
+    override fun bind(view: View, item: Unit, selectedItem: Unit?) {}
 }

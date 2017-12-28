@@ -22,26 +22,16 @@
   ~ SOFTWARE.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/li_category_width"
-    android:layout_height="@dimen/li_category_height"
-    android:background="@color/ello_light_grey"
-    android:foreground="?attr/selectableItemBackground"
-    android:orientation="vertical">
+<transition xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageView
-        android:id="@+id/categoryImage"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:foreground="@drawable/ello_transition_foreground"
-        android:scaleType="centerCrop" />
-
-    <TextView
-        android:id="@+id/categoryName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textAppearance="?attr/subtitleTextAppearance" />
-
-</FrameLayout>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/ello_foreground" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/ello_foreground_darker" />
+        </shape>
+    </item>
+</transition>

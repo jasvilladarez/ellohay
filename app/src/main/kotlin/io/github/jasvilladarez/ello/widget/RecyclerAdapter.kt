@@ -51,21 +51,23 @@ open class RecyclerAdapter<T>(
             notifyDataSetChanged()
         }
 
-    var onLoadMore: (() -> Unit)? = null
+    private var onLoadMore: (() -> Unit)? = null
     var isLoading: Boolean = false
         set(value) {
             field = value
             notifyItemChanged(itemCount)
         }
 
-    var onItemClick: ((T) -> Unit)? = null
+    private var onItemClick: ((T) -> Unit)? = null
 
     var selectedItem: T? = null
         set(value) {
+            notifyItemChanged(items.indexOf(field))
             field = value
             onItemSelected?.invoke(value)
+            notifyItemChanged(items.indexOf(field))
         }
-    var onItemSelected: ((T?) -> Unit)? = null
+    private var onItemSelected: ((T?) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
             object : RecyclerView.ViewHolder(LayoutInflater.from(parent.context)
@@ -76,9 +78,9 @@ open class RecyclerAdapter<T>(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
-            VIEW_ITEM_PROGRESS -> loadMoreItem.bind(holder.itemView, Unit)
+            VIEW_ITEM_PROGRESS -> loadMoreItem.bind(holder.itemView, Unit, null)
             else -> {
-                defaultViewItem.bind(holder.itemView, items[position])
+                defaultViewItem.bind(holder.itemView, items[position], selectedItem)
                 holder.itemView.setOnClickListener {
                     selectedItem = items[position]
                     onItemClick?.invoke(items[position])
@@ -121,69 +123,69 @@ open class RecyclerAdapter<T>(
         _items.add(item)
         notifyItemInserted(itemCount)
     }
-}
 
-internal class OnLoadMoreItems(
-        private val adapter: RecyclerAdapter<*>
-) : Observable<Unit>() {
+    private class OnLoadMoreItems(
+            private val adapter: RecyclerAdapter<*>
+    ) : Observable<Unit>() {
 
-    override fun subscribeActual(observer: Observer<in Unit>?) {
-        observer?.let {
-            adapter.onLoadMore = object : Function0<Unit>, MainThreadDisposable() {
+        override fun subscribeActual(observer: Observer<in Unit>?) {
+            observer?.let {
+                adapter.onLoadMore = object : Function0<Unit>, MainThreadDisposable() {
 
-                override fun invoke() {
-                    if (!isDisposed) {
-                        it.onNext(Unit)
+                    override fun invoke() {
+                        if (!isDisposed) {
+                            it.onNext(Unit)
+                        }
+                    }
+
+                    override fun onDispose() {
+                        adapter.onLoadMore = null
                     }
                 }
+            }
+        }
 
-                override fun onDispose() {
-                    adapter.onLoadMore = null
+    }
+
+    private class ItemClick<T>(
+            private val adapter: RecyclerAdapter<T>
+    ) : Observable<T>() {
+
+        override fun subscribeActual(observer: Observer<in T>?) {
+            observer?.let {
+                adapter.onItemClick = object : Function1<T, Unit>, MainThreadDisposable() {
+
+                    override fun invoke(item: T) {
+                        if (!isDisposed) {
+                            it.onNext(item)
+                        }
+                    }
+
+                    override fun onDispose() {
+                        adapter.onItemClick = null
+                    }
                 }
             }
         }
     }
 
-}
+    private class SelectedItem<T>(
+            private val adapter: RecyclerAdapter<T>
+    ) : Observable<T?>() {
 
-internal class ItemClick<T>(
-        private val adapter: RecyclerAdapter<T>
-) : Observable<T>() {
+        override fun subscribeActual(observer: Observer<in T?>?) {
+            observer?.let {
+                adapter.onItemSelected = object : Function1<T?, Unit>, MainThreadDisposable() {
 
-    override fun subscribeActual(observer: Observer<in T>?) {
-        observer?.let {
-            adapter.onItemClick = object : Function1<T, Unit>, MainThreadDisposable() {
-
-                override fun invoke(item: T) {
-                    if (!isDisposed) {
-                        it.onNext(item)
+                    override fun invoke(item: T?) {
+                        if (!isDisposed) {
+                            it.onNext(item)
+                        }
                     }
-                }
 
-                override fun onDispose() {
-                    adapter.onItemClick = null
-                }
-            }
-        }
-    }
-}
-
-internal class SelectedItem<T>(
-        private val adapter: RecyclerAdapter<T>
-) : Observable<T?>() {
-
-    override fun subscribeActual(observer: Observer<in T?>?) {
-        observer?.let {
-            adapter.onItemSelected = object : Function1<T?, Unit>, MainThreadDisposable() {
-
-                override fun invoke(item: T?) {
-                    if (!isDisposed) {
-                        it.onNext(item)
+                    override fun onDispose() {
+                        adapter.onItemSelected = null
                     }
-                }
-
-                override fun onDispose() {
-                    adapter.onItemSelected = null
                 }
             }
         }

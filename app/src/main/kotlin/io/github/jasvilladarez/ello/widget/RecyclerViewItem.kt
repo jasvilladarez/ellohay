@@ -30,6 +30,13 @@ interface RecyclerViewItem<in T> {
 
     val viewItemLayout: Int
 
-    fun bind(view: View, item: T)
+    /**
+     * Called when the item is binding by the recycler view
+     *
+     * @param view - View involving the bind
+     * @param item - Entity object that contains the item data
+     * @param selectedItem - Currently selected item. Null if there is no selected item
+     */
+    fun bind(view: View, item: T, selectedItem: T?)
 
 }

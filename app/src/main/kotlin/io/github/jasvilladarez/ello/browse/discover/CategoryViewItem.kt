@@ -24,6 +24,7 @@
 
 package io.github.jasvilladarez.ello.browse.discover
 
+import android.graphics.drawable.TransitionDrawable
 import android.view.View
 import io.github.jasvilladarez.domain.entity.Category
 import io.github.jasvilladarez.ello.R
@@ -36,11 +37,14 @@ internal class CategoryViewItem : RecyclerViewItem<Category> {
     override val viewItemLayout: Int
         get() = R.layout.li_category
 
-    override fun bind(view: View, item: Category) {
+    override fun bind(view: View, item: Category, selectedItem: Category?) {
         item.image.original?.url?.let {
             view.categoryImage?.loadImage(it)
         }
         view.categoryName.text = item.name
+        val imageForeground = view.categoryImage.foreground as TransitionDrawable
+        if (item == selectedItem) imageForeground.startTransition(600)
+        else imageForeground.resetTransition()
     }
 
 }
