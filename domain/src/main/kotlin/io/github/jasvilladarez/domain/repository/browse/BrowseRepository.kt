@@ -32,9 +32,9 @@ import io.reactivex.Observable
 
 interface BrowseRepository {
 
-    fun fetchEditorials(nextPageId: Int? = null): Observable<EditorialStream>
+    fun fetchEditorials(nextPageId: String? = null): Observable<EditorialStream>
 
-    fun fetchArtistInvites(nextPageId: Int? = null): Observable<ArtistInviteStream>
+    fun fetchArtistInvites(nextPageId: String? = null): Observable<ArtistInviteStream>
 
     fun fetchCategories(): Observable<List<Category>>
 

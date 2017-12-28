@@ -24,6 +24,7 @@
 
 package io.github.jasvilladarez.ello.browse.invites
 
+import android.support.v4.content.ContextCompat
 import android.view.View
 import io.github.jasvilladarez.domain.entity.ArtistInvite
 import io.github.jasvilladarez.ello.R
@@ -57,19 +58,19 @@ internal class ArtistInviteViewItem : RecyclerViewItem<ArtistInvite> {
     private fun setStatusText(view: View, status: ArtistInvite.Status) = when (status) {
         ArtistInvite.Status.UPCOMING -> {
             view.status?.text = view.context.getString(R.string.upcoming)
-            view.status?.setTextColor(view.context.resources.getColor(R.color.ello_purple))
+            view.status?.setTextColor(ContextCompat.getColor(view.context, R.color.ello_purple))
         }
         ArtistInvite.Status.OPEN -> {
             view.status?.text = view.context.getString(R.string.open_for_submissions)
-            view.status?.setTextColor(view.context.resources.getColor(R.color.ello_green))
+            view.status?.setTextColor(ContextCompat.getColor(view.context, R.color.ello_green))
         }
         ArtistInvite.Status.SELECTING -> {
             view.status?.text = view.context.getString(R.string.selection_in_progress)
-            view.status?.setTextColor(view.context.resources.getColor(R.color.ello_orange))
+            view.status?.setTextColor(ContextCompat.getColor(view.context, R.color.ello_orange))
         }
         else -> {
             view.status?.text = view.context.getString(R.string.invite_closed)
-            view.status?.setTextColor(view.context.resources.getColor(R.color.ello_red))
+            view.status?.setTextColor(ContextCompat.getColor(view.context, R.color.ello_red))
         }
     }
 

@@ -36,18 +36,18 @@ internal class BrowseRepositoryImpl(
         private val browseApi: BrowseApi
 ) : BrowseRepository {
 
-    override fun fetchEditorials(nextPageId: Int?): Observable<EditorialStream> {
+    override fun fetchEditorials(nextPageId: String?): Observable<EditorialStream> {
         return browseApi.fetchEditorials(nextPageId).map {
             val next = it.headers().getParameterInLink("before")
-            it.body()?.apply { this.next = next?.toIntOrNull() }
+            it.body()?.apply { this.next = next }
                     ?: EditorialStream(emptyList())
         }.toObservable().applySchedulers()
     }
 
-    override fun fetchArtistInvites(nextPageId: Int?): Observable<ArtistInviteStream> {
+    override fun fetchArtistInvites(nextPageId: String?): Observable<ArtistInviteStream> {
         return browseApi.fetchArtistInvites(nextPageId).map {
             val next = it.headers().getParameterInLink("page")
-            it.body()?.apply { this.next = next?.toIntOrNull() }
+            it.body()?.apply { this.next = next }
                     ?: ArtistInviteStream(emptyList())
         }.toObservable().applySchedulers()
     }

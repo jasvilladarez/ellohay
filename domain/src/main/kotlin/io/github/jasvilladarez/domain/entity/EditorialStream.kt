@@ -33,5 +33,5 @@ import com.google.gson.annotations.SerializedName
 data class EditorialStream(
         @SerializedName("editorials")
         val editorials: List<Editorial>,
-        var next: Int? = null
+        var next: String? = null
 )

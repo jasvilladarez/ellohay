@@ -35,7 +35,7 @@ internal sealed class ArtistInvitesIntent : MviIntent {
     object Load : ArtistInvitesIntent()
 
     data class LoadMore(
-            val nextPageId: Int?
+            val nextPageId: String?
     ) : ArtistInvitesIntent()
 }
 
@@ -63,12 +63,12 @@ internal sealed class ArtistInvitesViewState : MviViewState {
 
     data class DefaultView(
             val artistInvites: List<ArtistInvite> = emptyList(),
-            val nextPageId: Int? = null
+            val nextPageId: String? = null
     ) : ArtistInvitesViewState()
 
     data class MoreView(
             val artistInvites: List<ArtistInvite> = emptyList(),
-            val nextPageId: Int? = null
+            val nextPageId: String? = null
     ) : ArtistInvitesViewState()
 
     data class ErrorView(

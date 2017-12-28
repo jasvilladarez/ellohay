@@ -42,7 +42,7 @@ internal interface BrowseApi {
      * @param before - page ID from Link header
      */
     @GET("editorials")
-    fun fetchEditorials(@Query("before") before: Int? = null)
+    fun fetchEditorials(@Query("before") before: String? = null)
             : Single<Response<EditorialStream>>
 
     /**
@@ -51,7 +51,7 @@ internal interface BrowseApi {
      * @param page - page ID from Link header
      */
     @GET("artist_invites")
-    fun fetchArtistInvites(@Query("page") page: Int? = null)
+    fun fetchArtistInvites(@Query("page") page: String? = null)
             : Single<Response<ArtistInviteStream>>
 
     /**

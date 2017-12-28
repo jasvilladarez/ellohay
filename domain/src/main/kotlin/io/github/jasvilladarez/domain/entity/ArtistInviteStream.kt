@@ -29,5 +29,5 @@ import com.google.gson.annotations.SerializedName
 data class ArtistInviteStream(
         @SerializedName("artist_invites")
         val artistInvites: List<ArtistInvite>,
-        var next: Int? = null
+        var next: String? = null
 )

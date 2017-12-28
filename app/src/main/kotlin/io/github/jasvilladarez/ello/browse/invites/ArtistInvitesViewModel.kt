@@ -77,7 +77,7 @@ internal class ArtistInvitesViewModel(
         stateMachine.clear()
     }
 
-    private fun fetchArtistInvites(nextPageId: Int? = null): Observable<ArtistInvitesResult> =
+    private fun fetchArtistInvites(nextPageId: String? = null): Observable<ArtistInvitesResult> =
             browseRepository.fetchArtistInvites(nextPageId).applyMvi(
                     {
                         ArtistInvitesResult.Success(it, nextPageId?.let {

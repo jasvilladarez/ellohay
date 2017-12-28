@@ -35,7 +35,7 @@ internal sealed class EditorialIntent : MviIntent {
     object Load : EditorialIntent()
 
     data class LoadMore(
-            val nextPageId: Int?
+            val nextPageId: String?
     ) : EditorialIntent()
 
     data class ItemClick(
@@ -69,12 +69,12 @@ internal sealed class EditorialViewState : MviViewState {
 
     data class DefaultView(
             val editorials: List<Editorial> = emptyList(),
-            val nextPageId: Int? = null
+            val nextPageId: String? = null
     ) : EditorialViewState()
 
     data class MoreView(
             val editorials: List<Editorial> = emptyList(),
-            val nextPageId: Int? = null
+            val nextPageId: String? = null
     ) : EditorialViewState()
 
     object InitialLoadingView : EditorialViewState()

@@ -79,7 +79,7 @@ internal class EditorialViewModel(
         stateMachine.clear()
     }
 
-    private fun fetchEditorials(nextPageId: Int? = null): Observable<EditorialResult> =
+    private fun fetchEditorials(nextPageId: String? = null): Observable<EditorialResult> =
             browseRepository.fetchEditorials(nextPageId).applyMvi(
                     {
                         EditorialResult.Success(it, nextPageId?.let {

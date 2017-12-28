@@ -32,5 +32,5 @@ internal class ElloAdapter<T>(
         loadMoreDistance: Int = 1
 ) : RecyclerAdapter<T>(viewItem, loadMoreDistance, ElloProgressViewItem()) {
 
-    var nextPageId: Int? = null
+    var nextPageId: String? = null
 }
