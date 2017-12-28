@@ -7,6 +7,7 @@ def globalConf = rootProject.ext
 
 android {
     compileSdkVersion globalConf.compiledSdkVersion
+    buildToolsVersion globalConf.buildToolsVersion
     defaultConfig {
         applicationId "io.github.jasvilladarez.ello"
         minSdkVersion globalConf.minSdkVersion

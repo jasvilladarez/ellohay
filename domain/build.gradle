@@ -6,6 +6,7 @@ def globalConf = rootProject.ext
 
 android {
     compileSdkVersion globalConf.compiledSdkVersion
+    buildToolsVersion globalConf.buildToolsVersion
     defaultConfig {
         minSdkVersion globalConf.minSdkVersion
         targetSdkVersion globalConf.targetSdkVersion
@@ -31,7 +32,4 @@ dependencies {
     implementation dependencies.rxAndroid
     implementation dependencies.rxJava
     implementation dependencies.rxKotlin
-
-    kapt dependencies.roomCompiler
-    implementation dependencies.room
 }
