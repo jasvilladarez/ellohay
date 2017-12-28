@@ -27,6 +27,7 @@ package io.github.jasvilladarez.domain.repository.browse
 import io.github.jasvilladarez.domain.entity.ArtistInviteStream
 import io.github.jasvilladarez.domain.entity.CategoryStream
 import io.github.jasvilladarez.domain.entity.EditorialStream
+import io.github.jasvilladarez.domain.entity.PostStream
 import io.reactivex.Single
 import retrofit2.Response
 import retrofit2.http.GET
@@ -74,7 +75,7 @@ internal interface BrowseApi {
     @GET("categories/{slug}/posts/recent")
     fun fetchPostsInCategory(@Path("slug") slug: String,
                              @Query("before") before: String? = null,
-                             @Query("per_page") limit: Int? = null)
+                             @Query("per_page") limit: Int? = null): Single<PostStream>
 
     /**
      * Fetch ll the newest posts across all the categories  - time ordered.
@@ -84,7 +85,7 @@ internal interface BrowseApi {
      */
     @GET("categories/posts/recent")
     fun fetchFeaturedPosts(@Query("before") before: String? = null,
-                           @Query("per_page") limit: Int? = null)
+                           @Query("per_page") limit: Int? = null): Single<PostStream>
 
     /**
      * Fetch all the newest posts across the network - time ordered.
@@ -94,7 +95,7 @@ internal interface BrowseApi {
      */
     @GET("discover/posts/recent")
     fun fetchRecentPosts(@Query("before") before: String? = null,
-                         @Query("per_page") limit: Int? = null)
+                         @Query("per_page") limit: Int? = null): Single<PostStream>
 
     /**
      * Fetch trending across the entire network.
@@ -106,5 +107,5 @@ internal interface BrowseApi {
     @GET("discover/posts/trending")
     fun fetchTrendingPosts(@Query("page") page: Int? = null,
                            @Query("per_page") limit: Int? = null,
-                           @Query("images_only") imagesOnly: Boolean = true)
+                           @Query("images_only") imagesOnly: Boolean = true): Single<PostStream>
 }
