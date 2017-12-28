@@ -41,4 +41,12 @@ data class Category(
         val description: String? = null,
         @SerializedName("uses_page_promotionals")
         val usesPagePromotionals: Boolean = false
-)
+) {
+
+    companion object {
+        internal const val SLUG_FEATURED = "featured"
+        internal const val SLUG_TRENDING = "trending"
+        internal const val SLUG_RECENT = "recent"
+    }
+
+}

@@ -28,5 +28,6 @@ import com.google.gson.annotations.SerializedName
 
 data class PostStream(
         @SerializedName("posts")
-        val posts: List<Post>
+        val posts: List<Post>,
+        var next: String? = null
 )

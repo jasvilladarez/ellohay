@@ -75,7 +75,7 @@ internal interface BrowseApi {
     @GET("categories/{slug}/posts/recent")
     fun fetchPostsInCategory(@Path("slug") slug: String,
                              @Query("before") before: String? = null,
-                             @Query("per_page") limit: Int? = null): Single<PostStream>
+                             @Query("per_page") limit: Int? = null): Single<Response<PostStream>>
 
     /**
      * Fetch ll the newest posts across all the categories  - time ordered.
@@ -85,7 +85,7 @@ internal interface BrowseApi {
      */
     @GET("categories/posts/recent")
     fun fetchFeaturedPosts(@Query("before") before: String? = null,
-                           @Query("per_page") limit: Int? = null): Single<PostStream>
+                           @Query("per_page") limit: Int? = null): Single<Response<PostStream>>
 
     /**
      * Fetch all the newest posts across the network - time ordered.
@@ -95,17 +95,17 @@ internal interface BrowseApi {
      */
     @GET("discover/posts/recent")
     fun fetchRecentPosts(@Query("before") before: String? = null,
-                         @Query("per_page") limit: Int? = null): Single<PostStream>
+                         @Query("per_page") limit: Int? = null): Single<Response<PostStream>>
 
     /**
      * Fetch trending across the entire network.
      *
-     * @param before - What page to retrieve
+     * @param page - What page to retrieve, returned in the `link` header of the previous page
      * @param limit - Number of posts to return per page. Default: 25
      * @param imagesOnly - Flag to return only posts with images
      */
     @GET("discover/posts/trending")
     fun fetchTrendingPosts(@Query("page") page: Int? = null,
                            @Query("per_page") limit: Int? = null,
-                           @Query("images_only") imagesOnly: Boolean = true): Single<PostStream>
+                           @Query("images_only") imagesOnly: Boolean = true): Single<Response<PostStream>>
 }

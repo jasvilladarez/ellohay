@@ -24,10 +24,10 @@
 
 package io.github.jasvilladarez.domain.repository.browse
 
-import android.net.Uri
 import io.github.jasvilladarez.domain.entity.ArtistInviteStream
 import io.github.jasvilladarez.domain.entity.Category
 import io.github.jasvilladarez.domain.entity.EditorialStream
+import io.github.jasvilladarez.domain.entity.PostStream
 import io.github.jasvilladarez.domain.util.applySchedulers
 import io.github.jasvilladarez.domain.util.getParameterInLink
 import io.reactivex.Observable
@@ -55,5 +55,19 @@ internal class BrowseRepositoryImpl(
     override fun fetchCategories(): Observable<List<Category>> {
         return browseApi.fetchCategories(true).map { it.body()?.categories ?: emptyList() }
                 .toObservable().applySchedulers()
+    }
+
+    override fun fetchPostsByCategory(category: Category, nextPageId: String?): Observable<PostStream> {
+        return (when (category.slug) {
+            Category.SLUG_FEATURED -> browseApi.fetchFeaturedPosts(nextPageId)
+            Category.SLUG_TRENDING -> browseApi.fetchTrendingPosts(nextPageId?.toInt())
+            Category.SLUG_RECENT -> browseApi.fetchFeaturedPosts(nextPageId)
+            else -> browseApi.fetchPostsInCategory(category.slug, nextPageId)
+        }).map {
+            val next = if (category.slug == Category.SLUG_TRENDING) it.headers()
+                    .getParameterInLink("page")
+            else it.headers().getParameterInLink("before")
+            it.body()?.apply { this.next = next } ?: PostStream(emptyList())
+        }.toObservable().applySchedulers()
     }
 }
