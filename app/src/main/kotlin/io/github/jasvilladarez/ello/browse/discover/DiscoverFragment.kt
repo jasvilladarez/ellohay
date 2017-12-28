@@ -34,7 +34,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
 import io.github.jasvilladarez.domain.entity.Category
+import io.github.jasvilladarez.domain.entity.Post
 import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.common.BaseFragment
 import io.github.jasvilladarez.ello.common.MviView
@@ -57,6 +59,10 @@ internal class DiscoverFragment : BaseFragment(), MviView<DiscoverIntent, Discov
         ElloAdapter(CategoryViewItem())
     }
 
+    private val postAdapter: ElloAdapter<Post> by lazy {
+        ElloAdapter(PostViewItem())
+    }
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
@@ -73,7 +79,11 @@ internal class DiscoverFragment : BaseFragment(), MviView<DiscoverIntent, Discov
         viewModel.processIntents(intents())
     }
 
-    override fun intents(): Observable<DiscoverIntent> = loadCategoryIntent()
+    override fun intents(): Observable<DiscoverIntent> = Observable.merge(
+            loadCategoryIntent(),
+            loadPostsIntent(),
+            refreshIntent()
+    )
 
     override fun render(state: DiscoverViewState) {
         when (state) {
@@ -87,16 +97,36 @@ internal class DiscoverFragment : BaseFragment(), MviView<DiscoverIntent, Discov
                             DividerItemDecoration.HORIZONTAL))
                 }
                 categoriesAdapter.items = state.categories
+                categoriesAdapter.selectedItem = state.categories.firstOrNull()
+            }
+            is DiscoverViewState.DefaultPostsView -> {
+                postAdapter.isLoading = false
+                swipeRefreshLayout.isRefreshing = false
+                postAdapter.items = state.posts
+                postAdapter.nextPageId = state.nextPageId
             }
             is DiscoverViewState.ErrorView -> {
                 swipeRefreshLayout.isRefreshing = false
                 context?.showError(state.errorMessage)
             }
-            is DiscoverViewState.LoadingView -> swipeRefreshLayout.isRefreshing = true
+            is DiscoverViewState.LoadingCategoriesView -> swipeRefreshLayout.isRefreshing = true
+            is DiscoverViewState.LoadingPostsView -> {
+                postRecyclerView?.adapter ?: let {
+                    postRecyclerView.adapter = postAdapter
+                    postRecyclerView.layoutManager = LinearLayoutManager(context)
+                }
+                postAdapter.isLoading = true
+            }
         }
     }
 
     private fun loadCategoryIntent(): Observable<DiscoverIntent> = rxLifecycle.filter {
         it == Lifecycle.Event.ON_START
     }.map { DiscoverIntent.LoadCategories }
+
+    private fun loadPostsIntent(): Observable<DiscoverIntent> = categoriesAdapter.onItemSelected()
+            .map { categoriesAdapter.selectedItem?.let { DiscoverIntent.LoadPosts(it) } }
+
+    private fun refreshIntent(): Observable<DiscoverIntent> = RxSwipeRefreshLayout.refreshes(swipeRefreshLayout)
+            .map { categoriesAdapter.selectedItem?.let { DiscoverIntent.LoadPosts(it) } }
 }

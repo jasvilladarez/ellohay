@@ -26,6 +26,7 @@ package io.github.jasvilladarez.ello.browse.discover
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
+import io.github.jasvilladarez.domain.entity.Category
 import io.github.jasvilladarez.domain.repository.browse.BrowseRepository
 import io.github.jasvilladarez.ello.common.MviStateMachine
 import io.github.jasvilladarez.ello.common.MviViewModel
@@ -40,14 +41,23 @@ internal class DiscoverViewModel(
             MviStateMachine<DiscoverIntent, DiscoverResult, DiscoverViewState>(
                     DiscoverViewState.DefaultCategoryView(), {
                 when (it) {
-                    DiscoverIntent.LoadCategories -> fetchCategories()
+                    is DiscoverIntent.LoadCategories -> fetchCategories()
+                    is DiscoverIntent.LoadPosts -> fetchPosts(it.selectedItem)
                 }
             }, { _, result ->
                 when (result) {
                     is DiscoverResult.SuccessCategories ->
                         DiscoverViewState.DefaultCategoryView(result.categories)
+                    is DiscoverResult.SuccessPosts ->
+                        DiscoverViewState.DefaultPostsView(result.postStream.posts,
+                                result.postStream.next)
                     is DiscoverResult.Error -> DiscoverViewState.ErrorView(result.error.message)
-                    is DiscoverResult.InProgress -> DiscoverViewState.LoadingView
+                    is DiscoverResult.InProgress -> when (result.mode) {
+                        DiscoverResult.DiscoverMode.LOAD_CATEGORIES ->
+                            DiscoverViewState.LoadingCategoriesView
+                        DiscoverResult.DiscoverMode.LOAD_POSTS ->
+                            DiscoverViewState.LoadingPostsView
+                    }
                 }
             })
 
@@ -62,5 +72,13 @@ internal class DiscoverViewModel(
             .fetchCategories().applyMvi(
             { DiscoverResult.SuccessCategories(it) },
             { DiscoverResult.Error(it) },
-            { DiscoverResult.InProgress })
+            { DiscoverResult.InProgress(DiscoverResult.DiscoverMode.LOAD_CATEGORIES) })
+
+    private fun fetchPosts(category: Category,
+                           nextPageId: String? = null): Observable<DiscoverResult> =
+            browseRepository.fetchPostsByCategory(category, nextPageId).applyMvi(
+                    { DiscoverResult.SuccessPosts(it) },
+                    { DiscoverResult.Error(it) },
+                    { DiscoverResult.InProgress(DiscoverResult.DiscoverMode.LOAD_POSTS) }
+            )
 }

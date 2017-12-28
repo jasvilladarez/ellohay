@@ -25,6 +25,8 @@
 package io.github.jasvilladarez.ello.browse.discover
 
 import io.github.jasvilladarez.domain.entity.Category
+import io.github.jasvilladarez.domain.entity.Post
+import io.github.jasvilladarez.domain.entity.PostStream
 import io.github.jasvilladarez.ello.common.MviIntent
 import io.github.jasvilladarez.ello.common.MviResult
 import io.github.jasvilladarez.ello.common.MviViewState
@@ -32,19 +34,34 @@ import io.github.jasvilladarez.ello.common.MviViewState
 internal sealed class DiscoverIntent : MviIntent {
 
     object LoadCategories : DiscoverIntent()
+
+    data class LoadPosts(
+            val selectedItem: Category,
+            val nextPageId: String? = null
+    ) : DiscoverIntent()
 }
 
 internal sealed class DiscoverResult : MviResult {
 
+    enum class DiscoverMode {
+        LOAD_CATEGORIES, LOAD_POSTS
+    }
+
     data class SuccessCategories(
             val categories: List<Category> = emptyList()
+    ) : DiscoverResult()
+
+    data class SuccessPosts(
+            val postStream: PostStream = PostStream(emptyList())
     ) : DiscoverResult()
 
     data class Error(
             val error: Throwable
     ) : DiscoverResult()
 
-    object InProgress : DiscoverResult()
+    data class InProgress(
+            val mode: DiscoverMode
+    ) : DiscoverResult()
 }
 
 internal sealed class DiscoverViewState : MviViewState {
@@ -53,9 +70,16 @@ internal sealed class DiscoverViewState : MviViewState {
             val categories: List<Category> = emptyList()
     ) : DiscoverViewState()
 
+    data class DefaultPostsView(
+            val posts: List<Post> = emptyList(),
+            val nextPageId: String? = null
+    ) : DiscoverViewState()
+
     data class ErrorView(
             val errorMessage: String?
     ) : DiscoverViewState()
 
-    object LoadingView : DiscoverViewState()
+    object LoadingCategoriesView : DiscoverViewState()
+
+    object LoadingPostsView : DiscoverViewState()
 }
