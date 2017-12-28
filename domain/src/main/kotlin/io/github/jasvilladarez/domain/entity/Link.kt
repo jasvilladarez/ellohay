@@ -48,6 +48,11 @@ data class PostStreamLink(
         val href: String
 ) : Link
 
+data class AuthorLink(
+        @SerializedName("id")
+        val id: Long
+) : Link
+
 internal class LinksTypeAdapter : TypeAdapter<Links>() {
 
     override fun read(reader: JsonReader?): Links? {
@@ -58,6 +63,7 @@ internal class LinksTypeAdapter : TypeAdapter<Links>() {
                 when (it.nextName()) {
                     "post" -> links.add(readPost(it))
                     "post_stream" -> links.add(readPostStream(it))
+                    "author" -> links.add(readAuthor(it))
                 }
             }
             it.endObject()
@@ -106,4 +112,19 @@ internal class LinksTypeAdapter : TypeAdapter<Links>() {
         return PostStreamLink(href)
     }
 
+    private fun readAuthor(reader: JsonReader): AuthorLink {
+        var id = 0L
+        reader.beginObject()
+        while (reader.peek() != JsonToken.END_OBJECT) {
+            if (reader.peek() != JsonToken.NAME) {
+                reader.skipValue()
+                continue
+            }
+            when (reader.nextName()) {
+                "id" -> id = reader.nextLong()
+            }
+        }
+        reader.endObject()
+        return AuthorLink(id)
+    }
 }

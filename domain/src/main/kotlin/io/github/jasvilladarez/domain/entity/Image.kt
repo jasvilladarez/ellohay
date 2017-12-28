@@ -29,11 +29,11 @@ import com.google.gson.annotations.SerializedName
 data class Image(
         @SerializedName("ldpi")
         val ldpi: ImageVersion?,
-        @SerializedName("mdpi")
+        @SerializedName("mdpi", alternate = ["small"])
         val mdpi: ImageVersion?,
-        @SerializedName("hdpi")
+        @SerializedName("hdpi", alternate = ["regular"])
         val hdpi: ImageVersion?,
-        @SerializedName("xhdpi")
+        @SerializedName("xhdpi", alternate = ["large"])
         val xhdpi: ImageVersion?,
         @SerializedName("optimized")
         val optimized: ImageVersion?,

@@ -26,16 +26,11 @@ package io.github.jasvilladarez.domain.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class Post(
-        @SerializedName("id")
-        val id: String,
-        @SerializedName("token")
-        val token: String,
-        @SerializedName("href")
-        val href: String,
-        @SerializedName("links")
-        private val linkList: Links?
-) {
-    val links: List<Link>?
-        get() = linkList?.links
-}
+data class Linked(
+        @SerializedName("users")
+        val users: List<User>?,
+        @SerializedName("posts")
+        val posts: List<Post>?,
+        @SerializedName("categories")
+        val categories: List<Category>
+)

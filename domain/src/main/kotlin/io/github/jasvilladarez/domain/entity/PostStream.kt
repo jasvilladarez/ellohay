@@ -27,6 +27,8 @@ package io.github.jasvilladarez.domain.entity
 import com.google.gson.annotations.SerializedName
 
 data class PostStream(
+        @SerializedName("linked")
+        val linked: Linked,
         @SerializedName("posts")
         val posts: List<Post>,
         var next: String? = null
