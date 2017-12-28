@@ -43,20 +43,29 @@ internal class DiscoverViewModel(
                 when (it) {
                     is DiscoverIntent.LoadCategories -> fetchCategories()
                     is DiscoverIntent.LoadPosts -> fetchPosts(it.selectedItem)
+                    is DiscoverIntent.LoadMorePosts -> fetchPosts(it.selectedItem, it.nextPageId)
                 }
             }, { _, result ->
                 when (result) {
                     is DiscoverResult.SuccessCategories ->
                         DiscoverViewState.DefaultCategoryView(result.categories)
-                    is DiscoverResult.SuccessPosts ->
-                        DiscoverViewState.DefaultPostsView(result.postStream.posts,
-                                result.postStream.next)
+                    is DiscoverResult.SuccessPosts -> when (result.mode) {
+                        DiscoverResult.DiscoverMode.LOAD_POSTS ->
+                            DiscoverViewState.DefaultPostsView(result.postStream.posts,
+                                    result.postStream.next)
+                        DiscoverResult.DiscoverMode.LOAD_MORE_POSTS ->
+                            DiscoverViewState.MorePostsView(result.postStream.posts,
+                                    result.postStream.next)
+
+                    }
                     is DiscoverResult.Error -> DiscoverViewState.ErrorView(result.error.message)
-                    is DiscoverResult.InProgress -> when (result.mode) {
-                        DiscoverResult.DiscoverMode.LOAD_CATEGORIES ->
-                            DiscoverViewState.LoadingCategoriesView
+                    is DiscoverResult.InProgressCategories ->
+                        DiscoverViewState.LoadingCategoriesView
+                    is DiscoverResult.InProgressPosts -> when (result.mode) {
                         DiscoverResult.DiscoverMode.LOAD_POSTS ->
                             DiscoverViewState.LoadingPostsView
+                        DiscoverResult.DiscoverMode.LOAD_MORE_POSTS ->
+                            DiscoverViewState.LoadingMorePostsView
                     }
                 }
             })
@@ -72,13 +81,21 @@ internal class DiscoverViewModel(
             .fetchCategories().applyMvi(
             { DiscoverResult.SuccessCategories(it) },
             { DiscoverResult.Error(it) },
-            { DiscoverResult.InProgress(DiscoverResult.DiscoverMode.LOAD_CATEGORIES) })
+            { DiscoverResult.InProgressCategories })
 
     private fun fetchPosts(category: Category,
                            nextPageId: String? = null): Observable<DiscoverResult> =
             browseRepository.fetchPostsByCategory(category, nextPageId).applyMvi(
-                    { DiscoverResult.SuccessPosts(it) },
+                    {
+                        DiscoverResult.SuccessPosts(it, nextPageId?.let {
+                            DiscoverResult.DiscoverMode.LOAD_MORE_POSTS
+                        } ?: DiscoverResult.DiscoverMode.LOAD_POSTS)
+                    },
                     { DiscoverResult.Error(it) },
-                    { DiscoverResult.InProgress(DiscoverResult.DiscoverMode.LOAD_POSTS) }
+                    {
+                        nextPageId?.let {
+                            DiscoverResult.InProgressPosts(DiscoverResult.DiscoverMode.LOAD_MORE_POSTS)
+                        } ?: DiscoverResult.InProgressPosts(DiscoverResult.DiscoverMode.LOAD_POSTS)
+                    }
             )
 }

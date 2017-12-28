@@ -28,6 +28,7 @@ import android.view.View
 import io.github.jasvilladarez.domain.entity.Post
 import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.widget.RecyclerViewItem
+import kotlinx.android.synthetic.main.li_post.view.*
 
 internal class PostViewItem : RecyclerViewItem<Post> {
 
@@ -35,7 +36,7 @@ internal class PostViewItem : RecyclerViewItem<Post> {
         get() = R.layout.li_post
 
     override fun bind(view: View, item: Post, selectedItem: Post?) {
-
+        view.description.text = item.token
     }
 
 }

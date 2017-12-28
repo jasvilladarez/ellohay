@@ -82,6 +82,7 @@ internal class DiscoverFragment : BaseFragment(), MviView<DiscoverIntent, Discov
     override fun intents(): Observable<DiscoverIntent> = Observable.merge(
             loadCategoryIntent(),
             loadPostsIntent(),
+            loadMorePostsIntent(),
             refreshIntent()
     )
 
@@ -105,8 +106,14 @@ internal class DiscoverFragment : BaseFragment(), MviView<DiscoverIntent, Discov
                 postAdapter.items = state.posts
                 postAdapter.nextPageId = state.nextPageId
             }
+            is DiscoverViewState.MorePostsView -> {
+                postAdapter.isLoading = false
+                postAdapter.nextPageId = state.nextPageId
+                postAdapter.addItems(state.posts)
+            }
             is DiscoverViewState.ErrorView -> {
                 swipeRefreshLayout.isRefreshing = false
+                postAdapter.isLoading = false
                 context?.showError(state.errorMessage)
             }
             is DiscoverViewState.LoadingCategoriesView -> swipeRefreshLayout.isRefreshing = true
@@ -115,6 +122,10 @@ internal class DiscoverFragment : BaseFragment(), MviView<DiscoverIntent, Discov
                     postRecyclerView.adapter = postAdapter
                     postRecyclerView.layoutManager = LinearLayoutManager(context)
                 }
+                postAdapter.items = emptyList()
+                postAdapter.isLoading = true
+            }
+            is DiscoverViewState.LoadingMorePostsView -> {
                 postAdapter.isLoading = true
             }
         }
@@ -126,6 +137,13 @@ internal class DiscoverFragment : BaseFragment(), MviView<DiscoverIntent, Discov
 
     private fun loadPostsIntent(): Observable<DiscoverIntent> = categoriesAdapter.onItemSelected()
             .map { categoriesAdapter.selectedItem?.let { DiscoverIntent.LoadPosts(it) } }
+
+    private fun loadMorePostsIntent(): Observable<DiscoverIntent> = postAdapter.onLoadMore()
+            .map {
+                categoriesAdapter.selectedItem?.let {
+                    DiscoverIntent.LoadMorePosts(it, postAdapter.nextPageId)
+                }
+            }
 
     private fun refreshIntent(): Observable<DiscoverIntent> = RxSwipeRefreshLayout.refreshes(swipeRefreshLayout)
             .map { categoriesAdapter.selectedItem?.let { DiscoverIntent.LoadPosts(it) } }

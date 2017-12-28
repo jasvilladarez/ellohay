@@ -36,15 +36,19 @@ internal sealed class DiscoverIntent : MviIntent {
     object LoadCategories : DiscoverIntent()
 
     data class LoadPosts(
+            val selectedItem: Category
+    ) : DiscoverIntent()
+
+    data class LoadMorePosts(
             val selectedItem: Category,
-            val nextPageId: String? = null
+            val nextPageId: String?
     ) : DiscoverIntent()
 }
 
 internal sealed class DiscoverResult : MviResult {
 
     enum class DiscoverMode {
-        LOAD_CATEGORIES, LOAD_POSTS
+        LOAD_POSTS, LOAD_MORE_POSTS
     }
 
     data class SuccessCategories(
@@ -52,14 +56,17 @@ internal sealed class DiscoverResult : MviResult {
     ) : DiscoverResult()
 
     data class SuccessPosts(
-            val postStream: PostStream = PostStream(emptyList())
+            val postStream: PostStream = PostStream(emptyList()),
+            val mode: DiscoverMode
     ) : DiscoverResult()
 
     data class Error(
             val error: Throwable
     ) : DiscoverResult()
 
-    data class InProgress(
+    object InProgressCategories : DiscoverResult()
+
+    data class InProgressPosts(
             val mode: DiscoverMode
     ) : DiscoverResult()
 }
@@ -75,6 +82,11 @@ internal sealed class DiscoverViewState : MviViewState {
             val nextPageId: String? = null
     ) : DiscoverViewState()
 
+    data class MorePostsView(
+            val posts: List<Post> = emptyList(),
+            val nextPageId: String? = null
+    ) : DiscoverViewState()
+
     data class ErrorView(
             val errorMessage: String?
     ) : DiscoverViewState()
@@ -82,4 +94,6 @@ internal sealed class DiscoverViewState : MviViewState {
     object LoadingCategoriesView : DiscoverViewState()
 
     object LoadingPostsView : DiscoverViewState()
+
+    object LoadingMorePostsView : DiscoverViewState()
 }

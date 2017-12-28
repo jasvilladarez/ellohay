@@ -25,8 +25,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/li_default_height"
-    android:orientation="vertical"
     android:layout_margin="@dimen/default_half_padding"
-    android:background="@color/ello_grey">
+    android:background="@color/ello_grey"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

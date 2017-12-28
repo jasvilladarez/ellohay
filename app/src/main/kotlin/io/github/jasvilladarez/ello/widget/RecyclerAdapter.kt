@@ -62,6 +62,8 @@ open class RecyclerAdapter<T>(
 
     var selectedItem: T? = null
         set(value) {
+            if (field == value)
+                return
             notifyItemChanged(items.indexOf(field))
             field = value
             onItemSelected?.invoke(value)
