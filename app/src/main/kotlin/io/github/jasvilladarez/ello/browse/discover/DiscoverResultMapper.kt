@@ -25,6 +25,7 @@
 package io.github.jasvilladarez.ello.browse.discover
 
 import io.github.jasvilladarez.domain.entity.Category
+import io.github.jasvilladarez.domain.entity.PostStream
 
 internal data class CategoryItem(
         val name: String,
@@ -38,3 +39,14 @@ internal fun Category.mapToViewItem(): CategoryItem = CategoryItem(
         slug,
         image.original?.url
 )
+
+internal data class PostItem(
+        val authorUsername: String?
+)
+
+internal fun PostStream.mapToViewItems(): List<PostItem> = posts.map { post ->
+    val author = this.linked.users?.firstOrNull { it.id == post.authorId }
+    PostItem(
+            author?.username
+    )
+}

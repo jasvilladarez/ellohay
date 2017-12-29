@@ -30,7 +30,7 @@ data class User(
         @SerializedName("id")
         val id: Long,
         @SerializedName("username")
-        val uesrname: String,
+        val username: String,
         @SerializedName("name")
         val name: String,
         @SerializedName("avatar")

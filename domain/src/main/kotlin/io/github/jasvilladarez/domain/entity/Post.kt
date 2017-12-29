@@ -33,9 +33,6 @@ data class Post(
         val token: String,
         @SerializedName("href")
         val href: String,
-        @SerializedName("links")
-        private val linkList: Links?
-) {
-    val links: List<Link>?
-        get() = linkList?.links
-}
+        @SerializedName("author_id")
+        val authorId: Long
+)

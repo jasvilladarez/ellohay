@@ -24,10 +24,7 @@
 
 package io.github.jasvilladarez.domain.repository.browse
 
-import io.github.jasvilladarez.domain.entity.ArtistInviteStream
-import io.github.jasvilladarez.domain.entity.Category
-import io.github.jasvilladarez.domain.entity.EditorialStream
-import io.github.jasvilladarez.domain.entity.PostStream
+import io.github.jasvilladarez.domain.entity.*
 import io.github.jasvilladarez.domain.util.applySchedulers
 import io.github.jasvilladarez.domain.util.getParameterInLink
 import io.reactivex.Observable
@@ -67,7 +64,7 @@ internal class BrowseRepositoryImpl(
             val next = if (categorySlug == Category.SLUG_TRENDING) it.headers()
                     .getParameterInLink("page")
             else it.headers().getParameterInLink("before")
-            it.body()?.apply { this.next = next } ?: PostStream(emptyList())
+            it.body()?.apply { this.next = next } ?: PostStream(Linked(), emptyList())
         }.toObservable().applySchedulers()
     }
 }

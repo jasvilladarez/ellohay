@@ -35,7 +35,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
-import io.github.jasvilladarez.domain.entity.Post
 import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.common.BaseFragment
 import io.github.jasvilladarez.ello.common.MviView
@@ -58,7 +57,7 @@ internal class DiscoverFragment : BaseFragment(), MviView<DiscoverIntent, Discov
         ElloAdapter(CategoryViewItem())
     }
 
-    private val postAdapter: ElloAdapter<Post> by lazy {
+    private val postAdapter: ElloAdapter<PostItem> by lazy {
         ElloAdapter(PostViewItem())
     }
 

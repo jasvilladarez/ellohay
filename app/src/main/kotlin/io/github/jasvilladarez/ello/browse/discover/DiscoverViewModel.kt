@@ -51,11 +51,11 @@ internal class DiscoverViewModel(
                         DiscoverViewState.DefaultCategoryView(result.categories)
                     is DiscoverResult.SuccessPosts -> when (result.mode) {
                         DiscoverResult.DiscoverMode.LOAD_POSTS ->
-                            DiscoverViewState.DefaultPostsView(result.postStream.posts,
-                                    result.postStream.next)
+                            DiscoverViewState.DefaultPostsView(result.posts,
+                                    result.nextPageId)
                         DiscoverResult.DiscoverMode.LOAD_MORE_POSTS ->
-                            DiscoverViewState.MorePostsView(result.postStream.posts,
-                                    result.postStream.next)
+                            DiscoverViewState.MorePostsView(result.posts,
+                                    result.nextPageId)
 
                     }
                     is DiscoverResult.Error -> DiscoverViewState.ErrorView(result.error.message)
@@ -87,7 +87,8 @@ internal class DiscoverViewModel(
                            nextPageId: String? = null): Observable<DiscoverResult> =
             browseRepository.fetchPostsByCategory(category.slug, nextPageId).applyMvi(
                     {
-                        DiscoverResult.SuccessPosts(it, nextPageId?.let {
+                        DiscoverResult.SuccessPosts(it.mapToViewItems(),
+                                it.next, nextPageId?.let {
                             DiscoverResult.DiscoverMode.LOAD_MORE_POSTS
                         } ?: DiscoverResult.DiscoverMode.LOAD_POSTS)
                     },

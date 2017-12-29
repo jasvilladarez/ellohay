@@ -24,9 +24,6 @@
 
 package io.github.jasvilladarez.ello.browse.discover
 
-import io.github.jasvilladarez.domain.entity.Category
-import io.github.jasvilladarez.domain.entity.Post
-import io.github.jasvilladarez.domain.entity.PostStream
 import io.github.jasvilladarez.ello.common.MviIntent
 import io.github.jasvilladarez.ello.common.MviResult
 import io.github.jasvilladarez.ello.common.MviViewState
@@ -56,7 +53,8 @@ internal sealed class DiscoverResult : MviResult {
     ) : DiscoverResult()
 
     data class SuccessPosts(
-            val postStream: PostStream = PostStream(emptyList()),
+            val posts: List<PostItem> = emptyList(),
+            val nextPageId: String? = null,
             val mode: DiscoverMode
     ) : DiscoverResult()
 
@@ -78,12 +76,12 @@ internal sealed class DiscoverViewState : MviViewState {
     ) : DiscoverViewState()
 
     data class DefaultPostsView(
-            val posts: List<Post> = emptyList(),
+            val posts: List<PostItem> = emptyList(),
             val nextPageId: String? = null
     ) : DiscoverViewState()
 
     data class MorePostsView(
-            val posts: List<Post> = emptyList(),
+            val posts: List<PostItem> = emptyList(),
             val nextPageId: String? = null
     ) : DiscoverViewState()
 

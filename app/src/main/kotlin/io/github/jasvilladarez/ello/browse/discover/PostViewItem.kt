@@ -25,18 +25,17 @@
 package io.github.jasvilladarez.ello.browse.discover
 
 import android.view.View
-import io.github.jasvilladarez.domain.entity.Post
 import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.widget.RecyclerViewItem
 import kotlinx.android.synthetic.main.li_post.view.*
 
-internal class PostViewItem : RecyclerViewItem<Post> {
+internal class PostViewItem : RecyclerViewItem<PostItem> {
 
     override val viewItemLayout: Int
         get() = R.layout.li_post
 
-    override fun bind(view: View, item: Post) {
-        view.description.text = item.token
+    override fun bind(view: View, item: PostItem) {
+        view.description.text = item.authorUsername
     }
 
 }

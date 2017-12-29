@@ -28,9 +28,9 @@ import com.google.gson.annotations.SerializedName
 
 data class Linked(
         @SerializedName("users")
-        val users: List<User>?,
+        val users: List<User>? = null,
         @SerializedName("posts")
-        val posts: List<Post>?,
+        val posts: List<Post>? = null,
         @SerializedName("categories")
-        val categories: List<Category>
+        val categories: List<Category>? = null
 )
