@@ -116,6 +116,7 @@ internal class DiscoverFragment : BaseFragment(), MviView<DiscoverIntent, Discov
             }
             is DiscoverViewState.LoadingCategoriesView -> swipeRefreshLayout.isRefreshing = true
             is DiscoverViewState.LoadingPostsView -> {
+                swipeRefreshLayout.isRefreshing = false
                 postRecyclerView?.adapter ?: let {
                     postRecyclerView.adapter = postAdapter
                     postRecyclerView.layoutManager = LinearLayoutManager(context)

@@ -47,6 +47,6 @@ data class TextPostBlock(
 ) : PostBlock(Kind.TEXT)
 
 internal fun postBlockTypeAdapter(): TypeAdapterFactory = RuntimeTypeAdapterFactory
-        .of(PostBlock::class.java, "kind")
-        .registerSubtype(TextPostBlock::class.java, "text")
-        .registerSubtype(ImagePostBlock::class.java, "image")
+        .of(PostBlock::class, "kind")
+        .registerSubtype(TextPostBlock::class, "text")
+        .registerSubtype(ImagePostBlock::class, "image")

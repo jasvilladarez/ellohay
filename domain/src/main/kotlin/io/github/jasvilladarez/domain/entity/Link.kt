@@ -47,8 +47,14 @@ data class AuthorLink(
         val id: Long
 ) : Link
 
+data class RepostedAuthorLink(
+        @SerializedName("id")
+        val id: Long
+): Link
+
 internal fun linksTypeAdapter(): TypeAdapterFactory = MapToListTypeAdapterFactory
         .of(Link::class)
         .registerSubtype(PostLink::class, "post")
         .registerSubtype(PostStreamLink::class, "post_stream")
         .registerSubtype(AuthorLink::class, "author")
+        .registerSubtype(RepostedAuthorLink::class, "reposted_author")
