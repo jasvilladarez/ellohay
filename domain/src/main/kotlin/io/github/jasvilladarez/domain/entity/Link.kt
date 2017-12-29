@@ -24,15 +24,9 @@
 
 package io.github.jasvilladarez.domain.entity
 
-import com.google.gson.TypeAdapter
+import com.google.gson.TypeAdapterFactory
 import com.google.gson.annotations.SerializedName
-import com.google.gson.stream.JsonReader
-import com.google.gson.stream.JsonToken
-import com.google.gson.stream.JsonWriter
-
-class Links {
-    var links: List<Link>? = null
-}
+import io.github.jasvilladarez.domain.util.MapToListTypeAdapterFactory
 
 interface Link
 
@@ -53,78 +47,8 @@ data class AuthorLink(
         val id: Long
 ) : Link
 
-internal class LinksTypeAdapter : TypeAdapter<Links>() {
-
-    override fun read(reader: JsonReader?): Links? {
-        return reader?.takeUnless { it.peek() === JsonToken.NULL }?.let {
-            val links = mutableListOf<Link>()
-            it.beginObject()
-            while (it.hasNext()) {
-                when (it.nextName()) {
-                    "post" -> links.add(readPost(it))
-                    "post_stream" -> links.add(readPostStream(it))
-                    "author" -> links.add(readAuthor(it))
-                }
-            }
-            it.endObject()
-            Links().apply { this.links = links }
-        } ?: let {
-            reader?.nextNull()
-            null
-        }
-    }
-
-    override fun write(out: JsonWriter?, value: Links?) {
-
-    }
-
-    private fun readPost(reader: JsonReader): PostLink {
-        var id = ""
-        var href = ""
-        reader.beginObject()
-        while (reader.peek() != JsonToken.END_OBJECT) {
-            if (reader.peek() != JsonToken.NAME) {
-                reader.skipValue()
-                continue
-            }
-            when (reader.nextName()) {
-                "id" -> id = reader.nextString()
-                "href" -> href = reader.nextString()
-            }
-        }
-        reader.endObject()
-        return PostLink(id, href)
-    }
-
-    private fun readPostStream(reader: JsonReader): PostStreamLink {
-        var href = ""
-        reader.beginObject()
-        while (reader.peek() != JsonToken.END_OBJECT) {
-            if (reader.peek() != JsonToken.NAME) {
-                reader.skipValue()
-                continue
-            }
-            when (reader.nextName()) {
-                "href" -> href = reader.nextString()
-            }
-        }
-        reader.endObject()
-        return PostStreamLink(href)
-    }
-
-    private fun readAuthor(reader: JsonReader): AuthorLink {
-        var id = 0L
-        reader.beginObject()
-        while (reader.peek() != JsonToken.END_OBJECT) {
-            if (reader.peek() != JsonToken.NAME) {
-                reader.skipValue()
-                continue
-            }
-            when (reader.nextName()) {
-                "id" -> id = reader.nextLong()
-            }
-        }
-        reader.endObject()
-        return AuthorLink(id)
-    }
-}
+internal fun linksTypeAdapter(): TypeAdapterFactory = MapToListTypeAdapterFactory
+        .of(Link::class)
+        .registerSubtype(PostLink::class, "post")
+        .registerSubtype(PostStreamLink::class, "post_stream")
+        .registerSubtype(AuthorLink::class, "author")

@@ -39,7 +39,7 @@ import kotlin.reflect.KClass
 
 internal val gson: Gson = GsonBuilder()
         .registerTypeAdapterFactory(LowercaseEnumTypeAdapterFactory())
-        .registerTypeAdapter(Links::class.java, LinksTypeAdapter())
+        .registerTypeAdapterFactory(linksTypeAdapter())
         .registerTypeAdapterFactory(postBlockTypeAdapter())
         .create()
 

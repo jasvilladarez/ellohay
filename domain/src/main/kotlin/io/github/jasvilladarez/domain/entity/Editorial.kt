@@ -43,11 +43,8 @@ data class Editorial(
         @SerializedName("two_by_two_image")
         val image: Image? = null,
         @SerializedName("links")
-        private val linksList: Links? = null
+        val links: List<Link>? = null
 ) {
-
-    val links: List<Link>?
-        get() = linksList?.links
 
     enum class EditorialType {
         POST, INTERNAL, EXTERNAL, POST_STREAM
