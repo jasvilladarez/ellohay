@@ -24,17 +24,29 @@
 
 package io.github.jasvilladarez.domain.entity
 
+import com.google.gson.TypeAdapterFactory
 import com.google.gson.annotations.SerializedName
+import io.github.jasvilladarez.domain.util.RuntimeTypeAdapterFactory
 
-data class Post(
-        @SerializedName("id")
-        val id: String,
-        @SerializedName("token")
-        val token: String,
-        @SerializedName("href")
-        val href: String,
-        @SerializedName("author_id")
-        val authorId: Long,
-        @SerializedName("summary")
-        val summary: List<PostBlock>?
-)
+abstract class PostBlock(
+        val kind: Kind
+) {
+    enum class Kind {
+        TEXT, IMAGE
+    }
+}
+
+data class ImagePostBlock(
+        @SerializedName("data")
+        val image: ImageVersion
+) : PostBlock(Kind.IMAGE)
+
+data class TextPostBlock(
+        @SerializedName("data")
+        val text: String
+) : PostBlock(Kind.TEXT)
+
+internal fun postBlockTypeAdapter(): TypeAdapterFactory = RuntimeTypeAdapterFactory
+        .of(PostBlock::class.java, "kind")
+        .registerSubtype(TextPostBlock::class.java, "text")
+        .registerSubtype(ImagePostBlock::class.java, "image")
