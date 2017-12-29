@@ -24,23 +24,21 @@
 
 package io.github.jasvilladarez.ello.browse.editorial
 
-import android.view.View
-import io.github.jasvilladarez.ello.R
-import io.github.jasvilladarez.ello.util.ui.loadImage
-import io.github.jasvilladarez.ello.widget.RecyclerViewItem
-import kotlinx.android.synthetic.main.li_editorial.view.*
+import io.github.jasvilladarez.domain.entity.Editorial
+import io.github.jasvilladarez.ello.util.fromHtml
 
-internal class EditorialViewItem : RecyclerViewItem<EditorialItem> {
+data class EditorialItem(
+        val id: Long,
+        val title: String,
+        val subtitle: CharSequence?,
+        val thumbnailImageUrl: String?,
+        val imageUrl: String?
+)
 
-    override val viewItemLayout: Int
-        get() = R.layout.li_editorial
-
-    override fun bind(view: View, item: EditorialItem, selectedItem: EditorialItem?) {
-        item.thumbnailImageUrl?.let {
-            view.editorialImage?.loadImage(it)
-        }
-        view.title?.text = item.title
-        view.description?.text = item.subtitle
-    }
-
-}
+internal fun Editorial.mapToViewItem(): EditorialItem = EditorialItem(
+        id,
+        title,
+        renderedSubtitle?.fromHtml() ?: subtitle,
+        image?.mdpi?.url,
+        image?.xhdpi?.url ?: image?.original?.url
+)

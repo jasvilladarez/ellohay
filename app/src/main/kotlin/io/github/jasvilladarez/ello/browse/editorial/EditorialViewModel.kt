@@ -51,11 +51,11 @@ internal class EditorialViewModel(
                 when (result) {
                     is EditorialResult.Success -> when (result.mode) {
                         EditorialResult.EditorialMode.LOAD ->
-                            EditorialViewState.DefaultView(result.editorialStream.editorials,
-                                    result.editorialStream.next)
+                            EditorialViewState.DefaultView(result.editorials,
+                                    result.nextPageId)
                         EditorialResult.EditorialMode.LOAD_MORE ->
-                            EditorialViewState.MoreView(result.editorialStream.editorials,
-                                    result.editorialStream.next)
+                            EditorialViewState.MoreView(result.editorials,
+                                    result.nextPageId)
                     }
                     is EditorialResult.Error -> EditorialViewState.ErrorView(result.error.message)
                     is EditorialResult.InProgress -> when (result.mode) {
@@ -82,7 +82,8 @@ internal class EditorialViewModel(
     private fun fetchEditorials(nextPageId: String? = null): Observable<EditorialResult> =
             browseRepository.fetchEditorials(nextPageId).applyMvi(
                     {
-                        EditorialResult.Success(it, nextPageId?.let {
+                        EditorialResult.Success(it.editorials.map { it.mapToViewItem() },
+                                it.next, nextPageId?.let {
                             EditorialResult.EditorialMode.LOAD_MORE
                         } ?: EditorialResult.EditorialMode.LOAD)
                     },

@@ -24,8 +24,6 @@
 
 package io.github.jasvilladarez.ello.browse.editorial
 
-import io.github.jasvilladarez.domain.entity.Editorial
-import io.github.jasvilladarez.domain.entity.EditorialStream
 import io.github.jasvilladarez.ello.common.MviIntent
 import io.github.jasvilladarez.ello.common.MviResult
 import io.github.jasvilladarez.ello.common.MviViewState
@@ -39,7 +37,7 @@ internal sealed class EditorialIntent : MviIntent {
     ) : EditorialIntent()
 
     data class ItemClick(
-            val item: Editorial
+            val item: EditorialItem
     ) : EditorialIntent()
 
 }
@@ -51,7 +49,8 @@ internal sealed class EditorialResult : MviResult {
     }
 
     data class Success(
-            val editorialStream: EditorialStream = EditorialStream(emptyList()),
+            val editorials: List<EditorialItem> = emptyList(),
+            val nextPageId: String? = null,
             val mode: EditorialMode
     ) : EditorialResult()
 
@@ -68,12 +67,12 @@ internal sealed class EditorialResult : MviResult {
 internal sealed class EditorialViewState : MviViewState {
 
     data class DefaultView(
-            val editorials: List<Editorial> = emptyList(),
+            val editorials: List<EditorialItem> = emptyList(),
             val nextPageId: String? = null
     ) : EditorialViewState()
 
     data class MoreView(
-            val editorials: List<Editorial> = emptyList(),
+            val editorials: List<EditorialItem> = emptyList(),
             val nextPageId: String? = null
     ) : EditorialViewState()
 

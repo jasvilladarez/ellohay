@@ -35,11 +35,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
-import io.github.jasvilladarez.domain.entity.Editorial
 import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.common.BaseFragment
-import io.github.jasvilladarez.ello.common.adapter.ElloAdapter
 import io.github.jasvilladarez.ello.common.MviView
+import io.github.jasvilladarez.ello.common.adapter.ElloAdapter
 import io.github.jasvilladarez.ello.util.ui.showError
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.ello_loading_list.*
@@ -55,7 +54,7 @@ internal class EditorialFragment : BaseFragment(),
         ViewModelProviders.of(this, viewModelFactory)[EditorialViewModel::class.java]
     }
 
-    private val editorialAdapter: ElloAdapter<Editorial> by lazy {
+    private val editorialAdapter: ElloAdapter<EditorialItem> by lazy {
         ElloAdapter(EditorialViewItem())
     }
 
