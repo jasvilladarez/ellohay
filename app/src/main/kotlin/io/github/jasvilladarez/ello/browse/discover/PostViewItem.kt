@@ -35,7 +35,7 @@ internal class PostViewItem : RecyclerViewItem<Post> {
     override val viewItemLayout: Int
         get() = R.layout.li_post
 
-    override fun bind(view: View, item: Post, selectedItem: Post?) {
+    override fun bind(view: View, item: Post) {
         view.description.text = item.token
     }
 

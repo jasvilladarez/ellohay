@@ -41,7 +41,7 @@ internal class ArtistInviteViewItem : RecyclerViewItem<ArtistInviteItem> {
     override val viewItemLayout: Int
         get() = R.layout.li_artist_invite
 
-    override fun bind(view: View, item: ArtistInviteItem, selectedItem: ArtistInviteItem?) {
+    override fun bind(view: View, item: ArtistInviteItem) {
         item.headerImageUrl?.let {
             view.artistInviteHeaderImage?.loadImage(it)
         }

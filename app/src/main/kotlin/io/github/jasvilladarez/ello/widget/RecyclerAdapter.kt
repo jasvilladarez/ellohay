@@ -64,12 +64,12 @@ open class RecyclerAdapter<T>(
         set(value) {
             if (field == value)
                 return
+            onItemSelected?.invoke(field, value)
             notifyItemChanged(items.indexOf(field))
             field = value
-            onItemSelected?.invoke(value)
             notifyItemChanged(items.indexOf(field))
         }
-    private var onItemSelected: ((T?) -> Unit)? = null
+    private var onItemSelected: ((T?, T?) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
             object : RecyclerView.ViewHolder(LayoutInflater.from(parent.context)
@@ -80,9 +80,9 @@ open class RecyclerAdapter<T>(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
-            VIEW_ITEM_PROGRESS -> loadMoreItem.bind(holder.itemView, Unit, null)
+            VIEW_ITEM_PROGRESS -> loadMoreItem.bind(holder.itemView, Unit)
             else -> {
-                defaultViewItem.bind(holder.itemView, items[position], selectedItem)
+                defaultViewItem.bind(holder.itemView, items[position])
                 holder.itemView.setOnClickListener {
                     selectedItem = items[position]
                     onItemClick?.invoke(items[position])
@@ -106,7 +106,7 @@ open class RecyclerAdapter<T>(
 
     fun onItemClick(): Observable<T> = ItemClick(this)
 
-    fun onItemSelected(): Observable<T?> = SelectedItem(this)
+    fun onItemSelected(): Observable<Pair<T?, T?>> = SelectedItem(this)
 
     fun addItems(items: List<T>) {
         if (this.items.containsAll(items)) {
@@ -173,15 +173,15 @@ open class RecyclerAdapter<T>(
 
     private class SelectedItem<T>(
             private val adapter: RecyclerAdapter<T>
-    ) : Observable<T?>() {
+    ) : Observable<Pair<T?, T?>>() {
 
-        override fun subscribeActual(observer: Observer<in T?>?) {
+        override fun subscribeActual(observer: Observer<in Pair<T?, T?>>?) {
             observer?.let {
-                adapter.onItemSelected = object : Function1<T?, Unit>, MainThreadDisposable() {
+                adapter.onItemSelected = object : Function2<T?, T?, Unit>, MainThreadDisposable() {
 
-                    override fun invoke(item: T?) {
+                    override fun invoke(previousItem: T?, item: T?) {
                         if (!isDisposed) {
-                            it.onNext(item)
+                            it.onNext(Pair(previousItem, item))
                         }
                     }
 

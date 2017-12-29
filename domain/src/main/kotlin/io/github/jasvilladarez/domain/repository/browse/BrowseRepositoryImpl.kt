@@ -57,14 +57,14 @@ internal class BrowseRepositoryImpl(
                 .toObservable().applySchedulers()
     }
 
-    override fun fetchPostsByCategory(category: Category, nextPageId: String?): Observable<PostStream> {
-        return (when (category.slug) {
+    override fun fetchPostsByCategory(categorySlug: String, nextPageId: String?): Observable<PostStream> {
+        return (when (categorySlug) {
             Category.SLUG_FEATURED -> browseApi.fetchFeaturedPosts(nextPageId)
             Category.SLUG_TRENDING -> browseApi.fetchTrendingPosts(nextPageId?.toInt())
             Category.SLUG_RECENT -> browseApi.fetchFeaturedPosts(nextPageId)
-            else -> browseApi.fetchPostsInCategory(category.slug, nextPageId)
+            else -> browseApi.fetchPostsInCategory(categorySlug, nextPageId)
         }).map {
-            val next = if (category.slug == Category.SLUG_TRENDING) it.headers()
+            val next = if (categorySlug == Category.SLUG_TRENDING) it.headers()
                     .getParameterInLink("page")
             else it.headers().getParameterInLink("before")
             it.body()?.apply { this.next = next } ?: PostStream(emptyList())

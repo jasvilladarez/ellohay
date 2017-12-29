@@ -22,16 +22,19 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.common.adapter
+package io.github.jasvilladarez.ello.browse.discover
 
-import android.view.View
-import io.github.jasvilladarez.ello.R
-import io.github.jasvilladarez.ello.widget.RecyclerViewItem
+import io.github.jasvilladarez.domain.entity.Category
 
-internal class ElloProgressViewItem : RecyclerViewItem<Unit> {
+internal data class CategoryItem(
+        val name: String,
+        val slug: String,
+        val imageUrl: String?,
+        var isSelected: Boolean = false
+)
 
-    override val viewItemLayout: Int
-        get() = R.layout.li_progress
-
-    override fun bind(view: View, item: Unit) {}
-}
+internal fun Category.mapToViewItem(): CategoryItem = CategoryItem(
+        name,
+        slug,
+        image.original?.url
+)

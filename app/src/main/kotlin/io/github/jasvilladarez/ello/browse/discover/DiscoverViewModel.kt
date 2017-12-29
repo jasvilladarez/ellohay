@@ -79,13 +79,13 @@ internal class DiscoverViewModel(
 
     private fun fetchCategories(): Observable<DiscoverResult> = browseRepository
             .fetchCategories().applyMvi(
-            { DiscoverResult.SuccessCategories(it) },
+            { DiscoverResult.SuccessCategories(it.map { it.mapToViewItem() }) },
             { DiscoverResult.Error(it) },
             { DiscoverResult.InProgressCategories })
 
-    private fun fetchPosts(category: Category,
+    private fun fetchPosts(category: CategoryItem,
                            nextPageId: String? = null): Observable<DiscoverResult> =
-            browseRepository.fetchPostsByCategory(category, nextPageId).applyMvi(
+            browseRepository.fetchPostsByCategory(category.slug, nextPageId).applyMvi(
                     {
                         DiscoverResult.SuccessPosts(it, nextPageId?.let {
                             DiscoverResult.DiscoverMode.LOAD_MORE_POSTS

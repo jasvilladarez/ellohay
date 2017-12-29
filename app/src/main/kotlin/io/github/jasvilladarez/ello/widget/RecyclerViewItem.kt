@@ -35,8 +35,7 @@ interface RecyclerViewItem<in T> {
      *
      * @param view - View involving the bind
      * @param item - Entity object that contains the item data
-     * @param selectedItem - Currently selected item. Null if there is no selected item
      */
-    fun bind(view: View, item: T, selectedItem: T?)
+    fun bind(view: View, item: T)
 
 }

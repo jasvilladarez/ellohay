@@ -38,5 +38,5 @@ interface BrowseRepository {
 
     fun fetchCategories(): Observable<List<Category>>
 
-    fun fetchPostsByCategory(category: Category, nextPageId: String?): Observable<PostStream>
+    fun fetchPostsByCategory(categorySlug: String, nextPageId: String?): Observable<PostStream>
 }

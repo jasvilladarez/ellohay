@@ -36,11 +36,11 @@ internal sealed class DiscoverIntent : MviIntent {
     object LoadCategories : DiscoverIntent()
 
     data class LoadPosts(
-            val selectedItem: Category
+            val selectedItem: CategoryItem
     ) : DiscoverIntent()
 
     data class LoadMorePosts(
-            val selectedItem: Category,
+            val selectedItem: CategoryItem,
             val nextPageId: String?
     ) : DiscoverIntent()
 }
@@ -52,7 +52,7 @@ internal sealed class DiscoverResult : MviResult {
     }
 
     data class SuccessCategories(
-            val categories: List<Category> = emptyList()
+            val categories: List<CategoryItem> = emptyList()
     ) : DiscoverResult()
 
     data class SuccessPosts(
@@ -74,7 +74,7 @@ internal sealed class DiscoverResult : MviResult {
 internal sealed class DiscoverViewState : MviViewState {
 
     data class DefaultCategoryView(
-            val categories: List<Category> = emptyList()
+            val categories: List<CategoryItem> = emptyList()
     ) : DiscoverViewState()
 
     data class DefaultPostsView(

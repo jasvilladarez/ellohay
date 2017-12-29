@@ -35,7 +35,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
-import io.github.jasvilladarez.domain.entity.Category
 import io.github.jasvilladarez.domain.entity.Post
 import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.common.BaseFragment
@@ -55,7 +54,7 @@ internal class DiscoverFragment : BaseFragment(), MviView<DiscoverIntent, Discov
         ViewModelProviders.of(this, viewModelFactory)[DiscoverViewModel::class.java]
     }
 
-    private val categoriesAdapter: ElloAdapter<Category> by lazy {
+    private val categoriesAdapter: ElloAdapter<CategoryItem> by lazy {
         ElloAdapter(CategoryViewItem())
     }
 
@@ -136,7 +135,11 @@ internal class DiscoverFragment : BaseFragment(), MviView<DiscoverIntent, Discov
     }.map { DiscoverIntent.LoadCategories }
 
     private fun loadPostsIntent(): Observable<DiscoverIntent> = categoriesAdapter.onItemSelected()
-            .map { categoriesAdapter.selectedItem?.let { DiscoverIntent.LoadPosts(it) } }
+            .map {
+                it.first?.isSelected = false
+                it.second?.isSelected = true
+                it.second?.let { DiscoverIntent.LoadPosts(it) }
+            }
 
     private fun loadMorePostsIntent(): Observable<DiscoverIntent> = postAdapter.onLoadMore()
             .map {

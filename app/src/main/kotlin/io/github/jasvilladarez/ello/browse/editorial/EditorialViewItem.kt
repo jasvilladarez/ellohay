@@ -35,7 +35,7 @@ internal class EditorialViewItem : RecyclerViewItem<EditorialItem> {
     override val viewItemLayout: Int
         get() = R.layout.li_editorial
 
-    override fun bind(view: View, item: EditorialItem, selectedItem: EditorialItem?) {
+    override fun bind(view: View, item: EditorialItem) {
         item.thumbnailImageUrl?.let {
             view.editorialImage?.loadImage(it)
         }
