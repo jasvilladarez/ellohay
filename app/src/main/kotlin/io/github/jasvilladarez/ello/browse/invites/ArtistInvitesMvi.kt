@@ -46,7 +46,8 @@ internal sealed class ArtistInvitesResult : MviResult {
     }
 
     data class Success(
-            val artistInviteStream: ArtistInviteStream = ArtistInviteStream(emptyList()),
+            val artistInvites: List<ArtistInviteItem> = emptyList(),
+            val nextPageId: String?,
             val mode: ArtistInviteMode
     ) : ArtistInvitesResult()
 
@@ -62,12 +63,12 @@ internal sealed class ArtistInvitesResult : MviResult {
 internal sealed class ArtistInvitesViewState : MviViewState {
 
     data class DefaultView(
-            val artistInvites: List<ArtistInvite> = emptyList(),
+            val artistInvites: List<ArtistInviteItem> = emptyList(),
             val nextPageId: String? = null
     ) : ArtistInvitesViewState()
 
     data class MoreView(
-            val artistInvites: List<ArtistInvite> = emptyList(),
+            val artistInvites: List<ArtistInviteItem> = emptyList(),
             val nextPageId: String? = null
     ) : ArtistInvitesViewState()
 

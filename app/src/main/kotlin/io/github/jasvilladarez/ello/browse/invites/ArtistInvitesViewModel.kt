@@ -48,11 +48,11 @@ internal class ArtistInvitesViewModel(
                 when (result) {
                     is ArtistInvitesResult.Success -> when (result.mode) {
                         ArtistInvitesResult.ArtistInviteMode.LOAD ->
-                            ArtistInvitesViewState.DefaultView(result.artistInviteStream.artistInvites,
-                                    result.artistInviteStream.next)
+                            ArtistInvitesViewState.DefaultView(result.artistInvites,
+                                    result.nextPageId)
                         ArtistInvitesResult.ArtistInviteMode.LOAD_MORE ->
-                            ArtistInvitesViewState.MoreView(result.artistInviteStream.artistInvites,
-                                    result.artistInviteStream.next)
+                            ArtistInvitesViewState.MoreView(result.artistInvites,
+                                    result.nextPageId)
                     }
                     is ArtistInvitesResult.Error ->
                         ArtistInvitesViewState.ErrorView(result.error.message)
@@ -80,7 +80,8 @@ internal class ArtistInvitesViewModel(
     private fun fetchArtistInvites(nextPageId: String? = null): Observable<ArtistInvitesResult> =
             browseRepository.fetchArtistInvites(nextPageId).applyMvi(
                     {
-                        ArtistInvitesResult.Success(it, nextPageId?.let {
+                        ArtistInvitesResult.Success(it.artistInvites.map { it.mapToViewItem() },
+                                it.next, nextPageId?.let {
                             ArtistInvitesResult.ArtistInviteMode.LOAD_MORE
                         } ?: ArtistInvitesResult.ArtistInviteMode.LOAD)
                     },

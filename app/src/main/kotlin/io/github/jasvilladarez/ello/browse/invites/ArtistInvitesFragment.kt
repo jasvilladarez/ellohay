@@ -34,7 +34,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
-import io.github.jasvilladarez.domain.entity.ArtistInvite
 import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.common.BaseFragment
 import io.github.jasvilladarez.ello.common.MviView
@@ -54,7 +53,7 @@ internal class ArtistInvitesFragment : BaseFragment(),
         ViewModelProviders.of(this, viewModelFactory)[ArtistInvitesViewModel::class.java]
     }
 
-    private val artistInviteAdapter: ElloAdapter<ArtistInvite> by lazy {
+    private val artistInviteAdapter: ElloAdapter<ArtistInviteItem> by lazy {
         ElloAdapter(ArtistInviteViewItem())
     }
 

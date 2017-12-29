@@ -27,7 +27,7 @@ package io.github.jasvilladarez.ello.browse.editorial
 import io.github.jasvilladarez.domain.entity.Editorial
 import io.github.jasvilladarez.ello.util.fromHtml
 
-data class EditorialItem(
+internal data class EditorialItem(
         val id: Long,
         val title: String,
         val subtitle: CharSequence?,

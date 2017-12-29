@@ -22,23 +22,35 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.util
+package io.github.jasvilladarez.ello.browse.invites
 
-import android.text.format.DateUtils
-import java.text.SimpleDateFormat
+import io.github.jasvilladarez.domain.entity.ArtistInvite
+import io.github.jasvilladarez.ello.util.fromHtml
+import io.github.jasvilladarez.ello.util.toDate
 import java.util.*
 
-private val ELLO_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-
-internal fun String.toDate(): Date {
-    val dateFormat = SimpleDateFormat(ELLO_DATE_FORMAT, Locale.getDefault())
-    return dateFormat.parse(this)
+internal data class ArtistInviteItem(
+        val title: String,
+        val inviteType: String,
+        val status: Status,
+        val headerImageUrl: String?,
+        val logoImageUrl: String?,
+        val description: CharSequence?,
+        val openedAt: Date,
+        val closedAt: Date
+) {
+    enum class Status {
+        UPCOMING, OPEN, SELECTING, CLOSED, PREVIEW
+    }
 }
 
-internal fun Date.formatDate(format: String): String {
-    val formatter = SimpleDateFormat(format, Locale.getDefault())
-    return formatter.format(this)
-}
-
-internal fun Date.getDaysRemaining(): Int =
-        ((this.time - System.currentTimeMillis()) / DateUtils.DAY_IN_MILLIS).toInt()
+internal fun ArtistInvite.mapToViewItem(): ArtistInviteItem = ArtistInviteItem(
+        title,
+        inviteType,
+        ArtistInviteItem.Status.valueOf(status.name),
+        headerImage.mdpi?.url,
+        logoImage.optimized?.url,
+        shortDescription.fromHtml(),
+        openedAt.toDate(),
+        closedAt.toDate()
+)
