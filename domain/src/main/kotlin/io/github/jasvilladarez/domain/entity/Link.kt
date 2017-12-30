@@ -75,7 +75,7 @@ internal fun linksTypeAdapter(): TypeAdapterFactory = MapToListTypeAdapterFactor
         .registerSubtype(CategoryLink::class, "categories")
         .registerSubtype(AssetsLink::class, "assets")
 
-internal fun assetTypeAdapter(): TypeAdapterFactory = object : TypeAdapterFactory {
+internal fun assetsLinkTypeAdapter(): TypeAdapterFactory = object : TypeAdapterFactory {
 
     override fun <T : Any?> create(gson: Gson, type: TypeToken<T>?): TypeAdapter<T>? {
         return if (type?.rawType == AssetsLink::class.java) {
