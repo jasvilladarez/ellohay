@@ -47,7 +47,7 @@ internal class PostViewItem : RecyclerViewItem<PostItem> {
         view.content.removeAllViews()
         item.summary?.forEach {
             val childView = when (it) {
-                is ImagePostBlockItem -> it.imageUrl?.let {
+                is ImagePostBlockItem -> it.thumbnailUrl?.let {
                     ImageView(view.context).apply {
                         adjustViewBounds = true
                         minimumHeight = context.resources

@@ -26,13 +26,9 @@ package io.github.jasvilladarez.domain.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class Linked(
-        @SerializedName("users")
-        val users: List<User>? = null,
-        @SerializedName("posts")
-        val posts: List<Post>? = null,
-        @SerializedName("categories")
-        val categories: List<Category>? = null,
-        @SerializedName("assets")
-        val assets: List<Asset>? = null
+data class Asset(
+        @SerializedName("id")
+        val id: Long,
+        @SerializedName("attachment")
+        val attachment: Image
 )

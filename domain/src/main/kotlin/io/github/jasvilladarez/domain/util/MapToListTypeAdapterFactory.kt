@@ -25,7 +25,6 @@
 package io.github.jasvilladarez.domain.util
 
 import com.google.gson.Gson
-import com.google.gson.JsonParseException
 import com.google.gson.TypeAdapter
 import com.google.gson.TypeAdapterFactory
 import com.google.gson.internal.Streams
@@ -73,13 +72,11 @@ internal class MapToListTypeAdapterFactory<T : Any> private constructor(
             override fun read(reader: JsonReader?): List<T>? {
                 val list = mutableListOf<T>()
                 val jsonElement = Streams.parse(reader)
-                jsonElement.asJsonObject.entrySet().forEach {
-                    val delegate = labelToDelegate[it.key] ?:
-                            throw JsonParseException("""
-                                Cannot deserialize $baseType subtype named ${it.key};
-                                is subtype registered?
-                                """)
-                    list.add(delegate.fromJsonTree(it.value) as T)
+                jsonElement.asJsonObject.entrySet().forEach { jsonObject ->
+                    val delegate = labelToDelegate[jsonObject.key]
+                    delegate?.let {
+                        list.add(it.fromJsonTree(jsonObject.value) as T)
+                    }
                 }
                 return list
             }

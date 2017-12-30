@@ -49,7 +49,8 @@ internal data class PostItem(
 internal interface PostBlockItem
 
 internal data class ImagePostBlockItem(
-        val imageUrl: String?
+        val thumbnailUrl: String?,
+        val originalUrl: String?
 ) : PostBlockItem
 
 internal data class TextPostBlockItem(
@@ -62,18 +63,27 @@ internal data class EmbedPostBlockItem(
 
 internal fun PostStream.mapToViewItems(): List<PostItem> = posts.map { post ->
     val author = this.linked.users?.firstOrNull { it.id == post.authorId }
+    val assets = this.linked.assets
     PostItem(
             author?.username,
             author?.avatar?.mdpi?.url,
-            post.summary?.mapToViewItems()
+            post.summary?.mapToViewItems(assets)
     )
 }
 
-internal fun List<PostBlock>.mapToViewItems(): List<PostBlockItem> = this.mapNotNull {
-    when (it) {
-        is TextPostBlock -> TextPostBlockItem(it.text.fromHtml())
-        is ImagePostBlock -> ImagePostBlockItem(it.image.url)
-        is EmbedPostBlock -> EmbedPostBlockItem(it.data.url)
-        else -> null
-    }
-}
+internal fun List<PostBlock>.mapToViewItems(assets: List<Asset>?): List<PostBlockItem> =
+        this.mapNotNull { postBlock ->
+            when (postBlock) {
+                is TextPostBlock -> TextPostBlockItem(postBlock.text.fromHtml())
+                is ImagePostBlock -> {
+                    val imageAsset = assets?.firstOrNull {
+                        it.id ==
+                                postBlock.links?.filterIsInstance(AssetLink::class.java)?.firstOrNull()?.assetId
+                    }
+                    ImagePostBlockItem(imageAsset?.attachment?.mdpi?.url,
+                            postBlock.image.url)
+                }
+                is EmbedPostBlock -> EmbedPostBlockItem(postBlock.data.url)
+                else -> null
+            }
+        }
