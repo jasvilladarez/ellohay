@@ -24,8 +24,13 @@
 
 package io.github.jasvilladarez.ello.browse.discover
 
+import android.support.v4.content.ContextCompat
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import io.github.jasvilladarez.ello.R
+import io.github.jasvilladarez.ello.util.ui.loadImage
+import io.github.jasvilladarez.ello.util.ui.setVisible
 import io.github.jasvilladarez.ello.widget.RecyclerViewItem
 import kotlinx.android.synthetic.main.li_post.view.*
 
@@ -35,7 +40,37 @@ internal class PostViewItem : RecyclerViewItem<PostItem> {
         get() = R.layout.li_post
 
     override fun bind(view: View, item: PostItem) {
-        view.description.text = item.authorUsername
+        item.authorImageUrl?.let { view.authorImage.loadImage(it) }
+        val username = "@${item.authorUsername}"
+        view.authorName.text = username
+
+        view.content.removeAllViews()
+        item.summary?.forEach {
+            val childView = when (it) {
+                is ImagePostBlockItem -> it.imageUrl?.let {
+                    ImageView(view.context).apply {
+                        adjustViewBounds = true
+                        minimumHeight = context.resources
+                                .getDimensionPixelSize(R.dimen.li_default_image_height)
+                        setBackgroundColor(ContextCompat.getColor(context, R.color.ello_foreground))
+                        loadImage(it)
+                    }
+                }
+                is TextPostBlockItem -> it.text?.let {
+                    TextView(view.context).apply {
+                        val defaultPadding = context.resources
+                                .getDimensionPixelSize(R.dimen.default_padding)
+                        setPadding(defaultPadding, defaultPadding, defaultPadding, defaultPadding)
+                        setTextColor(ContextCompat.getColor(context, R.color.ello_black))
+                        setLinkTextColor(ContextCompat.getColor(context, R.color.ello_black))
+                        text = it
+                    }
+                }
+                else -> null
+            }
+            childView?.let { view.content.addView(it) }
+        }
+        view.content.setVisible(view.content.childCount > 0)
     }
 
 }

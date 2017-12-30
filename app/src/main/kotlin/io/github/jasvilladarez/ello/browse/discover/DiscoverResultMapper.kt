@@ -24,8 +24,8 @@
 
 package io.github.jasvilladarez.ello.browse.discover
 
-import io.github.jasvilladarez.domain.entity.Category
-import io.github.jasvilladarez.domain.entity.PostStream
+import io.github.jasvilladarez.domain.entity.*
+import io.github.jasvilladarez.ello.util.fromHtml
 
 internal data class CategoryItem(
         val name: String,
@@ -41,12 +41,39 @@ internal fun Category.mapToViewItem(): CategoryItem = CategoryItem(
 )
 
 internal data class PostItem(
-        val authorUsername: String?
+        val authorUsername: String?,
+        val authorImageUrl: String?,
+        val summary: List<PostBlockItem>?
 )
+
+internal interface PostBlockItem
+
+internal data class ImagePostBlockItem(
+        val imageUrl: String?
+) : PostBlockItem
+
+internal data class TextPostBlockItem(
+        val text: CharSequence?
+) : PostBlockItem
+
+internal data class EmbedPostBlockItem(
+        val embedUrl: String?
+) : PostBlockItem
 
 internal fun PostStream.mapToViewItems(): List<PostItem> = posts.map { post ->
     val author = this.linked.users?.firstOrNull { it.id == post.authorId }
     PostItem(
-            author?.username
+            author?.username,
+            author?.avatar?.mdpi?.url,
+            post.summary?.mapToViewItems()
     )
+}
+
+internal fun List<PostBlock>.mapToViewItems(): List<PostBlockItem> = this.mapNotNull {
+    when (it) {
+        is TextPostBlock -> TextPostBlockItem(it.text.fromHtml())
+        is ImagePostBlock -> ImagePostBlockItem(it.image.url)
+        is EmbedPostBlock -> EmbedPostBlockItem(it.data.url)
+        else -> null
+    }
 }

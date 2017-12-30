@@ -38,7 +38,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/li_artist_invite_image_height"
+        android:layout_height="@dimen/li_default_image_height"
         android:background="@color/ello_foreground">
 
         <ImageView
