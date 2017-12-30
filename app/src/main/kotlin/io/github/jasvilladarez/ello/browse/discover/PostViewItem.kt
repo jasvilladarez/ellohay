@@ -52,11 +52,13 @@ internal class PostViewItem : RecyclerViewItem<PostItem> {
                         adjustViewBounds = true
                         minimumHeight = context.resources
                                 .getDimensionPixelSize(R.dimen.li_default_image_height)
-                        setBackgroundColor(ContextCompat.getColor(context, R.color.ello_foreground))
+                        val defaultPadding = context.resources
+                                .getDimensionPixelSize(R.dimen.default_half_padding)
+                        setPadding(paddingLeft, paddingTop, paddingRight, defaultPadding)
                         loadImage(it)
                     }
                 }
-                is TextPostBlockItem -> it.text?.let {
+                is TextPostBlockItem -> it.text?.takeIf { it.isNotEmpty() }?.let {
                     TextView(view.context).apply {
                         val defaultPadding = context.resources
                                 .getDimensionPixelSize(R.dimen.default_padding)
