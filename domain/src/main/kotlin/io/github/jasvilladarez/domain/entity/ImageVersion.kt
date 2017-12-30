@@ -28,5 +28,16 @@ import com.google.gson.annotations.SerializedName
 
 data class ImageVersion(
         @SerializedName("url")
-        val url: String
+        val url: String,
+        @SerializedName("metadata")
+        val metadata: ImageVersionMetaData?
+)
+
+data class ImageVersionMetaData(
+        @SerializedName("width")
+        val width: Long,
+        @SerializedName("height")
+        val height: Long,
+        @SerializedName("type")
+        val mimeType: String
 )
