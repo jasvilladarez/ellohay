@@ -38,7 +38,9 @@ abstract class PostBlock(
 
 data class ImagePostBlock(
         @SerializedName("data")
-        val image: ImageVersion
+        val image: ImageVersion,
+        @SerializedName("links")
+        val links: List<Link>? = null
 ) : PostBlock(Kind.IMAGE)
 
 data class TextPostBlock(

@@ -39,6 +39,7 @@ import kotlin.reflect.KClass
 
 internal val gson: Gson = GsonBuilder()
         .registerTypeAdapterFactory(LowercaseEnumTypeAdapterFactory())
+        .registerTypeAdapterFactory(assetTypeAdapter())
         .registerTypeAdapterFactory(linksTypeAdapter())
         .registerTypeAdapterFactory(postBlockTypeAdapter())
         .create()

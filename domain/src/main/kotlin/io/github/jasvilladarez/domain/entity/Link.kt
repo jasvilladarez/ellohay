@@ -24,8 +24,12 @@
 
 package io.github.jasvilladarez.domain.entity
 
-import com.google.gson.TypeAdapterFactory
+import com.google.gson.*
 import com.google.gson.annotations.SerializedName
+import com.google.gson.internal.Streams
+import com.google.gson.reflect.TypeToken
+import com.google.gson.stream.JsonReader
+import com.google.gson.stream.JsonWriter
 import io.github.jasvilladarez.domain.util.MapToListTypeAdapterFactory
 
 interface Link
@@ -54,6 +58,14 @@ data class RepostedAuthorLink(
 
 class CategoryLink : ArrayList<Long>(), Link
 
+interface AssetsLink : Link
+
+data class AssetLink(
+        val assetId: Long
+) : AssetsLink
+
+class AssetsListLink : ArrayList<Long>(), AssetsLink
+
 internal fun linksTypeAdapter(): TypeAdapterFactory = MapToListTypeAdapterFactory
         .of(Link::class)
         .registerSubtype(PostLink::class, "post")
@@ -61,3 +73,32 @@ internal fun linksTypeAdapter(): TypeAdapterFactory = MapToListTypeAdapterFactor
         .registerSubtype(AuthorLink::class, "author")
         .registerSubtype(RepostedAuthorLink::class, "reposted_author")
         .registerSubtype(CategoryLink::class, "categories")
+        .registerSubtype(AssetsLink::class, "assets")
+
+internal fun assetTypeAdapter(): TypeAdapterFactory = object : TypeAdapterFactory {
+
+    override fun <T : Any?> create(gson: Gson, type: TypeToken<T>?): TypeAdapter<T>? {
+        return if (type?.rawType == AssetsLink::class.java) {
+            val assetsLinkDelegate = gson.getDelegateAdapter(this,
+                    TypeToken.get(AssetsListLink::class.java))
+
+            object : TypeAdapter<T>() {
+                override fun read(reader: JsonReader?): T? {
+                    val jsonElement = Streams.parse(reader)
+                    return when (jsonElement) {
+                        is JsonPrimitive -> AssetLink(jsonElement.asLong) as T
+                        is JsonArray -> assetsLinkDelegate.fromJsonTree(jsonElement) as T
+                        else -> null
+                    }
+                }
+
+                override fun write(out: JsonWriter?, value: T) {
+                    out?.nullValue()
+                }
+            }
+        } else {
+            null
+        }
+    }
+
+}

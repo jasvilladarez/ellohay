@@ -36,5 +36,7 @@ data class Post(
         @SerializedName("author_id")
         val authorId: Long,
         @SerializedName("summary")
-        val summary: List<PostBlock>?
+        val summary: List<PostBlock>?,
+        @SerializedName("links")
+        val links: List<Link>? = null
 )
