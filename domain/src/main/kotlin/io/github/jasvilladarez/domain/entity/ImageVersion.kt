@@ -35,9 +35,9 @@ data class ImageVersion(
 
 data class ImageVersionMetaData(
         @SerializedName("width")
-        val width: Long,
+        val width: Int,
         @SerializedName("height")
-        val height: Long,
+        val height: Int,
         @SerializedName("type")
         val mimeType: String
 )

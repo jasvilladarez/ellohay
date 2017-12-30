@@ -50,7 +50,8 @@ internal interface PostBlockItem
 
 internal data class ImagePostBlockItem(
         val thumbnailUrl: String?,
-        val originalUrl: String?
+        val originalUrl: String?,
+        val imageRatio: Double? = null
 ) : PostBlockItem
 
 internal data class TextPostBlockItem(
@@ -71,19 +72,22 @@ internal fun PostStream.mapToViewItems(): List<PostItem> = posts.map { post ->
     )
 }
 
-internal fun List<PostBlock>.mapToViewItems(assets: List<Asset>?): List<PostBlockItem> =
-        this.mapNotNull { postBlock ->
-            when (postBlock) {
-                is TextPostBlock -> TextPostBlockItem(postBlock.text.fromHtml())
-                is ImagePostBlock -> {
-                    val imageAsset = assets?.firstOrNull {
-                        it.id ==
-                                postBlock.links?.filterIsInstance(AssetLink::class.java)?.firstOrNull()?.assetId
-                    }
-                    ImagePostBlockItem(imageAsset?.attachment?.mdpi?.url,
-                            postBlock.image.url)
-                }
-                is EmbedPostBlock -> EmbedPostBlockItem(postBlock.data.url)
-                else -> null
+internal fun List<PostBlock>.mapToViewItems(assets: List<Asset>?):
+        List<PostBlockItem> = this.mapNotNull { postBlock ->
+    when (postBlock) {
+        is TextPostBlock -> TextPostBlockItem(postBlock.text.fromHtml())
+        is ImagePostBlock -> {
+            val thumbnailAsset = assets?.firstOrNull {
+                it.id == postBlock.links?.filterIsInstance(AssetLink::class.java)
+                        ?.firstOrNull()?.assetId
+            }?.attachment?.mdpi
+            val imageRatio = thumbnailAsset?.metadata?.let {
+                it.width.toDouble() / it.height
             }
+            ImagePostBlockItem(thumbnailAsset?.url,
+                    postBlock.image.url, imageRatio)
         }
+        is EmbedPostBlock -> EmbedPostBlockItem(postBlock.data.url)
+        else -> null
+    }
+}

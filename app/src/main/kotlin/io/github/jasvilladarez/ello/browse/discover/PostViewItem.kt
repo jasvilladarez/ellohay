@@ -24,8 +24,10 @@
 
 package io.github.jasvilladarez.ello.browse.discover
 
+import android.content.Context
 import android.support.v4.content.ContextCompat
 import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.ImageView
 import android.widget.TextView
 import io.github.jasvilladarez.ello.R
@@ -47,27 +49,8 @@ internal class PostViewItem : RecyclerViewItem<PostItem> {
         view.content.removeAllViews()
         item.summary?.forEach {
             val childView = when (it) {
-                is ImagePostBlockItem -> it.thumbnailUrl?.let {
-                    ImageView(view.context).apply {
-                        adjustViewBounds = true
-                        minimumHeight = context.resources
-                                .getDimensionPixelSize(R.dimen.li_default_image_height)
-                        val defaultPadding = context.resources
-                                .getDimensionPixelSize(R.dimen.default_half_padding)
-                        setPadding(paddingLeft, paddingTop, paddingRight, defaultPadding)
-                        loadImage(it)
-                    }
-                }
-                is TextPostBlockItem -> it.text?.takeIf { it.isNotEmpty() }?.let {
-                    TextView(view.context).apply {
-                        val defaultPadding = context.resources
-                                .getDimensionPixelSize(R.dimen.default_padding)
-                        setPadding(defaultPadding, defaultPadding, defaultPadding, defaultPadding)
-                        setTextColor(ContextCompat.getColor(context, R.color.ello_black))
-                        setLinkTextColor(ContextCompat.getColor(context, R.color.ello_black))
-                        text = it
-                    }
-                }
+                is ImagePostBlockItem -> it.toImageView(view.context)
+                is TextPostBlockItem -> it.toTextView(view.context)
                 else -> null
             }
             childView?.let { view.content.addView(it) }
@@ -75,4 +58,40 @@ internal class PostViewItem : RecyclerViewItem<PostItem> {
         view.content.setVisible(view.content.childCount > 0)
     }
 
+    private fun ImagePostBlockItem.toImageView(context: Context): ImageView? = this.thumbnailUrl?.let {
+        val imageRatio = this.imageRatio
+        ImageView(context).apply {
+            adjustViewBounds = true
+            minimumHeight = context.resources
+                    .getDimensionPixelSize(R.dimen.li_default_image_height)
+            val defaultPadding = context.resources
+                    .getDimensionPixelSize(R.dimen.default_half_padding)
+            setPadding(paddingLeft, paddingTop, paddingRight, defaultPadding)
+            viewTreeObserver.addOnPreDrawListener(
+                    object : ViewTreeObserver.OnPreDrawListener {
+                        override fun onPreDraw(): Boolean {
+                            viewTreeObserver.removeOnPreDrawListener(this)
+                            val width = measuredWidth
+                            minimumHeight = imageRatio?.let {
+                                width / it
+                            }?.toInt() ?: minimumHeight
+                            return true
+                        }
+                    }
+            )
+            loadImage(it)
+        }
+    }
+
+    private fun TextPostBlockItem.toTextView(context: Context): TextView? =
+            this.text?.takeIf { it.isNotEmpty() }?.let {
+                TextView(context).apply {
+                    val defaultPadding = context.resources
+                            .getDimensionPixelSize(R.dimen.default_padding)
+                    setPadding(defaultPadding, defaultPadding, defaultPadding, defaultPadding)
+                    setTextColor(ContextCompat.getColor(context, R.color.ello_black))
+                    setLinkTextColor(ContextCompat.getColor(context, R.color.ello_black))
+                    text = it
+                }
+            }
 }
