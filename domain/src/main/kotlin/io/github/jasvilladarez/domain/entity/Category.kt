@@ -28,7 +28,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Category(
         @SerializedName("id")
-        val id: String,
+        val id: Long,
         @SerializedName("name")
         val name: String,
         @SerializedName("slug")
