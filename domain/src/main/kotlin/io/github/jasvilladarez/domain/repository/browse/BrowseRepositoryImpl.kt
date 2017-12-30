@@ -58,7 +58,7 @@ internal class BrowseRepositoryImpl(
         return (when (categorySlug) {
             Category.SLUG_FEATURED -> browseApi.fetchFeaturedPosts(nextPageId)
             Category.SLUG_TRENDING -> browseApi.fetchTrendingPosts(nextPageId?.toInt())
-            Category.SLUG_RECENT -> browseApi.fetchFeaturedPosts(nextPageId)
+            Category.SLUG_RECENT -> browseApi.fetchRecentPosts(nextPageId)
             else -> browseApi.fetchPostsInCategory(categorySlug, nextPageId)
         }).map {
             val next = if (categorySlug == Category.SLUG_TRENDING) it.headers()

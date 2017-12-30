@@ -78,7 +78,7 @@ internal interface BrowseApi {
                              @Query("per_page") limit: Int? = null): Single<Response<PostStream>>
 
     /**
-     * Fetch ll the newest posts across all the categories  - time ordered.
+     * Fetch all the newest posts across all the categories  - time ordered.
      *
      * @param before - The pagination cursor, returned in the `link` header of the previous page.
      * @param limit - Number of posts to return per page. Default: 25
