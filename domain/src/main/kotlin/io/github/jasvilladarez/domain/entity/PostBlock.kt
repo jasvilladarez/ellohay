@@ -32,7 +32,7 @@ abstract class PostBlock(
         val kind: Kind
 ) {
     enum class Kind {
-        TEXT, IMAGE
+        TEXT, IMAGE, EMBED
     }
 }
 
@@ -46,7 +46,18 @@ data class TextPostBlock(
         val text: String
 ) : PostBlock(Kind.TEXT)
 
+data class EmbedPostBlock(
+        @SerializedName("data")
+        val data: EmbedData
+) : PostBlock(Kind.EMBED)
+
+data class EmbedData(
+        @SerializedName("url")
+        val url: String
+)
+
 internal fun postBlockTypeAdapter(): TypeAdapterFactory = RuntimeTypeAdapterFactory
         .of(PostBlock::class, "kind")
         .registerSubtype(TextPostBlock::class, "text")
         .registerSubtype(ImagePostBlock::class, "image")
+        .registerSubtype(EmbedPostBlock::class, "embed")
