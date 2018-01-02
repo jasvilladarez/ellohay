@@ -63,11 +63,8 @@ internal class PostViewItem : RecyclerViewItem<PostItem> {
         val imageRatio = this.imageRatio
         ImageView(context).apply {
             adjustViewBounds = true
-            minimumHeight = context.resources
-                    .getDimensionPixelSize(R.dimen.li_default_image_height)
-            val defaultPadding = context.resources
-                    .getDimensionPixelSize(R.dimen.default_half_padding)
-            setPadding(paddingLeft, paddingTop, paddingRight, defaultPadding)
+            setPadding(paddingLeft, paddingTop, paddingRight, context.resources
+                    .getDimensionPixelSize(R.dimen.default_half_padding))
             viewTreeObserver.addOnPreDrawListener(
                     object : ViewTreeObserver.OnPreDrawListener {
                         override fun onPreDraw(): Boolean {
@@ -75,7 +72,8 @@ internal class PostViewItem : RecyclerViewItem<PostItem> {
                             val width = measuredWidth
                             minimumHeight = imageRatio?.let {
                                 width / it
-                            }?.roundToInt() ?: minimumHeight
+                            }?.roundToInt() ?: context.resources
+                                    .getDimensionPixelSize(R.dimen.li_default_image_height)
                             return true
                         }
                     }
