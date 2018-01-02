@@ -35,6 +35,7 @@ import io.github.jasvilladarez.ello.util.ui.loadImage
 import io.github.jasvilladarez.ello.util.ui.setVisible
 import io.github.jasvilladarez.ello.widget.RecyclerViewItem
 import kotlinx.android.synthetic.main.li_post.view.*
+import kotlin.math.roundToInt
 
 internal class PostViewItem : RecyclerViewItem<PostItem> {
 
@@ -74,7 +75,7 @@ internal class PostViewItem : RecyclerViewItem<PostItem> {
                             val width = measuredWidth
                             minimumHeight = imageRatio?.let {
                                 width / it
-                            }?.toInt() ?: minimumHeight
+                            }?.roundToInt() ?: minimumHeight
                             return true
                         }
                     }
