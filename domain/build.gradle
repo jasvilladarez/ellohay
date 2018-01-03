@@ -32,4 +32,12 @@ dependencies {
     implementation dependencies.rxAndroid
     implementation dependencies.rxJava
     implementation dependencies.rxKotlin
+
+    testImplementation(dependencies.spekApi) {
+        exclude group: 'org.jetbrains.kotlin'
+    }
+    testImplementation(dependencies.spekRuntime) {
+        exclude group: 'org.junit.platform'
+        exclude group: 'org.jetbrains.kotlin'
+    }
 }

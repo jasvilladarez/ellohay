@@ -57,6 +57,8 @@ ext {
             // Tests
             espressoCore         : "com.android.support.test.espresso:espresso-core:$espressoVersion",
             junit                : "junit:junit:4.12",
-            testRunner           : 'com.android.support.test:runner:1.0.1'
+            testRunner           : 'com.android.support.test:runner:1.0.1',
+            spekApi              : 'org.jetbrains.spek:spek-api:1.1.5',
+            spekRuntime          : 'org.jetbrains.spek:spek-junit-platform-engine:1.1.5'
     ]
 }
