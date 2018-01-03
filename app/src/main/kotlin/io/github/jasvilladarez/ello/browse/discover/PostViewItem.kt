@@ -25,9 +25,9 @@
 package io.github.jasvilladarez.ello.browse.discover
 
 import android.content.Context
+import android.content.res.Resources
 import android.support.v4.content.ContextCompat
 import android.view.View
-import android.view.ViewTreeObserver
 import android.widget.ImageView
 import android.widget.TextView
 import io.github.jasvilladarez.ello.R
@@ -65,19 +65,10 @@ internal class PostViewItem : RecyclerViewItem<PostItem> {
             adjustViewBounds = true
             setPadding(paddingLeft, paddingTop, paddingRight, context.resources
                     .getDimensionPixelSize(R.dimen.default_half_padding))
-            viewTreeObserver.addOnPreDrawListener(
-                    object : ViewTreeObserver.OnPreDrawListener {
-                        override fun onPreDraw(): Boolean {
-                            viewTreeObserver.removeOnPreDrawListener(this)
-                            val width = measuredWidth
-                            minimumHeight = imageRatio?.let {
-                                width / it
-                            }?.roundToInt() ?: context.resources
-                                    .getDimensionPixelSize(R.dimen.li_default_image_height)
-                            return true
-                        }
-                    }
-            )
+            minimumHeight = imageRatio?.let {
+                Resources.getSystem().displayMetrics.widthPixels / it
+            }?.roundToInt() ?: context.resources
+                    .getDimensionPixelSize(R.dimen.li_default_image_height)
             loadImage(it)
         }
     }
