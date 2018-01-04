@@ -24,7 +24,12 @@
 
 package io.github.jasvilladarez.domain
 
+import io.github.jasvilladarez.domain.entity.Token
+import io.github.jasvilladarez.domain.network.AuthHeader
+import io.github.jasvilladarez.domain.repository.auth.AuthApi
+import io.github.jasvilladarez.domain.repository.browse.BrowseApi
 import io.github.jasvilladarez.domain.util.gson
+import io.github.jasvilladarez.ello.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -40,15 +45,15 @@ import java.util.concurrent.TimeUnit
  */
 internal object ApiFactory {
 
-    const val ELLO_V2_PREFIX = "v2/"
+    private const val ELLO_V2_PREFIX = "v2/"
 
     private const val ELLO_API_URL = "https://ello.co/api/"
     private const val DEFAULT_TIMEOUT = 120L
 
-    fun <T : Any> createApi(clazz: Class<T>,
-                            urlPrefix: String = "",
-                            isDebug: Boolean = false,
-                            vararg interceptors: Interceptor): T =
+    private fun <T : Any> createApi(clazz: Class<T>,
+                                    urlPrefix: String = "",
+                                    isDebug: Boolean = false,
+                                    vararg interceptors: Interceptor): T =
             createApi(clazz, ELLO_API_URL + urlPrefix,
                     makeOkHttpClient(makeLoggingInterceptor(isDebug),
                             *interceptors))
@@ -79,5 +84,12 @@ internal object ApiFactory {
 
     private fun makeConverterFactory(): Converter.Factory =
             GsonConverterFactory.create(gson)
+
+    internal fun createAuthApi(): AuthApi = ApiFactory.createApi(AuthApi::class.java,
+            isDebug = BuildConfig.DEBUG)
+
+    internal fun createBrowseApi(token: Token, isDebug: Boolean = false): BrowseApi =
+            ApiFactory.createApi(BrowseApi::class.java, ELLO_V2_PREFIX,
+                    isDebug, AuthHeader(token))
 
 }

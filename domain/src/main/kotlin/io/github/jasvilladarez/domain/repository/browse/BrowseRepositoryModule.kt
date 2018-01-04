@@ -28,16 +28,14 @@ import dagger.Module
 import dagger.Provides
 import io.github.jasvilladarez.domain.ApiFactory
 import io.github.jasvilladarez.domain.entity.Token
-import io.github.jasvilladarez.domain.network.AuthHeader
 import io.github.jasvilladarez.ello.BuildConfig
 
 @Module
 class BrowseRepositoryModule {
 
     @Provides
-    internal fun providesBrowseApi(token: Token) =
-            ApiFactory.createApi(BrowseApi::class.java, ApiFactory.ELLO_V2_PREFIX,
-                    BuildConfig.DEBUG, AuthHeader(token))
+    internal fun providesBrowseApi(token: Token) = ApiFactory.createBrowseApi(token,
+            BuildConfig.DEBUG)
 
     @Provides
     internal fun providesBrowseRepository(

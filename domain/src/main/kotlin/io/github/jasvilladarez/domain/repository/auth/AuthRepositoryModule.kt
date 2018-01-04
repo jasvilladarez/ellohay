@@ -31,14 +31,12 @@ import io.github.jasvilladarez.domain.ApiFactory
 import io.github.jasvilladarez.domain.entity.Token
 import io.github.jasvilladarez.domain.preference.auth.AuthPreference
 import io.github.jasvilladarez.domain.preference.auth.AuthPreferenceImpl
-import io.github.jasvilladarez.ello.BuildConfig
 
 @Module
 class AuthRepositoryModule {
 
     @Provides
-    internal fun providesAuthApi(): AuthApi = ApiFactory.createApi(AuthApi::class.java,
-            isDebug = BuildConfig.DEBUG)
+    internal fun providesAuthApi(): AuthApi = ApiFactory.createAuthApi()
 
     @Provides
     internal fun providesAuthPreference(sharedPreferences: SharedPreferences): AuthPreference =
@@ -46,7 +44,7 @@ class AuthRepositoryModule {
 
     @Provides
     internal fun providesAuthRepository(authApi: AuthApi,
-                                         authPreference: AuthPreference,
-                                         token: Token): AuthRepository =
+                                        authPreference: AuthPreference,
+                                        token: Token): AuthRepository =
             AuthRepositoryImpl(authApi, authPreference, token)
 }
