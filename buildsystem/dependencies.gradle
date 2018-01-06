@@ -8,6 +8,7 @@ ext {
     okHttpVersion = '3.9.0'
     retrofitVersion = '2.3.0'
     rxBindingVersion = '2.0.0'
+    spekVersion = '1.1.5'
     supportVersion = '26.1.0'
 
     dependencies = [
@@ -57,8 +58,11 @@ ext {
             // Tests
             espressoCore         : "com.android.support.test.espresso:espresso-core:$espressoVersion",
             junit                : "junit:junit:4.12",
-            testRunner           : 'com.android.support.test:runner:1.0.1',
-            spekApi              : 'org.jetbrains.spek:spek-api:1.1.5',
-            spekRuntime          : 'org.jetbrains.spek:spek-junit-platform-engine:1.1.5'
+            junit5Engine         : "org.junit.platform:junit-platform-engine:1.0.1",
+            kluent              : "org.amshove.kluent:kluent-android:1.30",
+            mockWebServer        : "com.squareup.okhttp3:mockwebserver:$okHttpVersion",
+            spek                 : "org.jetbrains.spek:spek-api:$spekVersion",
+            spekEngine           : "org.jetbrains.spek:spek-junit-platform-engine:$spekVersion",
+            testRunner           : 'com.android.support.test:runner:1.0.1'
     ]
 }

@@ -13,6 +13,7 @@ android {
     }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
     }
 }
 
@@ -33,10 +34,13 @@ dependencies {
     implementation dependencies.rxJava
     implementation dependencies.rxKotlin
 
-    testImplementation(dependencies.spekApi) {
+    testImplementation dependencies.junit5Engine
+    testImplementation dependencies.mockWebServer
+    testImplementation dependencies.kluent
+    testImplementation(dependencies.spek) {
         exclude group: 'org.jetbrains.kotlin'
     }
-    testImplementation(dependencies.spekRuntime) {
+    testImplementation(dependencies.spekEngine) {
         exclude group: 'org.junit.platform'
         exclude group: 'org.jetbrains.kotlin'
     }
