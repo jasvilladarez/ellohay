@@ -27,6 +27,7 @@ package io.github.jasvilladarez.domain.repository.browse
 import io.github.jasvilladarez.domain.ApiFactory
 import io.github.jasvilladarez.domain.createMockResponse
 import io.github.jasvilladarez.domain.entity.ArtistInviteStream
+import io.github.jasvilladarez.domain.entity.Category
 import io.github.jasvilladarez.domain.entity.EditorialStream
 import io.github.jasvilladarez.domain.entity.Token
 import io.github.jasvilladarez.domain.readFromFile
@@ -83,6 +84,22 @@ internal object BrowseRepositoryImplSpek : Spek({
 
                 observer.valueCount() shouldEqualTo 1
                 observer.values().firstOrNull() shouldEqual BrowseRepositoryTestObject.artistInviteStream
+            }
+        }
+
+        on("fetchCategories") {
+            val observer by memoized { TestObserver<List<Category>>() }
+            mockServer.enqueue(createMockResponse(readFromFile("category_list.json")))
+            browseRepositoryImpl.fetchCategories().subscribe(observer)
+
+            it("should have 1 item in list of categories") {
+                observer.awaitTerminalEvent()
+                observer.assertNoErrors()
+                observer.assertNoTimeout()
+                observer.assertComplete()
+
+                observer.valueCount() shouldEqualTo 1
+                observer.values().firstOrNull() shouldEqual BrowseRepositoryTestObject.categories
             }
         }
     }

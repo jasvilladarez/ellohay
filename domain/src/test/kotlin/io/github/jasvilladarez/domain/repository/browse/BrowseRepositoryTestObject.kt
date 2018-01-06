@@ -81,4 +81,23 @@ internal object BrowseRepositoryTestObject {
                     "2018-01-17T08:00:00.000000Z",
                     "2018-02-13T07:59:00.000000Z")
     ), "2")
+
+    val categories = listOf(Category(
+            22, "Shop", "shop",
+            Image(
+                    null,
+                    ImageVersion("https://assets0.ello.co/uploads/category/tile_image/22/ello-small-dcd53e90.png",
+                            ImageVersionMetaData(360, 360, "image/png")),
+                    ImageVersion("https://assets2.ello.co/uploads/category/tile_image/22/ello-regular-dcd53e90.png",
+                            ImageVersionMetaData(800, 800, "image/png")),
+                    ImageVersion("https://assets2.ello.co/uploads/category/tile_image/22/ello-large-dcd53e90.png",
+                            ImageVersionMetaData(1000, 1000, "image/png")),
+                    null,
+                    ImageVersion("https://assets2.ello.co/uploads/category/tile_image/22/ello-optimized-e8cd732a.jpg",
+                            null)
+            ),
+            0,
+            "Explore a wide collection of items created and sold by individual artists, photographers, independent shops, fashion designers, musicians, developers, writers, graphic designers — Creators. These are unique works made from and for an expressive life.",
+            false
+    ))
 }

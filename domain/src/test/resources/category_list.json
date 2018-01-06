@@ -1,0 +1,54 @@
+{
+  "categories": [
+    {
+      "uses_page_promotionals": false,
+      "tile_image": {
+        "small": {
+          "url": "https://assets0.ello.co/uploads/category/tile_image/22/ello-small-dcd53e90.png",
+          "metadata": {
+            "width": 360,
+            "type": "image/png",
+            "size": 96395,
+            "height": 360
+          }
+        },
+        "regular": {
+          "url": "https://assets2.ello.co/uploads/category/tile_image/22/ello-regular-dcd53e90.png",
+          "metadata": {
+            "width": 800,
+            "type": "image/png",
+            "size": 348466,
+            "height": 800
+          }
+        },
+        "original": {
+          "url": "https://assets2.ello.co/uploads/category/tile_image/22/ello-optimized-e8cd732a.jpg"
+        },
+        "large": {
+          "url": "https://assets2.ello.co/uploads/category/tile_image/22/ello-large-dcd53e90.png",
+          "metadata": {
+            "width": 1000,
+            "type": "image/png",
+            "size": 481648,
+            "height": 1000
+          }
+        }
+      },
+      "slug": "shop",
+      "order": 0,
+      "name": "Shop",
+      "links": {
+        "recent": {
+          "related": "/api/v2/categories/shop/posts/recent"
+        },
+        "promotionals": [
+          "178"
+        ]
+      },
+      "id": "22",
+      "header": "Shop",
+      "description": "Explore a wide collection of items created and sold by individual artists, photographers, independent shops, fashion designers, musicians, developers, writers, graphic designers — Creators. These are unique works made from and for an expressive life.",
+      "allow_in_onboarding": false
+    }
+  ]
+}
