@@ -24,7 +24,6 @@
 
 package io.github.jasvilladarez.domain.util
 
-import android.net.Uri
 import okhttp3.Headers
 
 internal fun Headers.getLink(): String? {
@@ -34,9 +33,15 @@ internal fun Headers.getLink(): String? {
 /**
  * Gets the query parameter in link header
  */
-internal fun Headers.getParameterInLink(parameterName: String): String? =
-        getLink()?.let {
-            Uri.parse(getLink()?.substringBefore(">")
-                    ?.substringAfter("<"))
-                    ?.getQueryParameter(parameterName)
+internal fun Headers.getParameterInLink(parameterName: String): String? = getLink()?.let {
+    try {
+        it.substringBefore(">").substringAfter("<")
+                .split('?', '&').firstOrNull {
+            it.split("=")[0] == parameterName
+        }?.let {
+            it.split("=")[1]
         }
+    } catch (e: Exception) {
+        null
+    }
+}
