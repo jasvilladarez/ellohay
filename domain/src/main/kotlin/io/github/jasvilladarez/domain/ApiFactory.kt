@@ -51,10 +51,11 @@ internal object ApiFactory {
     private const val DEFAULT_TIMEOUT = 120L
 
     private fun <T : Any> createApi(clazz: Class<T>,
+                                    baseUrl: String = ELLO_API_URL,
                                     urlPrefix: String = "",
                                     isDebug: Boolean = false,
                                     vararg interceptors: Interceptor): T =
-            createApi(clazz, ELLO_API_URL + urlPrefix,
+            createApi(clazz, baseUrl + urlPrefix,
                     makeOkHttpClient(makeLoggingInterceptor(isDebug),
                             *interceptors))
 
@@ -88,8 +89,10 @@ internal object ApiFactory {
     internal fun createAuthApi(): AuthApi = ApiFactory.createApi(AuthApi::class.java,
             isDebug = BuildConfig.DEBUG)
 
-    internal fun createBrowseApi(token: Token, isDebug: Boolean = false): BrowseApi =
-            ApiFactory.createApi(BrowseApi::class.java, ELLO_V2_PREFIX,
+    internal fun createBrowseApi(token: Token,
+                                 isDebug: Boolean = false,
+                                 baseUrl: String = ELLO_API_URL): BrowseApi =
+            ApiFactory.createApi(BrowseApi::class.java, baseUrl, ELLO_V2_PREFIX,
                     isDebug, AuthHeader(token))
 
 }
