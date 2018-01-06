@@ -1,0 +1,95 @@
+{
+  "artist_invites": [
+    {
+      "title": "Test Title",
+      "submission_body_block": "Test submission body block",
+      "status": "upcoming",
+      "slug": "format-magazine-community",
+      "short_description": "<p>Test short description</p>",
+      "opened_at": "2018-01-17T08:00:00.000000Z",
+      "logo_image": {
+        "original": {
+          "url": "https://assets1.ello.co/uploads/artist_invite/logo_image/123/uploads_2F6ac35e4f-4815-123d4-82d4-c47b9c5202b5_2FFormat.png"
+        },
+        "optimized": {
+          "url": "https://assets0.ello.co/uploads/artist_invite/logo_image/123/ello-optimized-9da9e868.png",
+          "metadata": {
+            "width": 675,
+            "type": "image/png",
+            "size": 4973,
+            "height": 380
+          }
+        }
+      },
+      "links": {},
+      "invite_type": "Artist Grant and Digital Publication",
+      "id": "123",
+      "header_image": {
+        "xhdpi": {
+          "url": "https://assets1.ello.co/uploads/artist_invite/header_image/123/ello-xhdpi-c3b8a357.jpg",
+          "metadata": {
+            "width": 1360,
+            "type": "image/jpeg",
+            "size": 124875,
+            "height": 555
+          }
+        },
+        "original": {
+          "url": "https://assets2.ello.co/uploads/artist_invite/header_image/123/uploads_2F89d0019e-cd5c-43aa-b38b-316aeca4364e_2FFormat_25202.png"
+        },
+        "optimized": {
+          "url": "https://assets0.ello.co/uploads/artist_invite/header_image/123/ello-optimized-c3b8a357.jpg",
+          "metadata": {
+            "width": 1360,
+            "type": "image/jpeg",
+            "size": 124875,
+            "height": 555
+          }
+        },
+        "mdpi": {
+          "url": "https://assets2.ello.co/uploads/artist_invite/header_image/123/ello-mdpi-c3b8a357.jpg",
+          "metadata": {
+            "width": 375,
+            "type": "image/jpeg",
+            "size": 15977,
+            "height": 153
+          }
+        },
+        "ldpi": {
+          "url": "https://assets2.ello.co/uploads/artist_invite/header_image/123/ello-ldpi-c3b8a357.jpg",
+          "metadata": {
+            "width": 180,
+            "type": "image/jpeg",
+            "size": 5883,
+            "height": 73
+          }
+        },
+        "hdpi": {
+          "url": "https://assets0.ello.co/uploads/artist_invite/header_image/123/ello-hdpi-c3b8a357.jpg",
+          "metadata": {
+            "width": 750,
+            "type": "image/jpeg",
+            "size": 45132,
+            "height": 306
+          }
+        }
+      },
+      "guide": [
+        {
+          "title": "How to Enter:",
+          "rendered_body": "<p>Click the SUBMIT button above. <br>\nMake sure to include: </p>\n\n<p>(1) A single post with a maximum of three images relating to the theme of community<br>\n(2) A brief bio<br>\n(3) A statement about the work<br>\n(4) A link to your website or online portfolio<br>\n(5) Tag us <a href=\"/useformat\" class=\"user-mention\">@useformat</a></p>\n\n<p>Please note that if you are selected, we will contact you to get high-res images for publication. </p>"
+        },
+        {
+          "title": "Opportunity:",
+          "rendered_body": "<p>• 5 selected artists will receive a $100 artist grant<br>\n• The selected artists will receive a free Format membership for one year <br>\n• Work will be featured on <a href=\"https://o.ello.co/https://www.format.com/magazine?utm_source=ello&amp;utm_medium=artist-invite&amp;utm_campaign=partnership-ello&amp;utm_term=opportunity\" rel=\"nofollow noopener\" target=\"_blank\">Format Magazine</a></p>"
+        },
+        {
+          "title": "Selection Process:",
+          "rendered_body": "<p>Submissions will be reviewed by the <a href=\"https://o.ello.co/https://www.format.com?utm_source=ello&amp;utm_medium=artist-invite&amp;utm_campaign=partnership-ello&amp;utm_term=selection-process\" rel=\"nofollow noopener\" target=\"_blank\">Format</a> and Ello curatorial teams and announced on the Artist Invite. We're excited to see your work and get you more exposure and opportunities.</p>"
+        }
+      ],
+      "description": "<p>Test description</p>",
+      "closed_at": "2018-02-13T07:59:00.000000Z"
+    }
+  ]
+}

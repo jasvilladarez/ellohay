@@ -26,6 +26,7 @@ package io.github.jasvilladarez.domain.repository.browse
 
 import io.github.jasvilladarez.domain.ApiFactory
 import io.github.jasvilladarez.domain.createMockResponse
+import io.github.jasvilladarez.domain.entity.ArtistInviteStream
 import io.github.jasvilladarez.domain.entity.EditorialStream
 import io.github.jasvilladarez.domain.entity.Token
 import io.github.jasvilladarez.domain.readFromFile
@@ -36,7 +37,7 @@ import okhttp3.mockwebserver.MockWebServer
 import org.amshove.kluent.shouldEqual
 import org.amshove.kluent.shouldEqualTo
 import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.given
+import org.jetbrains.spek.api.dsl.context
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 
@@ -47,7 +48,7 @@ internal object BrowseRepositoryImplSpek : Spek({
     val mockServer by memoized { MockWebServer() }
     val baseUrl by memoized { mockServer.url("/").toString() }
 
-    given("browse api and browse repository") {
+    context("browse") {
         val browseApi by memoized { ApiFactory.createBrowseApi(Token.default(), baseUrl = baseUrl) }
         val browseRepositoryImpl by memoized { BrowseRepositoryImpl(browseApi) }
 
@@ -65,6 +66,23 @@ internal object BrowseRepositoryImplSpek : Spek({
 
                 observer.valueCount() shouldEqualTo 1
                 observer.values().firstOrNull() shouldEqual BrowseRepositoryTestObject.editorialStream
+            }
+        }
+
+        on("fetchArtistInvites") {
+            val observer by memoized { TestObserver<ArtistInviteStream>() }
+            mockServer.enqueue(createMockResponse(readFromFile("artist_invite_stream.json"),
+                    "link: <https://ello.co/api/v2/artist_invites?page=2&per_page=1>; rel=\"next\""))
+            browseRepositoryImpl.fetchArtistInvites().subscribe(observer)
+
+            it("should have 1 item in artist invites") {
+                observer.awaitTerminalEvent()
+                observer.assertNoErrors()
+                observer.assertNoTimeout()
+                observer.assertComplete()
+
+                observer.valueCount() shouldEqualTo 1
+                observer.values().firstOrNull() shouldEqual BrowseRepositoryTestObject.artistInviteStream
             }
         }
     }

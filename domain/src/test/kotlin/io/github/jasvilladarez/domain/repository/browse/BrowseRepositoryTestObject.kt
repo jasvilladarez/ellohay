@@ -49,4 +49,36 @@ internal object BrowseRepositoryTestObject {
                     ),
                     listOf(PostLink("123467", "/api/v2/posts/14503035")))
     ), "101981")
+
+    val artistInviteStream = ArtistInviteStream(listOf(
+            ArtistInvite(123,
+                    "Test Title",
+                    "Artist Grant and Digital Publication",
+                    "<p>Test short description</p>",
+                    "<p>Test description</p>",
+                    Image(
+                            ImageVersion("https://assets2.ello.co/uploads/artist_invite/header_image/123/ello-ldpi-c3b8a357.jpg",
+                                    ImageVersionMetaData(180, 73, "image/jpeg")),
+                            ImageVersion("https://assets2.ello.co/uploads/artist_invite/header_image/123/ello-mdpi-c3b8a357.jpg",
+                                    ImageVersionMetaData(375, 153, "image/jpeg")),
+                            ImageVersion("https://assets0.ello.co/uploads/artist_invite/header_image/123/ello-hdpi-c3b8a357.jpg",
+                                    ImageVersionMetaData(750, 306, "image/jpeg")),
+                            ImageVersion("https://assets1.ello.co/uploads/artist_invite/header_image/123/ello-xhdpi-c3b8a357.jpg",
+                                    ImageVersionMetaData(1360, 555, "image/jpeg")),
+                            ImageVersion("https://assets0.ello.co/uploads/artist_invite/header_image/123/ello-optimized-c3b8a357.jpg",
+                                    ImageVersionMetaData(1360, 555, "image/jpeg")),
+                            ImageVersion("https://assets2.ello.co/uploads/artist_invite/header_image/123/uploads_2F89d0019e-cd5c-43aa-b38b-316aeca4364e_2FFormat_25202.png",
+                                    null)
+                    ),
+                    Image(
+                            null, null, null, null,
+                            ImageVersion("https://assets0.ello.co/uploads/artist_invite/logo_image/123/ello-optimized-9da9e868.png",
+                                    ImageVersionMetaData(675, 380, "image/png")),
+                            ImageVersion("https://assets1.ello.co/uploads/artist_invite/logo_image/123/uploads_2F6ac35e4f-4815-123d4-82d4-c47b9c5202b5_2FFormat.png",
+                                    null)
+                    ),
+                    ArtistInvite.Status.UPCOMING,
+                    "2018-01-17T08:00:00.000000Z",
+                    "2018-02-13T07:59:00.000000Z")
+    ), "2")
 }
