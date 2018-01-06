@@ -1,0 +1,78 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2018 Jasmine Villadarez
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+package io.github.jasvilladarez.domain.repository.browse
+
+import io.github.jasvilladarez.domain.ApiFactory
+import io.github.jasvilladarez.domain.createMockResponse
+import io.github.jasvilladarez.domain.entity.EditorialStream
+import io.github.jasvilladarez.domain.entity.Token
+import io.github.jasvilladarez.domain.readFromFile
+import io.reactivex.android.plugins.RxAndroidPlugins
+import io.reactivex.observers.TestObserver
+import io.reactivex.schedulers.Schedulers
+import okhttp3.mockwebserver.MockWebServer
+import org.amshove.kluent.shouldEqual
+import org.amshove.kluent.shouldEqualTo
+import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.api.dsl.given
+import org.jetbrains.spek.api.dsl.it
+import org.jetbrains.spek.api.dsl.on
+
+internal object BrowseRepositoryImplSpek : Spek({
+    RxAndroidPlugins.setInitMainThreadSchedulerHandler {
+        Schedulers.trampoline()
+    }
+    val mockServer by memoized { MockWebServer() }
+    val baseUrl by memoized { mockServer.url("/").toString() }
+
+    given("browse api and browse repository") {
+        val browseApi by memoized { ApiFactory.createBrowseApi(Token.default(), baseUrl = baseUrl) }
+        val browseRepositoryImpl by memoized { BrowseRepositoryImpl(browseApi) }
+
+        on("fetchEditorials") {
+            val observer by memoized { TestObserver<EditorialStream>() }
+            mockServer.enqueue(createMockResponse(readFromFile("editorial_stream.json"),
+                    "link: <https://ello.co/api/v2/editorials?before=101981&per_page=1>; rel=\"next\""))
+            browseRepositoryImpl.fetchEditorials().subscribe(observer)
+
+            it("should have 1 item in editorials") {
+                observer.awaitTerminalEvent()
+                observer.assertNoErrors()
+                observer.assertNoTimeout()
+                observer.assertComplete()
+
+                observer.valueCount() shouldEqualTo 1
+                observer.values().firstOrNull() shouldEqual BrowseRepositoryTestObject.editorialStream
+            }
+        }
+    }
+
+    afterEachTest {
+        mockServer.shutdown()
+    }
+    afterGroup {
+        RxAndroidPlugins.reset()
+    }
+})

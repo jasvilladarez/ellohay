@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: "de.mannodermaus.android-junit5"
 
 def globalConf = rootProject.ext
 
@@ -10,10 +11,24 @@ android {
     defaultConfig {
         minSdkVersion globalConf.minSdkVersion
         targetSdkVersion globalConf.targetSdkVersion
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath false
+            }
+        }
     }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
         test.java.srcDirs += 'src/test/kotlin'
+    }
+}
+
+junitPlatform {
+    filters {
+        engines {
+            include 'spek'
+        }
     }
 }
 

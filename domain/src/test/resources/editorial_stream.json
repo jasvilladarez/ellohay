@@ -1,0 +1,68 @@
+{
+  "editorials": [
+    {
+      "two_by_two_image": {
+        "xhdpi": {
+          "url": "https://assets0.ello.co/uploads/editorial/one_by_one_image/123/ello-xhdpi-e910e8f4.jpg",
+          "metadata": {
+            "width": 1500,
+            "type": "image/jpeg",
+            "size": 863868,
+            "height": 1500
+          }
+        },
+        "original": {
+          "url": "https://assets1.ello.co/uploads/editorial/one_by_one_image/123/uploads_2F8bbf59ec-9cd6-4f4e-aeb2-e536459787e8_2Fello-optimized-46a4a289.jpg"
+        },
+        "optimized": {
+          "url": "https://assets0.ello.co/uploads/editorial/one_by_one_image/123/ello-optimized-e910e8f4.jpg",
+          "metadata": {
+            "width": 1920,
+            "type": "image/jpeg",
+            "size": 1190445,
+            "height": 1920
+          }
+        },
+        "mdpi": {
+          "url": "https://assets2.ello.co/uploads/editorial/one_by_one_image/123/ello-mdpi-e910e8f4.jpg",
+          "metadata": {
+            "width": 375,
+            "type": "image/jpeg",
+            "size": 81242,
+            "height": 375
+          }
+        },
+        "ldpi": {
+          "url": "https://assets0.ello.co/uploads/editorial/one_by_one_image/123/ello-ldpi-e910e8f4.jpg",
+          "metadata": {
+            "width": 180,
+            "type": "image/jpeg",
+            "size": 21332,
+            "height": 180
+          }
+        },
+        "hdpi": {
+          "url": "https://assets1.ello.co/uploads/editorial/one_by_one_image/123/ello-hdpi-e910e8f4.jpg",
+          "metadata": {
+            "width": 750,
+            "type": "image/jpeg",
+            "size": 300443,
+            "height": 750
+          }
+        }
+      },
+      "title": "Test Title",
+      "subtitle": "\"Test Subtitle\"",
+      "rendered_subtitle": "<p>\"Test rendered subtitle\"</p>",
+      "links": {
+        "post": {
+          "type": "posts",
+          "id": "123467",
+          "href": "/api/v2/posts/14503035"
+        }
+      },
+      "kind": "post",
+      "id": "123"
+    }
+  ]
+}
