@@ -26,10 +26,7 @@ package io.github.jasvilladarez.domain.repository.browse
 
 import io.github.jasvilladarez.domain.ApiFactory
 import io.github.jasvilladarez.domain.createMockResponse
-import io.github.jasvilladarez.domain.entity.ArtistInviteStream
-import io.github.jasvilladarez.domain.entity.Category
-import io.github.jasvilladarez.domain.entity.EditorialStream
-import io.github.jasvilladarez.domain.entity.Token
+import io.github.jasvilladarez.domain.entity.*
 import io.github.jasvilladarez.domain.readFromFile
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.observers.TestObserver
@@ -100,6 +97,74 @@ internal object BrowseRepositoryImplSpek : Spek({
 
                 observer.valueCount() shouldEqualTo 1
                 observer.values().firstOrNull() shouldEqual BrowseRepositoryTestObject.categories
+            }
+        }
+
+        on("fetchPostsByCategory FEATURED") {
+            val observer by memoized { TestObserver<PostStream>() }
+            mockServer.enqueue(createMockResponse(readFromFile("post_stream.json"),
+                    "link: <https://ello.co/api/v2/categories/posts/recent?before=123&per_page=1>; rel=\"next\""))
+            browseRepositoryImpl.fetchPostsByCategory(Category.SLUG_FEATURED).subscribe(observer)
+
+            it("should have 1 item in posts") {
+                observer.awaitTerminalEvent()
+                observer.assertNoErrors()
+                observer.assertNoTimeout()
+                observer.assertComplete()
+
+                observer.valueCount() shouldEqualTo 1
+                observer.values().firstOrNull() shouldEqual BrowseRepositoryTestObject.postStream
+            }
+        }
+
+        on(" fetchPostsByCategory TRENDING") {
+            val observer by memoized { TestObserver<PostStream>() }
+            mockServer.enqueue(createMockResponse(readFromFile("post_stream.json"),
+                    "link: <https://ello.co/api/v2/categories/posts/recent?page=123&per_page=1>; rel=\"next\""))
+            browseRepositoryImpl.fetchPostsByCategory(Category.SLUG_TRENDING).subscribe(observer)
+
+            it("should have 1 item in posts") {
+                observer.awaitTerminalEvent()
+                observer.assertNoErrors()
+                observer.assertNoTimeout()
+                observer.assertComplete()
+
+                observer.valueCount() shouldEqualTo 1
+                observer.values().firstOrNull() shouldEqual BrowseRepositoryTestObject.postStream
+            }
+        }
+
+        on("fetchPostsByCategory RECENT") {
+            val observer by memoized { TestObserver<PostStream>() }
+            mockServer.enqueue(createMockResponse(readFromFile("post_stream.json"),
+                    "link: <https://ello.co/api/v2/categories/posts/recent?before=123&per_page=1>; rel=\"next\""))
+            browseRepositoryImpl.fetchPostsByCategory(Category.SLUG_RECENT).subscribe(observer)
+
+            it("should have 1 item in posts") {
+                observer.awaitTerminalEvent()
+                observer.assertNoErrors()
+                observer.assertNoTimeout()
+                observer.assertComplete()
+
+                observer.valueCount() shouldEqualTo 1
+                observer.values().firstOrNull() shouldEqual BrowseRepositoryTestObject.postStream
+            }
+        }
+
+        on("fetchPostsByCategory other") {
+            val observer by memoized { TestObserver<PostStream>() }
+            mockServer.enqueue(createMockResponse(readFromFile("post_stream.json"),
+                    "link: <https://ello.co/api/v2/categories/posts/recent?before=123&per_page=1>; rel=\"next\""))
+            browseRepositoryImpl.fetchPostsByCategory("other").subscribe(observer)
+
+            it("should have 1 item in posts") {
+                observer.awaitTerminalEvent()
+                observer.assertNoErrors()
+                observer.assertNoTimeout()
+                observer.assertComplete()
+
+                observer.valueCount() shouldEqualTo 1
+                observer.values().firstOrNull() shouldEqual BrowseRepositoryTestObject.postStream
             }
         }
     }

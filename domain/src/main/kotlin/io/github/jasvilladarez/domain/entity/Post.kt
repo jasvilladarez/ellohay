@@ -28,7 +28,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Post(
         @SerializedName("id")
-        val id: String,
+        val id: Long,
         @SerializedName("token")
         val token: String,
         @SerializedName("href")
