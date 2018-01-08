@@ -25,12 +25,11 @@
 package io.github.jasvilladarez.domain.repository.browse
 
 import io.github.jasvilladarez.domain.ApiFactory
+import io.github.jasvilladarez.domain.addRxScheduling
 import io.github.jasvilladarez.domain.createMockResponse
 import io.github.jasvilladarez.domain.entity.*
 import io.github.jasvilladarez.domain.readFromFile
-import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.observers.TestObserver
-import io.reactivex.schedulers.Schedulers
 import okhttp3.mockwebserver.MockWebServer
 import org.amshove.kluent.shouldEqual
 import org.amshove.kluent.shouldEqualTo
@@ -40,9 +39,7 @@ import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 
 internal object BrowseRepositoryImplSpek : Spek({
-    RxAndroidPlugins.setInitMainThreadSchedulerHandler {
-        Schedulers.trampoline()
-    }
+    addRxScheduling()
     val mockServer by memoized { MockWebServer() }
     val baseUrl by memoized { mockServer.url("/").toString() }
 
@@ -169,10 +166,5 @@ internal object BrowseRepositoryImplSpek : Spek({
         }
     }
 
-    afterEachTest {
-        mockServer.shutdown()
-    }
-    afterGroup {
-        RxAndroidPlugins.reset()
-    }
+    afterEachTest { mockServer.shutdown() }
 })
