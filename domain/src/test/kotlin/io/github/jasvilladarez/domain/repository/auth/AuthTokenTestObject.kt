@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2017 Jasmine Villadarez
+ * Copyright (c) 2018 Jasmine Villadarez
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,16 +25,9 @@
 package io.github.jasvilladarez.domain.repository.auth
 
 import io.github.jasvilladarez.domain.entity.Token
-import io.reactivex.Observable
 
-/**
- * This class involves fetching public access token
- * and logging in.
- */
-interface AuthRepository {
+internal object AuthTokenTestObject {
 
-    /**
-     * Fetch a token to use for the APIs
-     */
-    fun fetchAccessToken(currentTime: Long = System.currentTimeMillis()): Observable<Token>
+    val publicToken = Token("bearer", "Test token",
+            1515363305, 86400)
 }

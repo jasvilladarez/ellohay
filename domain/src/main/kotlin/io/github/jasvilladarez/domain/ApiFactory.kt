@@ -86,8 +86,9 @@ internal object ApiFactory {
     private fun makeConverterFactory(): Converter.Factory =
             GsonConverterFactory.create(gson)
 
-    internal fun createAuthApi(): AuthApi = ApiFactory.createApi(AuthApi::class.java,
-            isDebug = BuildConfig.DEBUG)
+    internal fun createAuthApi(baseUrl: String = ELLO_API_URL): AuthApi =
+            ApiFactory.createApi(AuthApi::class.java, baseUrl,
+                    isDebug = BuildConfig.DEBUG)
 
     internal fun createBrowseApi(token: Token,
                                  isDebug: Boolean = false,

@@ -37,9 +37,9 @@ internal class AuthRepositoryImpl(
         private val token: Token
 ) : AuthRepository {
 
-    override fun fetchAccessToken(): Observable<Token> {
+    override fun fetchAccessToken(currentTime: Long): Observable<Token> {
         return (authPreference.token?.takeIf {
-            it.createdAt + it.expiresIn > TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
+            it.createdAt + it.expiresIn > TimeUnit.MILLISECONDS.toSeconds(currentTime)
         }?.toSingle() ?: authApi.fetchPublicToken().map { it.token }).map {
             authPreference.token = it
             token.copy(it)
