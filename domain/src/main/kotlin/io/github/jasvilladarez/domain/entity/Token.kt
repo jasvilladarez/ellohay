@@ -73,7 +73,7 @@ data class Token(
         }
 
     companion object {
-        internal fun default(): Token = Token("", "",
+        fun default(): Token = Token("", "",
                 0, 0)
     }
 

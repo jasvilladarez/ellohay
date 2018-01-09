@@ -32,3 +32,7 @@ fun <T> Observable<T>.applySchedulers(): Observable<T> {
     return subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 }
+
+fun <T> T.toObservable(): Observable<T> = Observable.just(this)
+
+fun <T : Throwable, U> T.toObservableError(): Observable<U> = Observable.error<U>(this)

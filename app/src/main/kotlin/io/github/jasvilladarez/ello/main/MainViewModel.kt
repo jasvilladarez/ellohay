@@ -39,7 +39,7 @@ internal class MainViewModel(
     private val stateMachine =
             MviStateMachine<MainIntent, MainResult, MainViewState>(MainViewState.View(), {
                 when (it) {
-                    is MainIntent.Load -> fetchAccessToken()
+                    is MainIntent.Load -> fetchAccessToken(it.currentTime)
                 }
             }, { _, result ->
                 when (result) {
@@ -61,7 +61,7 @@ internal class MainViewModel(
         stateMachine.clear()
     }
 
-    private fun fetchAccessToken(): Observable<MainResult> =
-            authRepository.fetchAccessToken().applyMvi({ MainResult.Success },
+    private fun fetchAccessToken(currentTime: Long): Observable<MainResult> =
+            authRepository.fetchAccessToken(currentTime).applyMvi({ MainResult.Success },
                     { MainResult.Error(it) }, { MainResult.InProgress })
 }

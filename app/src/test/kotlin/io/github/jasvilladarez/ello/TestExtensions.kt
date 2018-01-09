@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2017 Jasmine Villadarez
+ * Copyright (c) 2018 Jasmine Villadarez
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,41 +22,34 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.main
+package io.github.jasvilladarez.ello
 
-import io.github.jasvilladarez.ello.common.MviIntent
-import io.github.jasvilladarez.ello.common.MviResult
-import io.github.jasvilladarez.ello.common.MviViewState
+import android.arch.core.executor.ArchTaskExecutor
+import android.arch.core.executor.TaskExecutor
+import io.reactivex.android.plugins.RxAndroidPlugins
+import io.reactivex.schedulers.Schedulers
+import org.jetbrains.spek.api.dsl.Spec
 
-internal sealed class MainIntent : MviIntent {
+internal fun Spec.addInstantTaskRule() {
+    ArchTaskExecutor.getInstance().setDelegate(object : TaskExecutor() {
+        override fun executeOnDiskIO(runnable: Runnable) {
+            runnable.run()
+        }
 
-    data class Load(
-            val currentTime: Long = System.currentTimeMillis()
-    ) : MainIntent()
+        override fun postToMainThread(runnable: Runnable) {
+            runnable.run()
+        }
+
+        override fun isMainThread(): Boolean {
+            return true
+        }
+    })
+    afterGroup { ArchTaskExecutor.getInstance().setDelegate(null) }
 }
 
-internal sealed class MainResult : MviResult {
-
-    object Success : MainResult()
-
-    data class Error(
-            val error: Throwable
-    ) : MainResult()
-
-    object InProgress : MainResult()
-}
-
-internal sealed class MainViewState : MviViewState {
-
-    data class View(
-            val isSuccessful: Boolean = false,
-            // TODO handle logged in view (Phase 2 implementation)
-            val isLoggedIn: Boolean = false
-    ) : MainViewState()
-
-    object LoadingView : MainViewState()
-
-    data class Error(
-            val errorMessage: String?
-    ) : MainViewState()
+internal fun Spec.addRxScheduling() {
+    RxAndroidPlugins.setInitMainThreadSchedulerHandler {
+        Schedulers.trampoline()
+    }
+    afterGroup { RxAndroidPlugins.reset() }
 }
