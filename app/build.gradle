@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: "de.mannodermaus.android-junit5"
 
 def globalConf = rootProject.ext
 
@@ -15,6 +16,12 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath false
+            }
+        }
     }
     buildTypes {
         release {
@@ -24,6 +31,15 @@ android {
     }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+    }
+}
+
+junitPlatform {
+    filters {
+        engines {
+            include 'spek'
+        }
     }
 }
 
@@ -50,7 +66,15 @@ dependencies {
     implementation dependencies.rxRelay
     implementation dependencies.rxBindingV4
 
-    testImplementation dependencies.junit
-    androidTestImplementation dependencies.testRunner
-    androidTestImplementation dependencies.espressoCore
+    testImplementation dependencies.archCoreTesting
+    testImplementation dependencies.junit5Engine
+    testImplementation dependencies.mockWebServer
+    testImplementation dependencies.kluent
+    testImplementation(dependencies.spek) {
+        exclude group: 'org.jetbrains.kotlin'
+    }
+    testImplementation(dependencies.spekEngine) {
+        exclude group: 'org.junit.platform'
+        exclude group: 'org.jetbrains.kotlin'
+    }
 }

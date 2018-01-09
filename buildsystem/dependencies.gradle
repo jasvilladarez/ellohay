@@ -56,10 +56,11 @@ ext {
             rxRelay              : "com.jakewharton.rxrelay2:rxrelay:2.0.0",
 
             // Tests
+            archCoreTesting      : "android.arch.core:core-testing:$architectureComponentsVersion",
             espressoCore         : "com.android.support.test.espresso:espresso-core:$espressoVersion",
             junit                : "junit:junit:4.12",
             junit5Engine         : "org.junit.platform:junit-platform-engine:1.0.1",
-            kluent              : "org.amshove.kluent:kluent-android:1.30",
+            kluent               : "org.amshove.kluent:kluent-android:1.30",
             mockWebServer        : "com.squareup.okhttp3:mockwebserver:$okHttpVersion",
             spek                 : "org.jetbrains.spek:spek-api:$spekVersion",
             spekEngine           : "org.jetbrains.spek:spek-junit-platform-engine:$spekVersion",
