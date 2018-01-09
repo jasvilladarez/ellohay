@@ -38,7 +38,7 @@ import org.jetbrains.spek.api.dsl.context
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 
-internal object BrowseRepositoryImplSpek : Spek({
+internal object BrowseRepositoryImplTest : Spek({
     addRxScheduling()
     val mockServer by memoized { MockWebServer() }
     val baseUrl by memoized { mockServer.url("/").toString() }
