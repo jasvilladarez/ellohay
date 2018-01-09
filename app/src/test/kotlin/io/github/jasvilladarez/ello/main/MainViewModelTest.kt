@@ -47,11 +47,11 @@ internal object MainViewModelTest : Spek({
 
     given("a MainViewModel") {
         val mainViewModel by memoized { MainViewModel(authRepository) }
+        val observer by memoized { mock<Observer<MainViewState>>() }
+        beforeEachTest { mainViewModel.state.observeForever(observer) }
+        afterEachTest { mainViewModel.state.removeObserver(observer) }
         context("fetchAccessToken") {
             on("success") {
-                val observer by memoized { mock<Observer<MainViewState>>() }
-                mainViewModel.state.observeForever(observer)
-
                 val currentTime by memoized { System.currentTimeMillis() }
                 whenever(authRepository.fetchAccessToken(currentTime))
                         .thenReturn(Token.default().toObservable())
@@ -65,9 +65,6 @@ internal object MainViewModelTest : Spek({
             }
 
             on("error") {
-                val observer by memoized { mock<Observer<MainViewState>>() }
-                mainViewModel.state.observeForever(observer)
-
                 val currentTime by memoized { System.currentTimeMillis() }
                 val errorMessage by memoized { "There's an error" }
                 whenever(authRepository.fetchAccessToken(currentTime))
