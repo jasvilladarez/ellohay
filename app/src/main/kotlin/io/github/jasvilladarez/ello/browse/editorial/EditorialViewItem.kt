@@ -26,6 +26,7 @@ package io.github.jasvilladarez.ello.browse.editorial
 
 import android.view.View
 import io.github.jasvilladarez.ello.R
+import io.github.jasvilladarez.ello.util.fromHtml
 import io.github.jasvilladarez.ello.util.ui.loadImage
 import io.github.jasvilladarez.ello.widget.RecyclerViewItem
 import kotlinx.android.synthetic.main.li_editorial.view.*
@@ -40,7 +41,7 @@ internal class EditorialViewItem : RecyclerViewItem<EditorialItem> {
             view.editorialImage?.loadImage(it)
         }
         view.title?.text = item.title
-        view.description?.text = item.subtitle
+        view.description?.text = item.subtitle?.fromHtml()
     }
 
 }

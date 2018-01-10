@@ -25,12 +25,11 @@
 package io.github.jasvilladarez.ello.browse.editorial
 
 import io.github.jasvilladarez.domain.entity.Editorial
-import io.github.jasvilladarez.ello.util.fromHtml
 
 internal data class EditorialItem(
         val id: Long,
         val title: String,
-        val subtitle: CharSequence?,
+        val subtitle: String?,
         val thumbnailImageUrl: String?,
         val imageUrl: String?
 )
@@ -38,7 +37,7 @@ internal data class EditorialItem(
 internal fun Editorial.mapToViewItem(): EditorialItem = EditorialItem(
         id,
         title,
-        renderedSubtitle?.fromHtml() ?: subtitle,
+        renderedSubtitle ?: subtitle,
         image?.mdpi?.url,
         image?.xhdpi?.url ?: image?.original?.url
 )
