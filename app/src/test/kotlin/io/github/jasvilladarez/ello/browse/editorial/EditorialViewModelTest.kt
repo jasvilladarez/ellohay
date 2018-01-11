@@ -50,7 +50,7 @@ internal object EditorialViewModelTest : Spek({
         val observer by memoized { mock<Observer<EditorialViewState>>() }
         beforeEachTest { editorialViewModel.state.observeForever(observer) }
         afterEachTest { editorialViewModel.state.removeObserver(observer) }
-        context("fetchEditorials") {
+        context("EditorialIntent.Load ") {
             on("success") {
                 whenever(browseRepository.fetchEditorials())
                         .thenReturn(BrowseRepositoryTestObject.editorialStream.toObservable())
@@ -75,6 +75,37 @@ internal object EditorialViewModelTest : Spek({
                     verify(observer).onChanged(EditorialViewState.DefaultView())
                     verify(observer).onChanged(EditorialViewState.InitialLoadingView)
                     verify(observer).onChanged(EditorialViewState.ErrorView(errorMessage))
+                }
+            }
+        }
+
+        context("EditorialIntent.LoadMore") {
+            val nextPageId by memoized { "123" }
+            on("success") {
+                whenever(browseRepository.fetchEditorials(nextPageId))
+                        .thenReturn(BrowseRepositoryTestObject.editorialStream.toObservable())
+                editorialViewModel.processIntents(EditorialIntent.LoadMore(nextPageId).toObservable())
+
+                it("should emit load more view state") {
+                    verify(observer).onChanged(EditorialViewState.DefaultView())
+                    verify(observer).onChanged(EditorialViewState.MoreLoadingView)
+                    verify(observer).onChanged(EditorialViewState.MoreView(
+                            BrowseRepositoryTestObject.editorialStream.editorials
+                                    .map { it.mapToViewItem() },
+                            BrowseRepositoryTestObject.editorialStream.next))
+                }
+            }
+
+            on("error") {
+                val errorMsg = "There's an error"
+                whenever(browseRepository.fetchEditorials(nextPageId))
+                        .thenReturn(RuntimeException(errorMsg).toObservableError())
+                editorialViewModel.processIntents(EditorialIntent.LoadMore(nextPageId).toObservable())
+
+                it("should emit error view state") {
+                    verify(observer).onChanged(EditorialViewState.DefaultView())
+                    verify(observer).onChanged(EditorialViewState.MoreLoadingView)
+                    verify(observer).onChanged(EditorialViewState.ErrorView(errorMsg))
                 }
             }
         }
