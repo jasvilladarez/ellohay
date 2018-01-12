@@ -30,9 +30,10 @@ import com.nhaarman.mockito_kotlin.whenever
 import io.github.jasvilladarez.domain.repository.browse.BrowseRepository
 import io.github.jasvilladarez.domain.util.toObservable
 import io.github.jasvilladarez.domain.util.toObservableError
-import io.github.jasvilladarez.ello.addInstantTaskRule
-import io.github.jasvilladarez.ello.addRxScheduling
+import io.github.jasvilladarez.ello.InstantTaskSpekRule
 import io.github.jasvilladarez.ello.browse.BrowseRepositoryTestObject
+import io.github.jasvilladarez.test.common.RxSpekRule
+import io.github.jasvilladarez.test.common.addGroupRules
 import org.amshove.kluent.mock
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.context
@@ -41,8 +42,7 @@ import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 
 internal object EditorialViewModelTest : Spek({
-    addInstantTaskRule()
-    addRxScheduling()
+    addGroupRules(RxSpekRule(), InstantTaskSpekRule())
     val browseRepository by memoized { mock<BrowseRepository>() }
 
     given("a EditorialViewModel") {

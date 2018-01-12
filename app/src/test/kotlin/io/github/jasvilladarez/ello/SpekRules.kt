@@ -26,11 +26,13 @@ package io.github.jasvilladarez.ello
 
 import android.arch.core.executor.ArchTaskExecutor
 import android.arch.core.executor.TaskExecutor
-import io.reactivex.android.plugins.RxAndroidPlugins
-import io.reactivex.schedulers.Schedulers
-import org.jetbrains.spek.api.dsl.Spec
+import android.arch.lifecycle.Observer
+import io.github.jasvilladarez.ello.common.MviIntent
+import io.github.jasvilladarez.ello.common.MviViewModel
+import io.github.jasvilladarez.ello.common.MviViewState
+import io.github.jasvilladarez.test.common.SpekRule
 
-internal fun Spec.addInstantTaskRule() {
+internal class InstantTaskSpekRule : SpekRule({
     ArchTaskExecutor.getInstance().setDelegate(object : TaskExecutor() {
         override fun executeOnDiskIO(runnable: Runnable) {
             runnable.run()
@@ -44,12 +46,15 @@ internal fun Spec.addInstantTaskRule() {
             return true
         }
     })
-    afterGroup { ArchTaskExecutor.getInstance().setDelegate(null) }
-}
+}, {
+    ArchTaskExecutor.getInstance().setDelegate(null)
+})
 
-internal fun Spec.addRxScheduling() {
-    RxAndroidPlugins.setInitMainThreadSchedulerHandler {
-        Schedulers.trampoline()
-    }
-    afterGroup { RxAndroidPlugins.reset() }
-}
+internal class ObserverSpekRule<I : MviIntent, S : MviViewState>(
+        private val viewModel: MviViewModel<I, S>,
+        private val observer: Observer<S>
+) : SpekRule({
+    viewModel.state.observeForever(observer)
+}, {
+    viewModel.state.removeObserver(observer)
+})
