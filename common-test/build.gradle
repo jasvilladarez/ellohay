@@ -1,0 +1,19 @@
+apply plugin: 'kotlin'
+
+def globalConf = rootProject.ext
+
+dependencies {
+    def dependencies = globalConf.dependencies
+
+    compile dependencies.junit5Engine
+    compile dependencies.mockWebServer
+    compile dependencies.kluent
+    compile(dependencies.spek) {
+        exclude group: 'org.jetbrains.kotlin'
+    }
+    compile(dependencies.spekEngine) {
+        exclude group: 'org.junit.platform'
+        exclude group: 'org.jetbrains.kotlin'
+    }
+    implementation dependencies.kotlin
+}
