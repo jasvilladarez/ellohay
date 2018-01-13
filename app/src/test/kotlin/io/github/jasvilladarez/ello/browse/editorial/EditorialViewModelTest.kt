@@ -33,6 +33,8 @@ import io.github.jasvilladarez.domain.util.toObservableError
 import io.github.jasvilladarez.ello.InstantTaskSpekRule
 import io.github.jasvilladarez.ello.browse.BrowseRepositoryTestObject
 import io.github.jasvilladarez.test.common.RxSpekRule
+import io.github.jasvilladarez.test.common.SpekRule
+import io.github.jasvilladarez.test.common.addEachTestRule
 import io.github.jasvilladarez.test.common.addGroupRules
 import org.amshove.kluent.mock
 import org.jetbrains.spek.api.Spek
@@ -48,8 +50,8 @@ internal object EditorialViewModelTest : Spek({
     given("a EditorialViewModel") {
         val editorialViewModel by memoized { EditorialViewModel(browseRepository) }
         val observer by memoized { mock<Observer<EditorialViewState>>() }
-        beforeEachTest { editorialViewModel.state.observeForever(observer) }
-        afterEachTest { editorialViewModel.state.removeObserver(observer) }
+        addEachTestRule(SpekRule({ editorialViewModel.state.observeForever(observer) },
+                { editorialViewModel.state.removeObserver(observer) }))
         context("EditorialIntent.Load ") {
             on("success") {
                 whenever(browseRepository.fetchEditorials())
