@@ -28,13 +28,14 @@ import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.spek.api.dsl.Spec
 
-abstract class SpekRule(
+open class SpekRule(
         val start: () -> Unit,
         val finish: () -> Unit
 )
 
 fun Spec.addGroupRule(spekRule: SpekRule) {
-    beforeGroup { spekRule.start.invoke() }
+//    beforeGroup { spekRule.start.invoke() }
+    spekRule.start.invoke()
     afterGroup { spekRule.finish.invoke() }
 }
 

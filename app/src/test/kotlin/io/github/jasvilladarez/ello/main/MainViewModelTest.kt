@@ -33,6 +33,8 @@ import io.github.jasvilladarez.domain.util.toObservable
 import io.github.jasvilladarez.domain.util.toObservableError
 import io.github.jasvilladarez.ello.InstantTaskSpekRule
 import io.github.jasvilladarez.test.common.RxSpekRule
+import io.github.jasvilladarez.test.common.SpekRule
+import io.github.jasvilladarez.test.common.addEachTestRule
 import io.github.jasvilladarez.test.common.addGroupRules
 import org.amshove.kluent.mock
 import org.jetbrains.spek.api.Spek
@@ -42,14 +44,14 @@ import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 
 internal object MainViewModelTest : Spek({
-    addGroupRules(RxSpekRule(), InstantTaskSpekRule())
+    addGroupRules(InstantTaskSpekRule(), RxSpekRule())
     val authRepository by memoized { mock(AuthRepository::class) }
 
     given("a MainViewModel") {
         val mainViewModel by memoized { MainViewModel(authRepository) }
         val observer by memoized { mock<Observer<MainViewState>>() }
-        beforeEachTest { mainViewModel.state.observeForever(observer) }
-        afterEachTest { mainViewModel.state.removeObserver(observer) }
+        addEachTestRule(SpekRule({ mainViewModel.state.observeForever(observer) },
+                { mainViewModel.state.removeObserver(observer) }))
         context("fetchAccessToken") {
             on("success") {
                 val currentTime by memoized { System.currentTimeMillis() }

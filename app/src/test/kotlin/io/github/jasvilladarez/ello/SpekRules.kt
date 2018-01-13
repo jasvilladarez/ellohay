@@ -26,10 +26,6 @@ package io.github.jasvilladarez.ello
 
 import android.arch.core.executor.ArchTaskExecutor
 import android.arch.core.executor.TaskExecutor
-import android.arch.lifecycle.Observer
-import io.github.jasvilladarez.ello.common.MviIntent
-import io.github.jasvilladarez.ello.common.MviViewModel
-import io.github.jasvilladarez.ello.common.MviViewState
 import io.github.jasvilladarez.test.common.SpekRule
 
 internal class InstantTaskSpekRule : SpekRule({
@@ -48,13 +44,4 @@ internal class InstantTaskSpekRule : SpekRule({
     })
 }, {
     ArchTaskExecutor.getInstance().setDelegate(null)
-})
-
-internal class ObserverSpekRule<I : MviIntent, S : MviViewState>(
-        private val viewModel: MviViewModel<I, S>,
-        private val observer: Observer<S>
-) : SpekRule({
-    viewModel.state.observeForever(observer)
-}, {
-    viewModel.state.removeObserver(observer)
 })
