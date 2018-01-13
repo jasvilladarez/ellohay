@@ -26,11 +26,10 @@ package io.github.jasvilladarez.ello.browse.invites
 
 import android.support.v4.content.ContextCompat
 import android.view.View
-import io.github.jasvilladarez.domain.entity.ArtistInvite
 import io.github.jasvilladarez.ello.R
-import io.github.jasvilladarez.ello.util.getDaysRemaining
 import io.github.jasvilladarez.ello.util.formatDate
 import io.github.jasvilladarez.ello.util.fromHtml
+import io.github.jasvilladarez.ello.util.getDaysRemaining
 import io.github.jasvilladarez.ello.util.ui.loadImage
 import io.github.jasvilladarez.ello.util.ui.setVisible
 import io.github.jasvilladarez.ello.widget.RecyclerViewItem
@@ -50,7 +49,7 @@ internal class ArtistInviteViewItem : RecyclerViewItem<ArtistInviteItem> {
         }
         view.title?.text = item.title
         view.inviteType?.text = item.inviteType
-        view.description?.text = item.description
+        view.description?.text = item.description?.fromHtml()
         setStatusText(view, item.status)
         setTime(view, item)
     }

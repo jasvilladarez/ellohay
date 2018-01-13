@@ -25,7 +25,6 @@
 package io.github.jasvilladarez.ello.browse.invites
 
 import io.github.jasvilladarez.domain.entity.ArtistInvite
-import io.github.jasvilladarez.ello.util.fromHtml
 import io.github.jasvilladarez.ello.util.toDate
 import java.util.*
 
@@ -35,7 +34,7 @@ internal data class ArtistInviteItem(
         val status: Status,
         val headerImageUrl: String?,
         val logoImageUrl: String?,
-        val description: CharSequence?,
+        val description: String?,
         val openedAt: Date,
         val closedAt: Date
 ) {
@@ -50,7 +49,7 @@ internal fun ArtistInvite.mapToViewItem(): ArtistInviteItem = ArtistInviteItem(
         ArtistInviteItem.Status.valueOf(status.name),
         headerImage.mdpi?.url,
         logoImage.optimized?.url,
-        shortDescription.fromHtml(),
+        shortDescription,
         openedAt.toDate(),
         closedAt.toDate()
 )
