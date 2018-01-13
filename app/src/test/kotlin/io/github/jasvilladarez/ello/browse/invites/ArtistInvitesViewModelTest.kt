@@ -74,7 +74,7 @@ internal object ArtistInvitesViewModelTest : Spek({
                         .thenReturn(RuntimeException(errorMessage).toObservableError())
                 artistInvitesViewModel.processIntents(ArtistInvitesIntent.Load.toObservable())
 
-                it("should return default view state") {
+                it("should return error view state") {
                     verify(observer).onChanged(ArtistInvitesViewState.DefaultView())
                     verify(observer).onChanged(ArtistInvitesViewState.InitialLoadingView)
                     verify(observer).onChanged(ArtistInvitesViewState.ErrorView(errorMessage))

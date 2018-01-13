@@ -31,6 +31,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import io.github.jasvilladarez.ello.R
+import io.github.jasvilladarez.ello.util.fromHtml
 import io.github.jasvilladarez.ello.util.ui.loadImage
 import io.github.jasvilladarez.ello.util.ui.setVisible
 import io.github.jasvilladarez.ello.widget.RecyclerViewItem
@@ -74,7 +75,7 @@ internal class PostViewItem : RecyclerViewItem<PostItem> {
     }
 
     private fun TextPostBlockItem.toTextView(context: Context): TextView? =
-            this.text?.takeIf { it.isNotEmpty() }?.let {
+            this.text?.takeIf { it.isNotEmpty() }?.fromHtml()?.let {
                 TextView(context).apply {
                     val defaultPadding = context.resources
                             .getDimensionPixelSize(R.dimen.default_padding)

@@ -25,7 +25,6 @@
 package io.github.jasvilladarez.ello.browse.discover
 
 import io.github.jasvilladarez.domain.entity.*
-import io.github.jasvilladarez.ello.util.fromHtml
 
 internal data class CategoryItem(
         val name: String,
@@ -55,7 +54,7 @@ internal data class ImagePostBlockItem(
 ) : PostBlockItem
 
 internal data class TextPostBlockItem(
-        val text: CharSequence?
+        val text: String?
 ) : PostBlockItem
 
 internal data class EmbedPostBlockItem(
@@ -75,7 +74,7 @@ internal fun PostStream.mapToViewItems(): List<PostItem> = posts.map { post ->
 internal fun List<PostBlock>.mapToViewItems(assets: List<Asset>?):
         List<PostBlockItem> = this.mapNotNull { postBlock ->
     when (postBlock) {
-        is TextPostBlock -> TextPostBlockItem(postBlock.text.fromHtml())
+        is TextPostBlock -> TextPostBlockItem(postBlock.text)
         is ImagePostBlock -> {
             val thumbnailAsset = assets?.firstOrNull {
                 it.id == postBlock.links?.filterIsInstance(AssetLink::class.java)
