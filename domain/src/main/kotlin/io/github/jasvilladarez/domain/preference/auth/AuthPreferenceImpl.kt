@@ -26,12 +26,13 @@ package io.github.jasvilladarez.domain.preference.auth
 
 import android.content.SharedPreferences
 import io.github.jasvilladarez.domain.entity.Token
+import io.github.jasvilladarez.domain.preference.IPreference
 import io.github.jasvilladarez.domain.util.fromJson
 import io.github.jasvilladarez.domain.util.toJson
 
 internal class AuthPreferenceImpl(
         override val sharedPreference: SharedPreferences
-) : AuthPreference {
+) : AuthPreference, IPreference {
 
     companion object {
         private const val AUTH_TOKEN = "auth_token"

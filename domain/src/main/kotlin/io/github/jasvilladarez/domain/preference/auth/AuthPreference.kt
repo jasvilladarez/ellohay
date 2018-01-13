@@ -25,9 +25,8 @@
 package io.github.jasvilladarez.domain.preference.auth
 
 import io.github.jasvilladarez.domain.entity.Token
-import io.github.jasvilladarez.domain.preference.IPreference
 
-internal interface AuthPreference : IPreference {
+internal interface AuthPreference {
 
     var token: Token?
 }
