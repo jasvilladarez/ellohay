@@ -26,11 +26,12 @@ package io.github.jasvilladarez.domain.repository.auth
 
 import com.nhaarman.mockito_kotlin.whenever
 import io.github.jasvilladarez.domain.ApiFactory
-import io.github.jasvilladarez.domain.addRxScheduling
 import io.github.jasvilladarez.domain.createMockResponse
 import io.github.jasvilladarez.domain.entity.Token
 import io.github.jasvilladarez.domain.preference.auth.AuthPreference
 import io.github.jasvilladarez.domain.readFromFile
+import io.github.jasvilladarez.test.common.RxSpekRule
+import io.github.jasvilladarez.test.common.addGroupRules
 import io.reactivex.observers.TestObserver
 import okhttp3.mockwebserver.MockWebServer
 import org.amshove.kluent.mock
@@ -42,13 +43,13 @@ import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 
 internal object AuthRepositoryImplTest : Spek({
-    addRxScheduling()
+    addGroupRules(RxSpekRule())
     val mockServer by memoized { MockWebServer() }
     val baseUrl by memoized { mockServer.url("/").toString() }
 
     context("authentication") {
         val authApi by memoized { ApiFactory.createAuthApi(baseUrl) }
-        val authPreference by memoized { mock(AuthPreference::class) }
+        val authPreference by memoized { mock<AuthPreference>() }
         val token by memoized { Token.default() }
         val authRepository by memoized {
             AuthRepositoryImpl(authApi, authPreference, token)

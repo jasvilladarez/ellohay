@@ -24,10 +24,7 @@
 
 package io.github.jasvilladarez.domain
 
-import io.reactivex.android.plugins.RxAndroidPlugins
-import io.reactivex.schedulers.Schedulers
 import okhttp3.mockwebserver.MockResponse
-import org.jetbrains.spek.api.dsl.Spec
 import java.io.ByteArrayOutputStream
 
 internal fun Any.readFromFile(file: String): String {
@@ -51,11 +48,4 @@ internal fun createMockResponse(body: String, vararg additionalHeaders: String):
             addHeader(it)
         }
     }
-}
-
-internal fun Spec.addRxScheduling() {
-    RxAndroidPlugins.setInitMainThreadSchedulerHandler {
-        Schedulers.trampoline()
-    }
-    afterGroup { RxAndroidPlugins.reset() }
 }

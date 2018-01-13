@@ -25,10 +25,11 @@
 package io.github.jasvilladarez.domain.repository.browse
 
 import io.github.jasvilladarez.domain.ApiFactory
-import io.github.jasvilladarez.domain.addRxScheduling
 import io.github.jasvilladarez.domain.createMockResponse
 import io.github.jasvilladarez.domain.entity.*
 import io.github.jasvilladarez.domain.readFromFile
+import io.github.jasvilladarez.test.common.RxSpekRule
+import io.github.jasvilladarez.test.common.addGroupRules
 import io.reactivex.observers.TestObserver
 import okhttp3.mockwebserver.MockWebServer
 import org.amshove.kluent.shouldEqual
@@ -39,7 +40,7 @@ import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 
 internal object BrowseRepositoryImplTest : Spek({
-    addRxScheduling()
+    addGroupRules(RxSpekRule())
     val mockServer by memoized { MockWebServer() }
     val baseUrl by memoized { mockServer.url("/").toString() }
 

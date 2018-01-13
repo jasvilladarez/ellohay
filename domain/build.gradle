@@ -49,14 +49,5 @@ dependencies {
     implementation dependencies.rxJava
     implementation dependencies.rxKotlin
 
-    testImplementation dependencies.junit5Engine
-    testImplementation dependencies.mockWebServer
-    testImplementation dependencies.kluent
-    testImplementation(dependencies.spek) {
-        exclude group: 'org.jetbrains.kotlin'
-    }
-    testImplementation(dependencies.spekEngine) {
-        exclude group: 'org.junit.platform'
-        exclude group: 'org.jetbrains.kotlin'
-    }
+    testImplementation project(':common-test')
 }

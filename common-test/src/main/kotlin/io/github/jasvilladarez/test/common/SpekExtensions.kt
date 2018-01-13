@@ -34,8 +34,7 @@ open class SpekRule(
 )
 
 fun Spec.addGroupRule(spekRule: SpekRule) {
-//    beforeGroup { spekRule.start.invoke() }
-    spekRule.start.invoke()
+    beforeGroup { spekRule.start.invoke() }
     afterGroup { spekRule.finish.invoke() }
 }
 

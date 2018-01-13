@@ -18,13 +18,13 @@ android {
 dependencies {
     def dependencies = globalConf.dependencies
 
-    compile dependencies.junit5Engine
-    compile dependencies.mockWebServer
-    compile dependencies.kluent
-    compile(dependencies.spek) {
+    api dependencies.junit5Engine
+    api dependencies.mockWebServer
+    api dependencies.kluent
+    api(dependencies.spek) {
         exclude group: 'org.jetbrains.kotlin'
     }
-    compile(dependencies.spekEngine) {
+    api(dependencies.spekEngine) {
         exclude group: 'org.junit.platform'
         exclude group: 'org.jetbrains.kotlin'
     }

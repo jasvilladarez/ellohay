@@ -1,6 +1,6 @@
 ext {
     architectureComponentsVersion = '1.0.0'
-    daggerVersion = '2.13'
+    daggerVersion = '2.14.1'
     espressoVersion = '3.0.1'
     glideVersion = '4.4.0'
     materialDialogVersion = '0.9.6.0'
@@ -60,7 +60,7 @@ ext {
             espressoCore         : "com.android.support.test.espresso:espresso-core:$espressoVersion",
             junit                : "junit:junit:4.12",
             junit5Engine         : "org.junit.platform:junit-platform-engine:1.0.1",
-            kluent               : "org.amshove.kluent:kluent-android:1.30",
+            kluent               : "org.amshove.kluent:kluent-android:1.33",
             mockWebServer        : "com.squareup.okhttp3:mockwebserver:$okHttpVersion",
             spek                 : "org.jetbrains.spek:spek-api:$spekVersion",
             spekEngine           : "org.jetbrains.spek:spek-junit-platform-engine:$spekVersion",
