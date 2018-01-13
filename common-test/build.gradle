@@ -29,6 +29,7 @@ dependencies {
         exclude group: 'org.jetbrains.kotlin'
     }
 
+    implementation project(':domain')
     implementation dependencies.rxAndroid
     implementation dependencies.kotlin
 }

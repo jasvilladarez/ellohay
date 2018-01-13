@@ -31,11 +31,11 @@ import io.github.jasvilladarez.domain.repository.browse.BrowseRepository
 import io.github.jasvilladarez.domain.util.toObservable
 import io.github.jasvilladarez.domain.util.toObservableError
 import io.github.jasvilladarez.ello.InstantTaskSpekRule
-import io.github.jasvilladarez.ello.browse.BrowseRepositoryTestObject
 import io.github.jasvilladarez.test.common.RxSpekRule
 import io.github.jasvilladarez.test.common.SpekRule
 import io.github.jasvilladarez.test.common.addEachTestRule
 import io.github.jasvilladarez.test.common.addGroupRules
+import io.github.jasvilladarez.test.objects.BrowseRepositoryTestObject
 import org.amshove.kluent.mock
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.context

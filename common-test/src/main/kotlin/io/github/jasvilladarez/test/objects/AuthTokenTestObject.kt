@@ -22,11 +22,11 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.repository.auth
+package io.github.jasvilladarez.test.objects
 
 import io.github.jasvilladarez.domain.entity.Token
 
-internal object AuthTokenTestObject {
+object AuthTokenTestObject {
 
     val publicToken = Token("bearer", "Test token",
             1515363305, 86400)

@@ -32,6 +32,7 @@ import io.github.jasvilladarez.domain.preference.auth.AuthPreference
 import io.github.jasvilladarez.domain.readFromFile
 import io.github.jasvilladarez.test.common.RxSpekRule
 import io.github.jasvilladarez.test.common.addGroupRules
+import io.github.jasvilladarez.test.objects.AuthTokenTestObject
 import io.reactivex.observers.TestObserver
 import okhttp3.mockwebserver.MockWebServer
 import org.amshove.kluent.mock

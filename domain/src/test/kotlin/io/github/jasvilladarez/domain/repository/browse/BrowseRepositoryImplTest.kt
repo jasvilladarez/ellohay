@@ -30,6 +30,7 @@ import io.github.jasvilladarez.domain.entity.*
 import io.github.jasvilladarez.domain.readFromFile
 import io.github.jasvilladarez.test.common.RxSpekRule
 import io.github.jasvilladarez.test.common.addGroupRules
+import io.github.jasvilladarez.test.objects.BrowseRepositoryTestObject
 import io.reactivex.observers.TestObserver
 import okhttp3.mockwebserver.MockWebServer
 import org.amshove.kluent.shouldEqual

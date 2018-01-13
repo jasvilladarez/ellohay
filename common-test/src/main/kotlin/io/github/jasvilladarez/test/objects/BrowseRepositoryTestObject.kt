@@ -22,11 +22,11 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.domain.repository.browse
+package io.github.jasvilladarez.test.objects
 
 import io.github.jasvilladarez.domain.entity.*
 
-internal object BrowseRepositoryTestObject {
+object BrowseRepositoryTestObject {
 
     val editorialStream = EditorialStream(listOf(
             Editorial(123,
