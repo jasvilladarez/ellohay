@@ -25,8 +25,6 @@
 package io.github.jasvilladarez.ello.browse.invites
 
 import io.github.jasvilladarez.domain.entity.ArtistInvite
-import io.github.jasvilladarez.ello.util.toDate
-import java.util.*
 
 internal data class ArtistInviteItem(
         val title: String,
@@ -35,8 +33,8 @@ internal data class ArtistInviteItem(
         val headerImageUrl: String?,
         val logoImageUrl: String?,
         val description: String?,
-        val openedAt: Date,
-        val closedAt: Date
+        val openedAt: String,
+        val closedAt: String
 ) {
     enum class Status {
         UPCOMING, OPEN, SELECTING, CLOSED, PREVIEW
@@ -50,6 +48,6 @@ internal fun ArtistInvite.mapToViewItem(): ArtistInviteItem = ArtistInviteItem(
         headerImage.mdpi?.url,
         logoImage.optimized?.url,
         shortDescription,
-        openedAt.toDate(),
-        closedAt.toDate()
+        openedAt,
+        closedAt
 )

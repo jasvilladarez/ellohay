@@ -80,7 +80,7 @@ internal object DiscoverViewModelTest : Spek({
             }
         }
 
-        context("DisocverIntent.LoadPosts") {
+        context("DiscoverIntent.LoadPosts") {
             val slug by memoized { "slug" }
             on("success") {
                 whenever(browseRepository.fetchPostsByCategory(slug))
@@ -112,7 +112,7 @@ internal object DiscoverViewModelTest : Spek({
             }
         }
 
-        context("DisocverIntent.LoadMorePosts") {
+        context("DiscoverIntent.LoadMorePosts") {
             val slug by memoized { "slug" }
             val nextPageId by memoized { "123" }
             on("success") {

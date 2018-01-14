@@ -30,6 +30,7 @@ import io.github.jasvilladarez.ello.R
 import io.github.jasvilladarez.ello.util.formatDate
 import io.github.jasvilladarez.ello.util.fromHtml
 import io.github.jasvilladarez.ello.util.getDaysRemaining
+import io.github.jasvilladarez.ello.util.toDate
 import io.github.jasvilladarez.ello.util.ui.loadImage
 import io.github.jasvilladarez.ello.util.ui.setVisible
 import io.github.jasvilladarez.ello.widget.RecyclerViewItem
@@ -78,18 +79,18 @@ internal class ArtistInviteViewItem : RecyclerViewItem<ArtistInviteItem> {
         when (artistInvite.status) {
             ArtistInviteItem.Status.UPCOMING -> {
                 val opensDay = "${view.context.getString(R.string.opens)} " +
-                        artistInvite.openedAt.formatDate("MMMM dd, yyyy")
+                        artistInvite.openedAt.toDate().formatDate("MMMM dd, yyyy")
                 view.time?.text = opensDay
             }
             ArtistInviteItem.Status.OPEN -> {
-                val daysRemaining = "${artistInvite.closedAt.getDaysRemaining()} " +
+                val daysRemaining = "${artistInvite.closedAt.toDate().getDaysRemaining()} " +
                         view.context.getString(R.string.days_remaining)
                 view.time?.text = daysRemaining
             }
             ArtistInviteItem.Status.SELECTING ->
                 view.time?.text = view.context.getString(R.string.hold_tight)
             ArtistInviteItem.Status.CLOSED ->
-                view.time?.text = artistInvite.openedAt.formatDate("MMMM yyyy")
+                view.time?.text = artistInvite.openedAt.toDate().formatDate("MMMM yyyy")
             else -> view.time?.setVisible(false)
         }
     }

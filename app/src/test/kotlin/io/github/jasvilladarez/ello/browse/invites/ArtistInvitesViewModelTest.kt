@@ -54,7 +54,7 @@ internal object ArtistInvitesViewModelTest : Spek({
                 { artistInvitesViewModel.state.removeObserver(observer) }))
         context("ArtistInvitesIntent.Load") {
             on("success") {
-                whenever(browseRepository.fetchArtistInvites(null))
+                whenever(browseRepository.fetchArtistInvites())
                         .thenReturn(BrowseRepositoryTestObject.artistInviteStream.toObservable())
                 artistInvitesViewModel.processIntents(ArtistInvitesIntent.Load.toObservable())
 
