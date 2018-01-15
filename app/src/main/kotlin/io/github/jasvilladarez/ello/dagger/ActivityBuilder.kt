@@ -30,6 +30,7 @@ import io.github.jasvilladarez.domain.repository.auth.AuthRepositoryModule
 import io.github.jasvilladarez.ello.browse.BrowseBuilder
 import io.github.jasvilladarez.ello.main.MainActivity
 import io.github.jasvilladarez.ello.main.MainModule
+import io.github.jasvilladarez.ello.viewmodel.ViewModelBuilder
 
 @Module
 internal abstract class ActivityBuilder {

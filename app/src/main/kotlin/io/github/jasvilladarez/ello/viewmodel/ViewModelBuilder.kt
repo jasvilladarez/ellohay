@@ -22,12 +22,11 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.dagger
+package io.github.jasvilladarez.ello.viewmodel
 
 import android.arch.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.Module
-import io.github.jasvilladarez.ello.viewmodel.ViewModelFactory
 
 @Module
 internal abstract class ViewModelBuilder {
