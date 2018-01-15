@@ -28,7 +28,7 @@ import dagger.Component
 import io.github.jasvilladarez.domain.entity.Token
 
 @DomainScope
-@Component(modules = arrayOf(AccountModule::class))
+@Component(modules = [AccountModule::class])
 interface DomainComponent {
 
     fun getToken(): Token
