@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2017 Jasmine Villadarez
+ * Copyright (c) 2018 Jasmine Villadarez
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,8 +24,6 @@
 
 package io.github.jasvilladarez.ello.browse.invites
 
-import io.github.jasvilladarez.domain.entity.ArtistInvite
-import io.github.jasvilladarez.domain.entity.ArtistInviteStream
 import io.github.jasvilladarez.ello.common.MviIntent
 import io.github.jasvilladarez.ello.common.MviResult
 import io.github.jasvilladarez.ello.common.MviViewState

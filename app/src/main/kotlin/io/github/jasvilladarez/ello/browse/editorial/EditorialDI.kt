@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2017 Jasmine Villadarez
+ * Copyright (c) 2018 Jasmine Villadarez
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,6 @@ import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 import io.github.jasvilladarez.domain.repository.browse.BrowseRepository
-import io.github.jasvilladarez.domain.repository.browse.BrowseRepositoryModule
 import io.github.jasvilladarez.ello.viewmodel.ViewModelKey
 
 @Module

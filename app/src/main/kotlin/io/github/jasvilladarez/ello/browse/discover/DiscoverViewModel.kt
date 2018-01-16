@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2017 Jasmine Villadarez
+ * Copyright (c) 2018 Jasmine Villadarez
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,6 @@ package io.github.jasvilladarez.ello.browse.discover
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
-import io.github.jasvilladarez.domain.entity.Category
 import io.github.jasvilladarez.domain.repository.browse.BrowseRepository
 import io.github.jasvilladarez.ello.common.MviStateMachine
 import io.github.jasvilladarez.ello.common.MviViewModel

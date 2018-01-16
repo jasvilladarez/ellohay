@@ -1,7 +1,7 @@
 <!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2017 Jasmine Villadarez
+  ~ Copyright (c) 2018 Jasmine Villadarez
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -25,12 +25,12 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
         android:width="60dp"
         android:height="60dp"
-        android:viewportWidth="60.0"
-        android:viewportHeight="60.0">
+    android:viewportHeight="60.0"
+    android:viewportWidth="60.0">
     <path
         android:fillColor="#FF000000"
         android:pathData="M30,30m-30,0a30,30 0,1 1,60 0a30,30 0,1 1,-60 0"/>
     <path
-        android:pathData="M30,48c-8.2,0 -15.4,-5.6 -17.4,-13.5 -0.2,-0.9 0.3,-1.9 1.2,-2.1 0.9,-0.2 1.9,0.3 2.1,1.2 1.7,6.4 7.5,10.9 14.1,10.9s12.4,-4.5 14.1,-10.9c0.2,-0.9 1.2,-1.5 2.1,-1.2 0.9,0.2 1.5,1.2 1.2,2.1 -2,7.9 -9.2,13.5 -17.4,13.5z"
-        android:fillColor="#fff"/>
+        android:fillColor="#fff"
+        android:pathData="M30,48c-8.2,0 -15.4,-5.6 -17.4,-13.5 -0.2,-0.9 0.3,-1.9 1.2,-2.1 0.9,-0.2 1.9,0.3 2.1,1.2 1.7,6.4 7.5,10.9 14.1,10.9s12.4,-4.5 14.1,-10.9c0.2,-0.9 1.2,-1.5 2.1,-1.2 0.9,0.2 1.5,1.2 1.2,2.1 -2,7.9 -9.2,13.5 -17.4,13.5z" />
 </vector>

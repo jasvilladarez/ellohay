@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2017 Jasmine Villadarez
+ * Copyright (c) 2018 Jasmine Villadarez
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,9 @@ import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
-import io.github.jasvilladarez.domain.entity.*
+import io.github.jasvilladarez.domain.entity.assetsLinkTypeAdapter
+import io.github.jasvilladarez.domain.entity.linksTypeAdapter
+import io.github.jasvilladarez.domain.entity.postBlockTypeAdapter
 import java.io.IOException
 import java.util.*
 import kotlin.reflect.KClass

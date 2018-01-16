@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2017 Jasmine Villadarez
+ * Copyright (c) 2018 Jasmine Villadarez
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,8 +27,6 @@ package io.github.jasvilladarez.ello
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import io.github.jasvilladarez.domain.Domain
-import io.github.jasvilladarez.domain.dagger.DaggerDomainComponent
-import io.github.jasvilladarez.domain.dagger.DomainComponent
 import io.github.jasvilladarez.ello.dagger.AppModule
 import io.github.jasvilladarez.ello.dagger.DaggerAppComponent
 
