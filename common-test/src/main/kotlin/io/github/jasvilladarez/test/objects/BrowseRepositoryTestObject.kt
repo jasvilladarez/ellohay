@@ -24,7 +24,7 @@
 
 package io.github.jasvilladarez.test.objects
 
-import io.github.jasvilladarez.domain.entity.*
+import io.github.jasvilladarez.ello.domain.entity.*
 
 object BrowseRepositoryTestObject {
 

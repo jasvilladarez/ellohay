@@ -24,7 +24,7 @@
 
 package io.github.jasvilladarez.ello.browse.discover
 
-import io.github.jasvilladarez.domain.entity.*
+import io.github.jasvilladarez.ello.domain.entity.*
 
 internal data class CategoryItem(
         val name: String,

@@ -26,9 +26,9 @@ package io.github.jasvilladarez.ello.browse.editorial
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
-import io.github.jasvilladarez.domain.repository.browse.BrowseRepository
 import io.github.jasvilladarez.ello.common.MviStateMachine
 import io.github.jasvilladarez.ello.common.MviViewModel
+import io.github.jasvilladarez.ello.domain.repository.browse.BrowseRepository
 import io.github.jasvilladarez.ello.util.applyMvi
 import io.reactivex.Observable
 

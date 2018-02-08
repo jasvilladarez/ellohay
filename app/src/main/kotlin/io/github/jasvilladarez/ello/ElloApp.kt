@@ -26,9 +26,9 @@ package io.github.jasvilladarez.ello
 
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
-import io.github.jasvilladarez.domain.Domain
 import io.github.jasvilladarez.ello.dagger.AppModule
 import io.github.jasvilladarez.ello.dagger.DaggerAppComponent
+import io.github.jasvilladarez.ello.domain.Domain
 
 internal class ElloApp : DaggerApplication() {
 

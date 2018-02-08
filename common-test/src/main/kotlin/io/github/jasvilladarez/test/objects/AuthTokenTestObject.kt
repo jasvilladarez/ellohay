@@ -24,7 +24,7 @@
 
 package io.github.jasvilladarez.test.objects
 
-import io.github.jasvilladarez.domain.entity.Token
+import io.github.jasvilladarez.ello.domain.entity.Token
 
 object AuthTokenTestObject {
 

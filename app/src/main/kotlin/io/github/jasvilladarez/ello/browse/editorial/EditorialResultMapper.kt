@@ -24,7 +24,7 @@
 
 package io.github.jasvilladarez.ello.browse.editorial
 
-import io.github.jasvilladarez.domain.entity.Editorial
+import io.github.jasvilladarez.ello.domain.entity.Editorial
 
 internal data class EditorialItem(
         val id: Long,

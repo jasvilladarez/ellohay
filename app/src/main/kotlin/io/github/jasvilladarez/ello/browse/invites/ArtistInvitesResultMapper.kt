@@ -24,7 +24,7 @@
 
 package io.github.jasvilladarez.ello.browse.invites
 
-import io.github.jasvilladarez.domain.entity.ArtistInvite
+import io.github.jasvilladarez.ello.domain.entity.ArtistInvite
 
 internal data class ArtistInviteItem(
         val title: String,

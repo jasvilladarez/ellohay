@@ -26,10 +26,10 @@ package io.github.jasvilladarez.ello.browse
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import io.github.jasvilladarez.domain.repository.browse.BrowseRepositoryModule
 import io.github.jasvilladarez.ello.browse.discover.DiscoverBuilder
 import io.github.jasvilladarez.ello.browse.editorial.EditorialBuilder
 import io.github.jasvilladarez.ello.browse.invites.ArtistInvitesBuilder
+import io.github.jasvilladarez.ello.domain.repository.browse.BrowseRepositoryModule
 
 @Module
 internal abstract class BrowseBuilder {

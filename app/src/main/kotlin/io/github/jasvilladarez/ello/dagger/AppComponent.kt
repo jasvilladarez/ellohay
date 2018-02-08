@@ -28,8 +28,8 @@ import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import dagger.android.support.AndroidSupportInjectionModule
-import io.github.jasvilladarez.domain.dagger.DomainComponent
 import io.github.jasvilladarez.ello.ElloApp
+import io.github.jasvilladarez.ello.domain.dagger.DomainComponent
 
 @AppScope
 @Component(modules = [

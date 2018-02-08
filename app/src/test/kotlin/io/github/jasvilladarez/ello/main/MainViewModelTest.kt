@@ -27,11 +27,11 @@ package io.github.jasvilladarez.ello.main
 import android.arch.lifecycle.Observer
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import io.github.jasvilladarez.domain.entity.Token
-import io.github.jasvilladarez.domain.repository.auth.AuthRepository
-import io.github.jasvilladarez.domain.util.toObservable
-import io.github.jasvilladarez.domain.util.toObservableError
 import io.github.jasvilladarez.ello.InstantTaskSpekRule
+import io.github.jasvilladarez.ello.domain.entity.Token
+import io.github.jasvilladarez.ello.domain.repository.auth.AuthRepository
+import io.github.jasvilladarez.ello.domain.util.toObservable
+import io.github.jasvilladarez.ello.domain.util.toObservableError
 import io.github.jasvilladarez.test.common.RxSpekRule
 import io.github.jasvilladarez.test.common.SpekRule
 import io.github.jasvilladarez.test.common.addEachTestRule

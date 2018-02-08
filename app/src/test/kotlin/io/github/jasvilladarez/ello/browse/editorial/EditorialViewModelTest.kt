@@ -27,10 +27,10 @@ package io.github.jasvilladarez.ello.browse.editorial
 import android.arch.lifecycle.Observer
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import io.github.jasvilladarez.domain.repository.browse.BrowseRepository
-import io.github.jasvilladarez.domain.util.toObservable
-import io.github.jasvilladarez.domain.util.toObservableError
 import io.github.jasvilladarez.ello.InstantTaskSpekRule
+import io.github.jasvilladarez.ello.domain.repository.browse.BrowseRepository
+import io.github.jasvilladarez.ello.domain.util.toObservable
+import io.github.jasvilladarez.ello.domain.util.toObservableError
 import io.github.jasvilladarez.test.common.RxSpekRule
 import io.github.jasvilladarez.test.common.SpekRule
 import io.github.jasvilladarez.test.common.addEachTestRule
