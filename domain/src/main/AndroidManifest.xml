@@ -22,7 +22,7 @@
   ~ SOFTWARE.
   -->
 
-<manifest package="io.github.jasvilladarez.ello">
+<manifest package="io.github.jasvilladarez.domain">
 
     <application></application>
 </manifest>

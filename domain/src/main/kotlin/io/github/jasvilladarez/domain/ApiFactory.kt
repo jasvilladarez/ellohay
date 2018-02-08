@@ -29,7 +29,6 @@ import io.github.jasvilladarez.domain.network.AuthHeader
 import io.github.jasvilladarez.domain.repository.auth.AuthApi
 import io.github.jasvilladarez.domain.repository.browse.BrowseApi
 import io.github.jasvilladarez.domain.util.gson
-import io.github.jasvilladarez.ello.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

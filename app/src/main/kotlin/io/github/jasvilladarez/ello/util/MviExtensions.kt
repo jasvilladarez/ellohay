@@ -24,9 +24,10 @@
 
 package io.github.jasvilladarez.ello.util
 
-import io.github.jasvilladarez.domain.util.applySchedulers
 import io.github.jasvilladarez.ello.common.MviResult
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 inline fun <T : Any, reified M : MviResult> Observable<T>.applyMvi(
         crossinline onSuccess: (T) -> M,
@@ -35,6 +36,7 @@ inline fun <T : Any, reified M : MviResult> Observable<T>.applyMvi(
     return this.map { onSuccess(it) }
             .ofType(M::class.java)
             .onErrorReturn { onError(it) }
-            .applySchedulers()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .startWith(onProgress())
 }

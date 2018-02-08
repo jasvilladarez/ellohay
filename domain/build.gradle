@@ -69,7 +69,6 @@ dependencies {
     implementation dependencies.retrofitAdapter
     implementation dependencies.retrofitConverter
 
-    implementation dependencies.rxAndroid
     implementation dependencies.rxJava
     implementation dependencies.rxKotlin
 
