@@ -24,6 +24,9 @@
 
 package io.github.jasvilladarez.ello.domain
 
+import io.github.jasvilladarez.test.common.SpekRule
+import io.reactivex.plugins.RxJavaPlugins
+import io.reactivex.schedulers.Schedulers
 import okhttp3.mockwebserver.MockResponse
 import java.io.ByteArrayOutputStream
 
@@ -49,3 +52,9 @@ internal fun createMockResponse(body: String, vararg additionalHeaders: String):
         }
     }
 }
+
+internal class RxJavaSpekRule : SpekRule({
+    RxJavaPlugins.setIoSchedulerHandler { Schedulers.trampoline() }
+}, {
+    RxJavaPlugins.reset()
+})

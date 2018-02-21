@@ -25,9 +25,10 @@
 package io.github.jasvilladarez.ello.domain.repository.browse
 
 import io.github.jasvilladarez.ello.domain.ApiFactory
+import io.github.jasvilladarez.ello.domain.RxJavaSpekRule
 import io.github.jasvilladarez.ello.domain.createMockResponse
 import io.github.jasvilladarez.ello.domain.entity.*
-import io.github.jasvilladarez.test.common.RxSpekRule
+import io.github.jasvilladarez.ello.domain.readFromFile
 import io.github.jasvilladarez.test.common.addGroupRules
 import io.github.jasvilladarez.test.objects.BrowseRepositoryTestObject
 import io.reactivex.observers.TestObserver
@@ -40,7 +41,7 @@ import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 
 internal object BrowseRepositoryImplTest : Spek({
-    addGroupRules(RxSpekRule())
+    addGroupRules(RxJavaSpekRule())
     val mockServer by memoized { MockWebServer() }
     val baseUrl by memoized { mockServer.url("/").toString() }
 
