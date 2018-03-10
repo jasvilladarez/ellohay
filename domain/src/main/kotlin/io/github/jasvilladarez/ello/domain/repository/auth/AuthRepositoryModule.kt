@@ -28,6 +28,7 @@ import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import io.github.jasvilladarez.ello.domain.ApiFactory
+import io.github.jasvilladarez.ello.domain.BuildConfig
 import io.github.jasvilladarez.ello.domain.entity.Token
 import io.github.jasvilladarez.ello.domain.preference.auth.AuthPreference
 import io.github.jasvilladarez.ello.domain.preference.auth.AuthPreferenceImpl
@@ -36,7 +37,7 @@ import io.github.jasvilladarez.ello.domain.preference.auth.AuthPreferenceImpl
 class AuthRepositoryModule {
 
     @Provides
-    internal fun providesAuthApi(): AuthApi = ApiFactory.createAuthApi()
+    internal fun providesAuthApi(): AuthApi = ApiFactory.createAuthApi(BuildConfig.DEBUG)
 
     @Provides
     internal fun providesAuthPreference(sharedPreferences: SharedPreferences): AuthPreference =
