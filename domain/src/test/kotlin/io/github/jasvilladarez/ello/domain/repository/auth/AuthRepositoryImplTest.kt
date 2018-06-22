@@ -49,7 +49,7 @@ internal object AuthRepositoryImplTest : Spek({
     val baseUrl by memoized { mockServer.url("/").toString() }
 
     context("authentication") {
-        val authApi by memoized { ApiFactory.createAuthApi(baseUrl) }
+        val authApi by memoized { ApiFactory.createAuthApi(true, baseUrl) }
         val authPreference by memoized { mock<AuthPreference>() }
         val token by memoized { Token.default() }
         val authRepository by memoized {

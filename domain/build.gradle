@@ -48,14 +48,6 @@ android {
     }
 }
 
-junitPlatform {
-    filters {
-        engines {
-            include 'spek'
-        }
-    }
-}
-
 dependencies {
     def dependencies = globalConf.dependencies
 
