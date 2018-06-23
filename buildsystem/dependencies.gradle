@@ -23,7 +23,10 @@
  */
 
 ext {
-    architectureComponentsVersion = '1.0.0'
+    // Architecture Components
+    lifecycleVersion = '1.1.1'
+    roomVersion = '1.1.1'
+
     daggerVersion = '2.14.1'
     espressoVersion = '3.0.1'
     glideVersion = '4.4.0'
@@ -33,7 +36,7 @@ ext {
     retrofitVersion = '2.3.0'
     rxBindingVersion = '2.0.0'
     spekVersion = '1.1.5'
-    supportVersion = '26.1.0'
+    supportVersion = '27.1.1'
 
     dependencies = [
             // Android Support Libraries
@@ -41,10 +44,12 @@ ext {
             appCompat            : "com.android.support:appcompat-v7:$supportVersion",
 
             // Architecture Components
-            lifecycleCompiler    : "android.arch.lifecycle:compiler:$architectureComponentsVersion",
-            lifecycleExtensions  : "android.arch.lifecycle:extensions:$architectureComponentsVersion",
-            room                 : "android.arch.persistence.room:runtime:$architectureComponentsVersion",
-            roomCompiler         : "android.arch.persistence.room:compiler:$architectureComponentsVersion",
+            lifecycleCompiler    : "android.arch.lifecycle:compiler:$lifecycleVersion",
+            lifecycleExtensions  : "android.arch.lifecycle:extensions:$lifecycleVersion",
+            navigationUi         : "android.arch.navigation:navigation-ui-ktx:$navigationVersion",
+            navigationFragment   : "android.arch.navigation:navigation-fragment-ktx:$navigationVersion",
+            room                 : "android.arch.persistence.room:runtime:$roomVersion",
+            roomCompiler         : "android.arch.persistence.room:compiler:$roomVersion",
 
             // UI
             glide                : "com.github.bumptech.glide:glide:$glideVersion",
@@ -59,7 +64,7 @@ ext {
             daggerCompiler       : "com.google.dagger:dagger-compiler:$daggerVersion",
 
             // Kotlin
-            kotlin               : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
+            kotlin               : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion",
 
             // Network
             gson                 : "com.google.code.gson:gson:2.8.2",
@@ -80,7 +85,8 @@ ext {
             rxRelay              : "com.jakewharton.rxrelay2:rxrelay:2.0.0",
 
             // Tests
-            archCoreTesting      : "android.arch.core:core-testing:$architectureComponentsVersion",
+            archCoreTesting      : "android.arch.core:core-testing:$lifecycleVersion",
+            archNavTesting       : "android.arch.navigation:navigation-testing:$navigationVersion",
             espressoCore         : "com.android.support.test.espresso:espresso-core:$espressoVersion",
             junit                : "junit:junit:4.12",
             junit5Engine         : "org.junit.platform:junit-platform-engine:1.0.1",
