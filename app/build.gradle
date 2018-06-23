@@ -23,6 +23,7 @@
  */
 
 apply plugin: 'com.android.application'
+apply plugin: "androidx.navigation.safeargs"
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
@@ -67,14 +68,16 @@ dependencies {
     implementation dependencies.kotlin
     implementation project(':domain')
 
-    kapt dependencies.lifecycleCompiler
-    implementation dependencies.lifecycleExtensions
     implementation dependencies.appCompat
     implementation dependencies.design
     implementation dependencies.glide
     kapt dependencies.glideCompiler
     implementation dependencies.materialDialogCore
     implementation dependencies.materialDialogCommons
+
+    kapt dependencies.lifecycleCompiler
+    implementation dependencies.lifecycleExtensions
+    implementation dependencies.navigationUi
 
     kapt dependencies.daggerAndroidCompiler
     kapt dependencies.daggerCompiler
