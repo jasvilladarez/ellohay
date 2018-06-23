@@ -29,8 +29,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
+import io.github.jasvilladarez.ello.common.viewmodel.ViewModelKey
 import io.github.jasvilladarez.ello.domain.repository.browse.BrowseRepository
-import io.github.jasvilladarez.ello.viewmodel.ViewModelKey
 
 @Module
 internal abstract class EditorialBuilder {

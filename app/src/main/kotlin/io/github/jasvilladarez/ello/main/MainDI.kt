@@ -28,8 +28,8 @@ import android.arch.lifecycle.ViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
+import io.github.jasvilladarez.ello.common.viewmodel.ViewModelKey
 import io.github.jasvilladarez.ello.domain.repository.auth.AuthRepository
-import io.github.jasvilladarez.ello.viewmodel.ViewModelKey
 
 @Module
 internal class MainModule {

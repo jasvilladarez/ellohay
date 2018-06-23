@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.viewmodel
+package io.github.jasvilladarez.ello.common.viewmodel
 
 import android.arch.lifecycle.ViewModelProvider
 import dagger.Binds

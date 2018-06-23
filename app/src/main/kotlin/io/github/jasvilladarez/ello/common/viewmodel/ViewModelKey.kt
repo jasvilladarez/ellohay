@@ -22,29 +22,13 @@
  * SOFTWARE.
  */
 
-package io.github.jasvilladarez.ello.viewmodel
+package io.github.jasvilladarez.ello.common.viewmodel
 
 import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
-import javax.inject.Inject
-import javax.inject.Provider
+import dagger.MapKey
+import kotlin.reflect.KClass
 
-internal class ViewModelFactory @Inject constructor(
-        private val creators: @JvmSuppressWildcards Map<Class<out ViewModel>, Provider<ViewModel>>
-) : ViewModelProvider.Factory {
-
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        var creator: Provider<out ViewModel>? = creators[modelClass]
-        creator = creator ?: let {
-            creators.filterKeys { modelClass.isAssignableFrom(it) }
-                    .flatMap { listOf(it.value) }
-                    .firstOrNull()
-        } ?: throw IllegalArgumentException("unknown model class $modelClass")
-        try {
-            @Suppress("UNCHECKED_CAST")
-            return creator.get() as T
-        } catch (e: Exception) {
-            throw RuntimeException(e)
-        }
-    }
-}
+@Target(AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER)
+@Retention(AnnotationRetention.RUNTIME)
+@MapKey
+annotation class ViewModelKey(val value: KClass<out ViewModel>)
