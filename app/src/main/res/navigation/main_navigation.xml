@@ -21,11 +21,25 @@
   ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   ~ SOFTWARE.
   -->
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_nav_host"
-    android:name="androidx.navigation.fragment.NavHostFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:defaultNavHost="true"
-    app:navGraph="@navigation/main_navigation" />
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/loadingScreen">
+
+    <fragment
+        android:id="@+id/loadingScreen"
+        android:name="io.github.jasvilladarez.ello.main.LoadingScreen"
+        android:label="LoadingScreen">
+        <action
+            android:id="@+id/action_loadingScreen_to_browseFragment"
+            app:clearTask="true"
+            app:destination="@id/browseFragment"
+            app:popUpTo="@id/loadingScreen"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/browseFragment"
+        android:name="io.github.jasvilladarez.ello.browse.BrowseFragment"
+        android:label="BrowseFragment" />
+</navigation>

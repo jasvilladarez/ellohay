@@ -29,11 +29,11 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import io.github.jasvilladarez.ello.R
-import io.github.jasvilladarez.ello.browse.BrowseFragment
 import io.github.jasvilladarez.ello.common.BaseActivity
 import io.github.jasvilladarez.ello.common.MviView
-import io.github.jasvilladarez.ello.util.ui.setVisible
 import io.github.jasvilladarez.ello.util.ui.showError
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_main.*
@@ -64,25 +64,20 @@ internal class MainActivity : BaseActivity(), MviView<MainIntent, MainViewState>
     override fun render(state: MainViewState) {
         when (state) {
             is MainViewState.View -> {
-                loadingView.setVisible(false)
-                fragmentContainer.setVisible(true)
-                if (state.isSuccessful
-                        && supportFragmentManager.findFragmentById(R.id.fragmentContainer) == null) {
-                    supportFragmentManager.beginTransaction()
-                            .replace(R.id.fragmentContainer, BrowseFragment())
-                            .commit()
+                if (state.isSuccessful) {
+                    main_nav_host.findNavController()
+                            .navigate(R.id.action_loadingScreen_to_browseFragment)
                 }
             }
             is MainViewState.Error -> {
-                loadingView.setVisible(false)
-                fragmentContainer.setVisible(false)
                 showError(state.errorMessage)
             }
-            is MainViewState.LoadingView -> loadingView.setVisible(true)
         }
     }
 
     private fun loadIntent(): Observable<MainIntent> = rxLifecycle.filter {
         it == Lifecycle.Event.ON_START
     }.map { MainIntent.Load() }
+
+    override fun onSupportNavigateUp() = findNavController(R.id.main_nav_host).navigateUp()
 }
