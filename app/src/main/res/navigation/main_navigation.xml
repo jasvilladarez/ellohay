@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/loadingScreen"
-        android:name="io.github.jasvilladarez.ello.main.LoadingScreen"
+        android:name="io.github.jasvilladarez.ello.common.LoadingScreen"
         android:label="LoadingScreen">
         <action
             android:id="@+id/action_loadingScreen_to_browseFragment"
