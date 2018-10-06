@@ -25,6 +25,7 @@
 ext {
     // Architecture Components
     lifecycleVersion = '1.1.1'
+    pagingVersion = '1.0.0'
     roomVersion = '1.1.1'
 
     daggerVersion = '2.14.1'
@@ -48,6 +49,8 @@ ext {
             lifecycleExtensions  : "android.arch.lifecycle:extensions:$lifecycleVersion",
             navigationUi         : "android.arch.navigation:navigation-ui-ktx:$navigationVersion",
             navigationFragment   : "android.arch.navigation:navigation-fragment-ktx:$navigationVersion",
+            paging               : "android.arch.paging:runtime:$pagingVersion",
+            pagingRxJava         : "android.arch.paging:rxjava2:1.0.0-rc1",
             room                 : "android.arch.persistence.room:runtime:$roomVersion",
             roomCompiler         : "android.arch.persistence.room:compiler:$roomVersion",
 

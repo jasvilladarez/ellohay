@@ -77,6 +77,8 @@ dependencies {
 
     kapt dependencies.lifecycleCompiler
     implementation dependencies.lifecycleExtensions
+    implementation dependencies.paging
+    implementation dependencies.pagingRxJava
     implementation dependencies.navigationFragment
     implementation dependencies.navigationUi
 
