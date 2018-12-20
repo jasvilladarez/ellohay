@@ -1,7 +1,7 @@
 # ellohay
 An Ello Android App
 
-Still under development
+This project showcases the use MVI (Model-View-Intent) pattern with the help of RxJava to implement it.
 
 ## References
 * https://github.com/gumil/basamto
