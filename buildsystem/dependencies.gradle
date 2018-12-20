@@ -36,7 +36,10 @@ ext {
     retrofitVersion = '2.3.0'
     rxBindingVersion = '2.0.0'
     spekVersion = '1.1.5'
-    supportVersion = '27.1.1'
+    supportVersion = '28.0.0'
+
+    // Kotlin related
+    coroutinesVersion = '0.30.1'
 
     dependencies = [
             // Android Support Libraries
@@ -65,6 +68,8 @@ ext {
 
             // Kotlin
             kotlin               : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion",
+            coroutines           : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion",
+            coroutinesAndroid    : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion",
 
             // Network
             gson                 : "com.google.code.gson:gson:2.8.2",

@@ -64,5 +64,13 @@ dependencies {
     implementation dependencies.rxJava
     implementation dependencies.rxKotlin
 
+    implementation dependencies.coroutines
+    implementation dependencies.coroutinesAndroid
+
     testImplementation project(':common-test')
+}
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
 }

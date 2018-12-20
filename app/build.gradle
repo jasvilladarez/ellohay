@@ -23,7 +23,6 @@
  */
 
 apply plugin: 'com.android.application'
-apply plugin: "androidx.navigation.safeargs"
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
@@ -53,6 +52,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            applicationIdSuffix ".debug"
+        }
     }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -77,7 +79,6 @@ dependencies {
 
     kapt dependencies.lifecycleCompiler
     implementation dependencies.lifecycleExtensions
-    implementation dependencies.navigationUi
 
     kapt dependencies.daggerAndroidCompiler
     kapt dependencies.daggerCompiler

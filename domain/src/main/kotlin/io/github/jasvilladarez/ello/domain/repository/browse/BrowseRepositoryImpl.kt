@@ -27,18 +27,28 @@ package io.github.jasvilladarez.ello.domain.repository.browse
 import io.github.jasvilladarez.ello.domain.entity.*
 import io.github.jasvilladarez.ello.domain.util.applySchedulers
 import io.github.jasvilladarez.ello.domain.util.getParameterInLink
+import io.github.jasvilladarez.ello.domain.util.toObservable
 import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.experimental.runBlocking
+import retrofit2.Response
 
 internal class BrowseRepositoryImpl(
         private val browseApi: BrowseApi
 ) : BrowseRepository {
 
     override fun fetchEditorials(nextPageId: String?): Observable<EditorialStream> {
-        return browseApi.fetchEditorials(nextPageId).map {
+        return runBlocking {
+            tryFetchingEditorials(nextPageId)
+        }.toObservable().map {
             val next = it.headers().getParameterInLink("before")
             it.body()?.apply { this.next = next }
                     ?: EditorialStream(emptyList())
-        }.toObservable().applySchedulers()
+        }.applySchedulers()
+    }
+
+    private fun tryFetchingEditorials(nextPageId: String?): Response<EditorialStream> {
+        return browseApi.fetchEditorials(nextPageId).subscribeOn(Schedulers.io()).blockingGet()
     }
 
     override fun fetchArtistInvites(nextPageId: String?): Observable<ArtistInviteStream> {
