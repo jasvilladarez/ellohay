@@ -26,7 +26,7 @@ apply from: 'buildsystem/dependencies.gradle'
 apply from: 'buildsystem/common.gradle'
 
 buildscript {
-    ext.kotlinVersion = '1.2.71'
+    ext.kotlinVersion = '1.3.21'
     ext.navigationVersion = '1.0.0-alpha02'
 
     repositories {
@@ -35,9 +35,8 @@ buildscript {
         maven { url "https://jitpack.io" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0'
+        classpath 'com.android.tools.build:gradle:3.3.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath "de.mannodermaus.gradle.plugins:android-junit5:1.0.32"
         classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
     }
 }

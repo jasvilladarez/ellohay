@@ -73,6 +73,7 @@ internal class MainActivity : BaseActivity(), MviView<MainIntent, MainViewState>
                 showError(state.errorMessage)
             }
         }
+
     }
 
     private fun loadIntent(): Observable<MainIntent> = rxLifecycle.filter {
